@@ -57,7 +57,10 @@ License: You must have a valid license purchased only from themeforest(the above
 		<ul class="nav navbar-nav pull-right">
 			<li class="dropdown user">
 				<a href="index.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-				<span class="username username-hide-on-mobile">Bienvenid@ ${username}</span>
+					<sec:ifLoggedIn>
+						<span class="username username-hide-on-mobile">Bienvenid@ ${sec.loggedInUserInfo(field: 'username')} </span>
+					</sec:ifLoggedIn>
+
 				</a>
 			</li>
 			<!-- END USER LOGIN DROPDOWN -->
@@ -89,11 +92,11 @@ License: You must have a valid license purchased only from themeforest(the above
 			</li>
 			<sec:ifLoggedIn>
 				<li class="start active ">
-					<a href="index.html">
-					<i class="icon-home"></i>
-					<span class="title">Barra</span>
-					<span class="selected"></span>
-					</a>
+					<g:link mapping="createMember">
+						<i class="icon-home"></i>
+						<span class="title">Barra</span>
+						<span class="selected"></span>
+					</g:link>
 				</li>
 				<li >
 					<g:link mapping="searchMember">

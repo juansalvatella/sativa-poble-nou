@@ -17,6 +17,7 @@ import com.sativa.exception.SativaAuthException
 
 import com.sativa.domain.Partner
 
+import  javax.servlet.http.Cookie
 import com.sativa.exception.NotFoundException
 
 
@@ -69,7 +70,7 @@ class LoginController  {
 			}
 			return
 		}
-		render(view: "/sativaTemplate/login", model: [username:user.username])
+		render(view: "/sativaTemplate/searchMembers")
 	}
 	
 	def ajaxSuccess() {

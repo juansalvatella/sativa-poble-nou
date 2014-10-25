@@ -8,7 +8,21 @@
 				 <div class="container-fluid">
 				 	<div class="row">
 				 		<div class="col-lg-3">
-				 			<g:img dir="css/img" file="avatar.png" width="200"/>
+				 			<g:if test="${member.image}">
+				 			<g:img dir="css/img/partners" file="${member.image}" width="225" height="180"/>
+					 		</g:if>
+					 		<g:else>
+								<g:img dir="css/img" file="avatar.png" width="200"/>
+					 		</g:else>
+					 		<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
+				 			 	<a href="#disabledMember" class="btn btn-block btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
+				 			</g:if>
+				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
+				 			 	<a href="#disabledMember" class="btn btn-block  btn-success" data-toggle="modal" class="config">Activar socio</a>
+				 			</g:elseif>
+				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
+				 			 	<a href="#disabledMember" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Renovar socio</a>
+				 			</g:elseif>
 				 		</div>
 				 		<div class="col-lg-5">
 				 			<p><b>Nombre:</b> ${member.firstname}</p>
@@ -17,14 +31,19 @@
 				 			<p><b>Domicilio:</b>  ${member.address}</p>
 				 			<p><b>Email:</b>  ${member.email}</p>
 				 			<p><b>Numero de socio:</b>  ${member.code}</p>
-				 			<p><b>Fecha de inscripción:</b> ${member.dateCreated} </p>
+				 			<p><b>Fecha de inscripción:</b> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
 				 		</div>
 				 		<div class="col-lg-4">
-				 			<a class="btn btn-success">
+				 			<!--<video id="video" width="200" height="150" class="gapPhoto videoWebcam" autoplay></video>
+				 			<a id="snap" class="btn btn-block btn-warning">
 				 				<i class="icon-camera"></i>
-				 				 Hacer foto
+				 				 HACER FOTO
 				 			</a>
-				 			<a class="btn btn-danger">Desactivar socio</a>
+				            <div id="divCanvas">  
+				                <p><b>Imagen:</b></p>
+				               <canvas name="canvas" id="canvas" width="300" height="200"></canvas>
+				            </div>-->
+								 		
 				 		</div>
 				 	</div>
 				 	<div class="row" id="listActiveGenetics">
@@ -34,13 +53,17 @@
 				 	</div>
 				 	<hr />
 				 	<div class="row">
+				 		<g:cookie name="myCookie" />
 				 		<h3>Historial del usuario</h3>
-				 		<textarea class="textareaHistoric"></textarea>
-				 		<a class="btn btn-success">Publicar comentario</a>
-				 		<table id="tableHistoric" class="table table-condensed">
-				 			<tr><td class="columnStep" >Nombre</td><td>Historico 1</td></tr>
-				 			<tr><td class="columnStep">Nombre</td><td>Historico 2</td></tr>
-				 			<tr><td class="columnStep">Nombre</td><td>Historico 3</td></tr>
+				 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
+					 		<textarea  name="observation" class="textareaHistoric"></textarea>
+					 		<input type="hidden" name="partnerId" value="${member.id}" />
+					 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
+				 		</g:form>
+				 		<table id="tableHistoric" class="table table-bordered table-condensed">
+				 			<g:each in="${listEvents}">
+				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td><td>${it.observation}</td></tr>
+				 			</g:each>
 				 		</table>
 				 	</div>
 				 </div>
@@ -51,74 +74,80 @@
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
 
+<div class="modal fade" id="disabledMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED'}">
+					<h4 class="modal-title">DESACTIVAR SOCIO</h4>
+				</g:if>
+				<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
+	 			 	<h4 class="modal-title">ACTIVAR SOCIO</h4>
+	 			</g:elseif>
+	 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
+	 			 	<h4 class="modal-title">RENOVAR SOCIO</h4>
+	 			</g:elseif>
+			</div>
+			
+			<g:set var="controllerBtn" value="" />
+			<g:set var="actionBtn" value="" />
+			<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
+				<g:set var="actionBtn" value="remove" />
+			</g:if>
+			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
+				<g:set var="actionBtn" value="activate" />
+			</g:elseif>
+			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
+				<g:set var="actionBtn" value="renovation" />
+			</g:elseif>
+
+		
+			<g:form name="myForm" role="form"  class="form-horizontal" url="[controller:'member', action:actionBtn ]" >
+				<div class="modal-body">
+					<input type="hidden" name="memberId" value="${member.id}" />
+					 <g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
+						 <p>¿Estas seguro que quieres desactivarlo?.<br /> Escribe el motivo de la baja</p>
+						 <textarea name="observation" id="textareaDisabled"></textarea>
+					 </g:if>
+					 <g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
+		 			 	 <p>¿Estas seguro que quieres reactivarlo?.</p>
+		 			</g:elseif>
+		 			<g:elseif test="${member.status.name() == PARTNER_STATUS__DISABLED}">
+		 			 	 <p>¿Estas seguro que quieres renovarlo?.</p>
+		 			</g:elseif>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
+						<input type="submit" class="btn btn-danger" value="Desactivar" />
+					</g:if>
+					<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
+						<input type="submit" class="btn btn-success" value="Activar" />
+					</g:elseif>
+					<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
+						<input type="submit" class="btn btn-primary" value="Renovar" />
+					</g:elseif>
+				</div>
+			</g:form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+
+
 <div class="footer">
 	<div class="footer-inner">
 		 2014 &copy; Sativa
 	</div>
 </div>
-<!-- END FOOTER -->
-<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-<!-- BEGIN CORE PLUGINS -->
-<script src="${resource(dir: 'js/pluginsSativa', file: 'jquery-1.11.0.min.js')}" type="text/javascript"></script>
-<script src="${resource(dir: 'js/pluginsSativa', file: 'jquery-migrate-1.2.1.min.js')}" type="text/javascript"></script>
 
-<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-<script src="${resource(dir: 'js/pluginsSativa/jquery-ui', file: 'jquery-ui-1.10.3.custom.min.js')}" type="text/javascript"></script>
-
-<script src="${resource(dir: 'js/pluginsSativa/bootstrap/js', file: 'bootstrap.min.js')}" type="text/javascript"></script>
-
-
-
-<script src="${resource(dir:'js/pluginsSativa/bootstrap-hover-dropdown', file:'bootstrap-hover-dropdown.min.js')}" type="text/javascript"></script>
-
-
-<script src="${resource(dir:'js/pluginsSativa/jquery-slimscroll', file:'jquery.slimscroll.min.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa', file:'jquery.blockui.min.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/uniform', file: 'jquery.uniform.min.js')}" type="text/javascript"></script>
-<!-- END CORE PLUGINS -->
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-<!--
-
-<script src="${resource(dir:'js/pluginsSativa/jqvmap/jqvmap', file: 'jquery.vmap.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/jqvmap/jqvmap/maps', file: 'jquery.vmap.russia.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/jqvmap/jqvmap/maps', file: 'jquery.vmap.world.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/jqvmap/jqvmap/maps', file: 'jquery.vmap.europe.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/jqvmap/jqvmap/maps', file: 'jquery.vmap.germany.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/jqvmap/jqvmap/maps', file: 'jquery.vmap.usa.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/jqvmap/jqvmap/data', file:'jquery.vmap.sampledata.js')}" type="text/javascript"></script>
-
--->
-<script src="${resource(dir:'js/pluginsSativa', file:'jquery.peity.min.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa', file: 'jquery.pulsate.min.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/jquery-knob/js', file:'jquery.knob.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/flot', file:'jquery.flot.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/flot', file: 'jquery.flot.resize.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/bootstrap-daterangepicker', file: 'moment.min.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/bootstrap-daterangepicker', file:'daterangepicker.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/gritter/js', file:'jquery.gritter.js')}" type="text/javascript"></script>
-<!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
-<script src="${resource(dir:'js/pluginsSativa/fullcalendar/fullcalendar', file: 'fullcalendar.min.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa/jquery-easypiechart', file:'jquery.easypiechart.min.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/pluginsSativa', file:'jquery.sparkline.min.js')}" type="text/javascript"></script>
-<!-- END PAGE LEVEL PLUGINS -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="${resource(dir:'js/scriptsSativa', file:'app.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/scriptsSativa', file:'index.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/scriptsSativa', file: 'tasks.js')}" type="text/javascript"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
+<g:render template="/sativaTemplate/scriptsTemplate"  />
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
-   Index.init();
-   //Index.initJQVMAP(); // init index page's custom scripts
-   Index.initCalendar(); // init index page's custom scripts
-   Index.initCharts(); // init index page's custom scripts
-   Index.initChat();
-   Index.initMiniCharts();
-   Index.initPeityElements();
-   Index.initKnowElements();
-   Index.initDashboardDaterange();
-   Tasks.initDashboardWidget();
+
 });
 </script>
 </body>

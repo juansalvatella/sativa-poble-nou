@@ -20,6 +20,7 @@ class Partner {
 	String 	    	    lastname
 	String  			address
 	String 				image 
+	String				signature
 	String  			identificationNumber
 	PartnerStatusEnum   status 
 
@@ -34,12 +35,17 @@ class Partner {
 		firstname 			 nullable:true
 		lastname  			 nullable:true
 		address   			 nullable:true
+		signature			 nullable:true
 		image 	  			 nullable:true
 		identificationNumber nullable:true
 	}
 
 	static mapping = {
 		password column: '`password`'
+	}
+
+	static hasMany = {
+		events : Event
 	}
 
 	Set<Role> getAuthorities() {

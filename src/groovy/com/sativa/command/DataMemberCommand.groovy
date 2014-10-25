@@ -1,5 +1,6 @@
 package com.sativa.command
 
+
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.naming.*
@@ -9,7 +10,7 @@ import grails.validation.Validateable
 
 
 @Validateable
-class CreateMemberCommand {
+class DataMemberCommand {
 	String 				username
 	String 				password
 	String 				code
@@ -32,12 +33,15 @@ class CreateMemberCommand {
 		identificationNumber nullable:true, validator:idNValidator
 	}
 
-	static final emailValidator = { String value, CreateMemberCommand command ->
-		if (!this.doLookup(value)) {
-			return 'command.email.error'
+	static final emailValidator = { String value, DataMemberCommand command ->
+		if (value){
+			if (!this.doLookup(value)) {
+				return 'command.email.error'
+			}
 		}
-		
 	}
+
+
  
 	static boolean doLookup( String address ) throws NamingException {
 		
@@ -67,45 +71,47 @@ class CreateMemberCommand {
 
 	static final idNValidator = {
 		String idValue, def instance  ->
-		String letters = "TRWAGMYFPDXBNJZSQVHLCKE"
 		
-		if (
-			(idValue.toUpperCase().startsWith("K"))||
-			(idValue.toUpperCase().startsWith("L"))||
-			(idValue.toUpperCase().startsWith("M")))
-		 idValue = idValue.substring(1)
-		
-		if (
-			idValue.toUpperCase().startsWith("X"))
-		 idValue = "0" + idValue.substring(1)
-		 
-		if (
-			idValue.toUpperCase().startsWith("Y"))
-		 idValue = "1" + idValue.substring(1)
+		if (idValue) {
+			String letters = "TRWAGMYFPDXBNJZSQVHLCKE"
+			
+			if (
+				(idValue.toUpperCase().startsWith("K"))||
+				(idValue.toUpperCase().startsWith("L"))||
+				(idValue.toUpperCase().startsWith("M")))
+			 idValue = idValue.substring(1)
+			
+			if (
+				idValue.toUpperCase().startsWith("X"))
+			 idValue = "0" + idValue.substring(1)
+			 
+			if (
+				idValue.toUpperCase().startsWith("Y"))
+			 idValue = "1" + idValue.substring(1)
 
-		if (
-			idValue.toUpperCase().startsWith("Z"))
-		 idValue = "2" + idValue.substring(1);
-		 
-		Pattern nifPattern = Pattern.compile(
-		"(\\d{1,8})([TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke])")
+			if (
+				idValue.toUpperCase().startsWith("Z"))
+			 idValue = "2" + idValue.substring(1);
+			 
+			Pattern nifPattern = Pattern.compile(
+			"(\\d{1,8})([TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke])")
 
-		Matcher m = nifPattern.matcher(idValue)
-		
-		if (m.matches()) {
-			String letter = m.group(2);
-			// Extract letter from DNI/NIF
-			int dni = Integer.parseInt(m.group(1));
-			dni = dni % 23;
-		 
-			String reference = letters.substring(dni, dni + 1);
-			if (!reference.equalsIgnoreCase(letter)) {
+			Matcher m = nifPattern.matcher(idValue)
+			
+			if (m.matches()) {
+				String letter = m.group(2);
+				// Extract letter from DNI/NIF
+				int dni = Integer.parseInt(m.group(1));
+				dni = dni % 23;
+			 
+				String reference = letters.substring(dni, dni + 1);
+				if (!reference.equalsIgnoreCase(letter)) {
+					instance.errors.rejectValue("identificationNumber","user.identificationNumber.error.validator","identification number is not correct")
+				}
+			}
+			else {
 				instance.errors.rejectValue("identificationNumber","user.identificationNumber.error.validator","identification number is not correct")
 			}
-		}
-		else {
-			instance.errors.rejectValue("identificationNumber","user.identificationNumber.error.validator","identification number is not correct")
-		}
-		
+		}			
 	}
 }

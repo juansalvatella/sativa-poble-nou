@@ -1427,6 +1427,15 @@
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			today: "Today",
 			clear: "Clear"
+		},
+		es: {
+			days: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo", "Lunes"],
+		    daysShort: ["Lun", "Mar", "Mier", "Jue", "Vier", "Sab", "Dom", "Lun"],
+		    daysMin: ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do", "Lu"],
+		    months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+		    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+		    today: "Hoy",
+		    clear: "Limpiar"
 		}
 	};
 
@@ -1649,6 +1658,8 @@
 		$.fn.datepicker = old;
 		return this;
 	};
+
+
 
 
 	/* DATEPICKER DATA-API

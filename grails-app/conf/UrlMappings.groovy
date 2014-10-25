@@ -8,6 +8,7 @@ class UrlMappings {
         }
 
         "/"(view:"/sativaTemplate/login")
+        name createMember: "/crear-socio"(view:"/sativaTemplate/createMember")
         name searchMember: "/buscar-socio"(view:"/sativaTemplate/searchMembers")
         name managementMembers: "/gestionar-socios"(controller:"member", action:"list")
         name managementGenetics: "/gestionar-geneticas" (controller:"genetic", action:"list")

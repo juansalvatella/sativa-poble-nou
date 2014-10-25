@@ -2,6 +2,7 @@ import com.sativa.domain.Partner
 import com.sativa.domain.Role
 import com.sativa.domain.PartnerRole
 import com.sativa.domain.Genetic
+import com.sativa.domain.GeneticOrders
 
 import com.sativa.enums.PartnerStatusEnum
 class BootStrap {
@@ -72,5 +73,11 @@ println "user 2 "+testUser2.id
       genetic17.save(flush:true)
       genetic18.save(flush:true)
 
+
+      GeneticOrders go = new GeneticOrders()
+      go.partner = testUser
+      go.genetic = genetic 
+      go.amount  = 1
+      go.save(flush:true)
    }
 }
