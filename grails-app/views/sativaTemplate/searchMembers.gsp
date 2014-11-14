@@ -45,38 +45,44 @@
 	                            
 			              </g:form>
 			        </div>
+			        <h4><b>TOTAL DE USUARIOS: ${listMembers?.size()}</b></h4>
 			        <div class="row">
 				 		<table class="table table-bordered table-condensed">
 				 			<thead>
 				 				<tr>
+				 					<th>#</th>
 					 				<th>Nombre</th>
-					 				<th>Nº de Socio</th>
+					 				<th>DNI</th>
 					 				<th>Estado</th>
+					 				<th>Acciones</th>
 				 				</tr>
 				 			</thead>
 				 			<tbody>
 				 				<g:if test="${listMembers}">
-				 						<g:each in="${listMembers}">
+				 						<g:each in="${listMembers}" var="mem" status="i">
 				 							<tr>
-				 								<td>${it.firstname} ${it.lastname}</td>
-				 								<td>${it.code}</td>
+				 								<td>${i+1}</td>
+				 								<td>${mem.firstname} ${mem.lastname}</td>
+				 								<td>${mem.identificationNumber}</td>
 				 								<td>
-				 									<g:if test="${it.status.name() == 'PARTNER_STATUS__ACTIVED'}">
+				 									<g:if test="${mem.status.name() == 'PARTNER_STATUS__ACTIVED'}">
 				 										<g:img dir="css/img" file="semaforoVerde.jpg"/>
 				 									</g:if>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__DISABLED'}">
+				 									<g:elseif test="${mem.status.name() == 'PARTNER_STATUS__DISABLED'}">
 				 										<g:img dir="css/img" file="semaforoRojo.jpg"/>
 				 									</g:elseif>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__BANNED'}">
+				 									<g:elseif test="${mem.status.name() == 'PARTNER_STATUS__BANNED'}">
 				 										<g:img dir="css/img" file="semaforoRojo.jpg"/>
 				 									</g:elseif>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__DETOXIFIED'}">
+				 									<g:elseif test="${mem.status.name() == 'PARTNER_STATUS__DETOXIFIED'}">
 				 										<g:img dir="css/img" file="semaforoNaranja.jpg"/>
 				 									</g:elseif>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__UNKNOWN'}">
+				 									<g:elseif test="${mem.status.name() == 'PARTNER_STATUS__UNKNOWN'}">
 				 										<g:img dir="css/img" file="semaforoAmarillo.jpg"/>
 				 									</g:elseif>
-				 									<a href="${createLink(controller:'member', action:'show', params:[memberId:it.id])}">
+				 								</td>
+				 								<td>
+				 									<a href="${createLink(controller:'member', action:'show', params:[memberId:mem.id])}">
 				 										Ver
 				 									</a>
 				 								</td>

@@ -19,6 +19,7 @@ class MemberController  {
 	def memberService
 	def geneticService
 	def eventService
+	def cardService
 
 	def search(String firstname, String lastname, String identificationNumber) {
 		def listMembers = memberService.search(firstname, lastname, identificationNumber)
@@ -27,8 +28,13 @@ class MemberController  {
 
 	}
 
-	def list (String firstname, String lastname, String identificationNumber, String code) {
-		def listMembers = memberService.list(firstname, lastname, identificationNumber, code)
+	def list () {
+		def listMembers = memberService.list()
+		render(view: "/sativaTemplate/searchMembers", model: [listMembers:listMembers])
+	}
+
+	def all (String firstname, String lastname, String identificationNumber, String code) {
+		def listMembers = memberService.all(firstname, lastname, identificationNumber, code)
 		render(view: "/sativaTemplate/managementMembers", model: [listMembers:listMembers])
 	}
 
@@ -46,14 +52,16 @@ class MemberController  {
 		Partner member = Partner.read(memberId)
 		def listGenetics = geneticService.active()
 		def listEvents   = eventService.list(member)
-		render(view: "/sativaTemplate/showMember", model: [member:member, listGenetics:listGenetics, listEvents:listEvents])
+		def card  		 = cardService.cardActive(member)
+		render(view: "/sativaTemplate/showMember", model: [member:member, card:card, listGenetics:listGenetics, listEvents:listEvents])
 	}
 
 
-	def showEdit (Long memberId, DataMemberCommand cpc){
+	def showEdit (Long memberId){
 		Partner member = Partner.read(memberId)
 		def listEvents   = eventService.list(member)
-		render(view: "/sativaTemplate/editMember", model: [member:member,  listEvents:listEvents])
+		def card  		 = cardService.cardActive(member)
+		render(view: "/sativaTemplate/editMember", model: [card:card,member:member,  listEvents:listEvents])
 
 	}
 

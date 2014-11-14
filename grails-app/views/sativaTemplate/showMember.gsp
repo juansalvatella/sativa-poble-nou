@@ -6,7 +6,7 @@
 	<div class="page-content-wrapper">
 		<div class="page-content">
 				 <div class="container-fluid">
-				 	<div class="row">
+				 	<div class="row" id="divShowMember">
 				 		<div class="col-lg-3">
 				 			<g:if test="${member.image}">
 				 			<g:img dir="css/img/partners" file="${member.image}" width="225" height="180"/>
@@ -32,6 +32,8 @@
 				 			<p><b>Email:</b>  ${member.email}</p>
 				 			<p><b>Numero de socio:</b>  ${member.code}</p>
 				 			<p><b>Fecha de inscripción:</b> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
+				 			<p><b>Última cuota:</b> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
+				 			<p><b>Tarjeta:</b>  ${card.code}</p>
 				 		</div>
 				 		<div class="col-lg-4">
 				 			<!--<video id="video" width="200" height="150" class="gapPhoto videoWebcam" autoplay></video>
@@ -47,9 +49,11 @@
 				 		</div>
 				 	</div>
 				 	<div class="row" id="listActiveGenetics">
-				 		<g:each in="${listGenetics}">
-				 			<a class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
-				 		</g:each>
+				 		<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
+					 		<g:each in="${listGenetics}">
+					 			<a class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
+					 		</g:each>
+				 		</g:if>
 				 	</div>
 				 	<hr />
 				 	<div class="row">
@@ -62,7 +66,13 @@
 				 		</g:form>
 				 		<table id="tableHistoric" class="table table-bordered table-condensed">
 				 			<g:each in="${listEvents}">
-				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td><td>${it.observation}</td></tr>
+				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
+				 					<g:if test="${it.type.name() == 'EVENT_TYPE__ACTIVATE'}"><td class="textGreen"></g:if>
+				 					<g:if test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:if>
+				 					<g:else><td ></g:else>
+				 					${it.observation}</td>
+				 					
+				 				</tr>
 				 			</g:each>
 				 		</table>
 				 	</div>
@@ -147,6 +157,9 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
+   if ("${member.status.name()}" == 'PARTNER_STATUS__BANNED' || "${member.status.name()}" == 'PARTNER_STATUS__DISABLED') {
+   		$('#divShowMember').css("border", "red solid 2px").css("padding", 20); 
+   }
 
 });
 </script>

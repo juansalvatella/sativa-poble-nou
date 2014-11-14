@@ -31,9 +31,16 @@
 			 				<div class="form-group">
 								<p><b>Numero de socio:</b><br />${member.code}</p>
 							</div>
-								<div class="form-group">
+							<div class="form-group">
 								<p><b>Fecha de inscripción:</b><br/> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/></p>
 							</div>
+							<div class="form-group">
+								<p><b>Última cuota:</b><br/> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/></p>
+							</div>
+							<div class="form-group">
+								<p><b>Tarjeta:</b><br />${card.code}</p>
+							</div>
+
 				 		</div>
 				 		<div class="col-lg-5">
 				 			<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'edit',controller:'member']" >
@@ -102,7 +109,13 @@
 				 		</g:form>
 				 		<table id="tableHistoric" class="table table-bordered table-condensed">
 				 			<g:each in="${listEvents}">
-				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td><td>${it.observation}</td></tr>
+				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
+
+				 					<g:if test="${it.type.name() == 'EVENT_TYPE__ACTIVATE'}"><td class="textGreen"></g:if>
+				 					<g:if test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:if>
+				 					<g:else><td ></g:else>
+				 					${it.observation}</td>
+				 				</tr>
 				 			</g:each>
 				 		</table>
 				 	</div>

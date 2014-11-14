@@ -91,45 +91,38 @@ License: You must have a valid license purchased only from themeforest(the above
 				</form>
 			</li>
 			<sec:ifLoggedIn>
-				<li class="start active ">
-					<g:link mapping="createMember">
-						<i class="icon-home"></i>
-						<span class="title">Barra</span>
-						<span class="selected"></span>
-					</g:link>
-				</li>
-				<li >
+				<li class="menuSearchMember">
 					<g:link mapping="searchMember">
 						<i class="icon-user"></i>
 						<span class="title">Buscar socios</span>
 					</g:link>
 					
 				</li>
-				<li >
+				<li class="menuManageMember">
 					<g:link mapping="managementMembers">
 						<i class="icon-settings"></i>
 						<span class="title">Gestion de socios</span>
 					</g:link>
 				</li>
-				<li >
+				<li class="menuManagerGenetics">
 					<g:link mapping="managementGenetics">
 					<i class="icon-tag"></i>
 					<span class="title">Gestion de genéticas</span>
 					</g:link>
 				</li>
-				<li >
+				<li class="menuStadistics">
 					<g:link mapping="stadistics">
 					<i class="icon-bar-chart"></i>
 					<span class="title">Filtro estadísticas</span>
 					</g:link>
 				</li>
-				<li >
+				<li class="menuManagerPartners">
 					<g:link mapping="searchPartner">
 					<i class="icon-users"></i>
 					<span class="title">Socios colaboradores</span>
 					</g:link>
 				</li>
-				<li class="last ">
+				<li class="last menuClass">
 
 					<a href="${createLink(uri:'j_spring_security_logout')}">
 						<i class="icon-close"></i>

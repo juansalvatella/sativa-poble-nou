@@ -9,6 +9,8 @@ class Genetic {
 	Long   				id
 	Date 				dateCreated
 	String 				name
+	BigDecimal			price
+	BigDecimal			grams
 	GeneticStatusEnum   status        = GENETIC_STATUS__ENABLED
 
 

@@ -1,16 +1,14 @@
 package com.sativa.domain
 
-import static com.sativa.enums.GeneticStatusEnum.GENETIC_STATUS__ENABLED
-
-import com.sativa.enums.GeneticStatusEnum
+import com.sativa.enums.EventTypeEnum
 
 class Event {
 
-	Long   		id
-	Date 		dateCreated
-	String 		observation
-	String		writer		
-	
+	Long   			id
+	Date 			dateCreated
+	String 			observation
+	String			writer		
+	EventTypeEnum	type
 
 	static belongsTo 	= [member	: Partner]
 

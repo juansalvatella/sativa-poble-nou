@@ -13,23 +13,23 @@ import grails.validation.Validateable
 class DataMemberCommand {
 	String 				username
 	String 				password
-	String 				code
 	String 				email 
 	String  			firstname
 	String 	    	    lastname
 	String  			address
 	String 				image 
 	String  			identificationNumber
+	String 				codeCard
 
 	static constraints = {
 		username  			 nullable:true
 		password  			 nullable:true
-		code 	  			 nullable:true
 		email 	  			 nullable:true, validator:emailValidator
 		firstname 			 nullable:true
 		lastname  			 nullable:true
 		address   			 nullable:true
 		image 	  			 nullable:true
+		codeCard		     nullable:true
 		identificationNumber nullable:true, validator:idNValidator
 	}
 

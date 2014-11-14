@@ -9,7 +9,7 @@
 				 		<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
 						  <li class="active"><a href="#tablePerDay" role="tab" data-toggle="tab">Tabla del dia</a></li>
-						  <li><a href="#tablePerPeriod" role="tab" data-toggle="tab">Ventas por período</a></li>
+						  <li id="tableDivPeriod"><a href="#tablePerPeriod" role="tab" data-toggle="tab">Ventas por período</a></li>
 						</ul>
 
 						<!-- Tab panes -->
@@ -17,18 +17,15 @@
 						  <div class="tab-pane active" id="tablePerDay">
 						  		<div class="row">
 						  			<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'day',controller:'geneticOrders']" >
-							        <div class='col-lg-4'>
-							            <div class="form-group">
-							                <div class='input-group date' id='dateFilter'>
-							                		
-								                    <input id="calendar" type='text' class="form-control" data-date-format="dd/mm/yyyy"/>
-								                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-								                    </span>
-								                    <button type="submit" class=" form-control btn btn-primary" >Filtrar</button>
-								                    <input type="hidden" id="currentDate" name="currentDate" />
-							                </div>
-							            </div>
-							        </div>
+							        <div class="col-lg-4">
+									    <div class="input-group">
+									      <input type="date" id="calendar1" class="form-control">
+									      <input type="hidden" name="currentDate" id="hiddenCalendar">
+									      <span class="input-group-btn">
+									        <button class="btn btn-default" type="submit">Filtrar</button>
+									      </span>
+									    </div>
+									  </div>
 							        </g:form>
 							    </div>
 
@@ -62,18 +59,31 @@
 						  </div>
 						  <div class="tab-pane" id="tablePerPeriod">
 						  		<div class="row">
-							        <div class='col-lg-8'>
-						        		<div class="row">
-								            <div class="col-lg-6">
-									            <div id="dashboard-report-range" class="btn btn-default selectbox pull-right">
-													 <i class="fa fa-calendar"></i>
-													<span>September 26, 2014 - October 25, 2014</span> <b class="caret"></b>
-												</div>
+							        <div class='col-lg-3'>
+							        	<p>Desde</p>
+							        </div>
+							        <div class='col-lg-3'>
+							        	<p>Hasta</p>
+							        </div>
+							    </div>
+						  		<div class="row">
+							        <div class='col-lg-12'>
+							        	<div class="row">
+											  <div class="col-lg-3">
+											    <div class="input-group">
+											    	<input type="hidden" name="currentDate" id="hiddenCalendar2">
+											     <input type="date" id="calendar2" value="${new Date().format('dd/MM/yyyy')}" class="form-control">
+											    </div>
+											  </div>
+											  <div class="col-lg-3">
+												    <div class="input-group">
+												    	<input type="hidden" name="currentDate" id="hiddenCalendar3">
+												     <input type="date" id="calendar3" value="${new Date().format('dd/MM/yyyy')}" class="form-control">
+												      <span class="input-group-btn">
+												        <a class="btn btn-default" >Filtrar</a>
+												      </span>
+												    </div>
 											</div>
-											<div class="col-lg-2">
-												<button type="submit" class=" form-control btn btn-primary" >Filtrar</button>
-											</div>
-										</div>
 							        </div>
 							    </div>
 							    <g:if test="${listGenetics}">
@@ -134,48 +144,44 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
- 
+   var now = new Date("${daySelected}")
+   var end = new Date("${end}")
+   
 
-   var startAux = new Date() - 30
-   var endAux   = new Date()
-   if (currentDate) {
-   		console.dir(currentDate)
-   		var aux = new Date(currentDate)
-   		$('#currentDate').val(aux.toISOString());   	
-   }
-   else {
-		$('#currentDate').val(new Date().toISOString());   	
-		currentDate = new Date()
-   }
+   var day = ("0" + now.getDate()).slice(-2);
+   var month = ("0" + (now.getMonth() + 1)).slice(-2);
+   var today 	 = now.getFullYear()+"-"+(month)+"-"+(day) ;
 
+   day = ("0" + end.getDate()).slice(-2);
+   month = ("0" + (end.getMonth() + 1)).slice(-2);
+   var auxEnd 	 = end.getFullYear()+"-"+(month)+"-"+(day) ;
 
-
-     $('#dateFilter').datepicker({language:'es', format:"dd-mm-yyyy", startDate:currentDate}).on('changeDate', function(ev) {
-		$('#currentDate').val(ev.date.toISOString());
-  	});
-
-   $('#calendar').val(new Date().toLocaleDateString());
-
-
-	
 
    
-   $('#dashboard-report-range').daterangepicker(
-		{
-			opens: 'right',
-			format: 'DD-MM-YYYY',
-			startDate: startAux,
-			endDate:  endAux,
-			language: 'es',
-			locale: {applyLabel:"Aplicar", cancelLabel:"Cancelar", fromLabel:"Desde",toLabel:"Hasta"}		
 
-		}, 
-		function(start, end) {
-			$('#dashboard-report-range span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
-		}
-	);
+   $('#calendar1').val(today)
 
+   $('#calendar1').on('change', function(){
+   		var auxDate = new Date($('#calendar1').val());
+   		$('#hiddenCalendar').val(auxDate.toISOString())
+   });
 
+   $('#calendar2').on('change', function(){
+   		var auxDate = new Date($('#calendar2').val());
+   		$('#hiddenCalendar2').val(auxDate.toISOString())
+   });
+
+   $('#calendar3').on('change', function(){
+   		var auxDate = new Date($('#calendar3').val());
+   		$('#hiddenCalendar3').val(auxDate.toISOString())
+   });
+
+   $('#calendar3').val(today)
+   $('#calendar2').val(auxEnd)
+   
+   $('#tableDivPeriod').click(function() {
+
+   })
 
 });
 </script>

@@ -70,7 +70,7 @@ class LoginController  {
 			}
 			return
 		}
-		render(view: "/sativaTemplate/searchMembers")
+		redirect(controller: "member", action: "list")
 	}
 	
 	def ajaxSuccess() {

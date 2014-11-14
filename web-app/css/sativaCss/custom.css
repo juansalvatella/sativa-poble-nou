@@ -57,3 +57,14 @@
 .tableStadistic {
 	margin-top:2%;
 }
+
+
+.textGreen {
+	color:green;
+	font-weight: bold;
+}
+
+.textRed {
+	color:red;
+	font-weight: bold;
+}

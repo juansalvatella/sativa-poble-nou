@@ -55,6 +55,7 @@
       									<input type="text" class="form-control" name="email" placeholder="algo@algo.com">
     								</div>
                     <input type="hidden" name="image" id="foto_canvas" value="">
+                    <input type="hidden" name="codeCard" id="codeCard" value="">
     							</div>
 					 			<input type="submit" class="btn center  pull-right btn-success" value="Nuevo socio" />
 				 			</g:form>
@@ -83,11 +84,13 @@
 		 2014 &copy; Sativa
 	</div>
 </div>
-
-<g:render template="/sativaTemplate/scriptsTemplate"  /><script>
+<g:render template="/sativaTemplate/scriptsTemplate"  />
+<script>
 
 jQuery(document).ready(function() {    
+    
    App.init(); // initlayout and core plugins
+   $('#codeCard').val("${numCard}")
 
     // Put event listeners into place
     window.addEventListener("DOMContentLoaded", function() {

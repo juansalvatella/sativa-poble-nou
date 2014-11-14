@@ -44,9 +44,10 @@ class Partner {
 		password column: '`password`'
 	}
 
-	static hasMany = {
+	static hasMany = [
+		cards  : Card,
 		events : Event
-	}
+	]
 
 	Set<Role> getAuthorities() {
 		PartnerRole.findAllByPartner(this).collect { it.role }
@@ -66,4 +67,6 @@ class Partner {
 	protected void encodePassword() {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
 	}
+
+	
 }

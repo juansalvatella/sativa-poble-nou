@@ -819,8 +819,23 @@ var App = function () {
 
         //main function to initiate the theme
         init: function () {
+            if (window.location.pathname == "/estadisticas") {
+                $('.menuStadistics').addClass('active');
+            }
+            else if (window.location.pathname == "/buscar-socio") {
+                $('.menuSearchMember').addClass('active');
+            }
+            else if (window.location.pathname == "/gestionar-socios") {
+                $('.menuManageMember').addClass('active');
+            }
+            else if (window.location.pathname == "/gestionar-geneticas") {
+                $('.menuManagerGenetics').addClass('active');
+            }
+            else if (window.location.pathname == "/gestionar-socio") {
+                $('.menuManagerPartners').addClass('active');
+            }
+      
 
-            //IMPORTANT!!!: Do not modify the core handlers call order.
 
             //core handlers
             handleInit(); // initialize core variables

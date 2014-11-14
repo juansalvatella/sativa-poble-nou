@@ -1,11 +1,11 @@
 package com.sativa.controller
 
-
+import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__CUSTOM
 import grails.plugin.springsecurity.annotation.Secured
 
 import com.sativa.domain.Event
 import com.sativa.domain.Partner
-
+import com.sativa.enums.EventTypeEnum
 
 
 
@@ -18,7 +18,7 @@ class EventController  {
 	def create(String observation, Long partnerId) {
 		Partner partner = Partner.read(partnerId)
 		
-		eventService.create(observation, partner)
+		eventService.create(observation, partner, EVENT_TYPE__CUSTOM)
 		redirect(controller: "member", action: "show", params:[memberId:partnerId])
 	}
 

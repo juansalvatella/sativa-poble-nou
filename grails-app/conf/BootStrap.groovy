@@ -36,24 +36,24 @@ println "user 2 "+testUser2.id
       PartnerRole.create testUser, sellerRole, true
       PartnerRole.create testUser, userRole, true
 
-      def genetic = new Genetic(name:"genetica1")
-      def genetic2 = new Genetic(name:"genetica2")
-      def genetic3 = new Genetic(name:"genetica3")
-      def genetic4 = new Genetic(name:"genetica4")
-      def genetic5 = new Genetic(name:"genetica5")
-      def genetic6 = new Genetic(name:"genetica6")
-      def genetic7 = new Genetic(name:"genetica7")
-      def genetic8 = new Genetic(name:"genetica8")
-      def genetic9 = new Genetic(name:"genetica9")
-      def genetic10 = new Genetic(name:"genetica10")
-      def genetic11 = new Genetic(name:"genetica12")
-      def genetic12 = new Genetic(name:"genetica13")
-      def genetic13 = new Genetic(name:"genetica14")
-      def genetic14= new Genetic(name:"genetica15")
-      def genetic15 = new Genetic(name:"genetica16")
-      def genetic16 = new Genetic(name:"genetica17")
-      def genetic17 = new Genetic(name:"genetica18")
-      def genetic18= new Genetic(name:"genetica19")
+      def genetic = new Genetic(name:"genetica1", price:1, grams:1)
+      def genetic2 = new Genetic(name:"genetica2", price:1, grams:1)
+      def genetic3 = new Genetic(name:"genetica3", price:1, grams:1)
+      def genetic4 = new Genetic(name:"genetica4", price:1, grams:1)
+      def genetic5 = new Genetic(name:"genetica5", price:1, grams:1)
+      def genetic6 = new Genetic(name:"genetica6", price:1, grams:1)
+      def genetic7 = new Genetic(name:"genetica7", price:1, grams:1)
+      def genetic8 = new Genetic(name:"genetica8", price:1, grams:1)
+      def genetic9 = new Genetic(name:"genetica9", price:1, grams:1)
+      def genetic10 = new Genetic(name:"genetica10", price:1, grams:1)
+      def genetic11 = new Genetic(name:"genetica12", price:1, grams:1)
+      def genetic12 = new Genetic(name:"genetica13", price:1, grams:1)
+      def genetic13 = new Genetic(name:"genetica14", price:1, grams:1)
+      def genetic14= new Genetic(name:"genetica15", price:1, grams:1)
+      def genetic15 = new Genetic(name:"genetica16", price:1, grams:1)
+      def genetic16 = new Genetic(name:"genetica17", price:1, grams:1)
+      def genetic17 = new Genetic(name:"genetica18", price:1, grams:1)
+      def genetic18= new Genetic(name:"genetica19", price:1, grams:1)
       genetic.save(flush:true)
       genetic2.save(flush:true)
       genetic3.save(flush:true)
@@ -79,5 +79,16 @@ println "user 2 "+testUser2.id
       go.genetic = genetic 
       go.amount  = 1
       go.save(flush:true)
+
+        Date.metaClass.'static'.fromISO = { String date ->
+            if (!date) return null
+            try {
+                return new java.sql.Timestamp(javax.xml.bind.DatatypeConverter.parseDateTime(date).getTimeInMillis())
+            }
+            catch(IllegalArgumentException iae) {
+                log.error "Invalid date input. Must be a String with format 'yyyy-MM-dd'T'HH:mm:ssZ'"
+                return null
+            }
+        }
    }
 }
