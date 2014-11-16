@@ -3,6 +3,7 @@ import com.sativa.domain.Role
 import com.sativa.domain.PartnerRole
 import com.sativa.domain.Genetic
 import com.sativa.domain.GeneticOrders
+import com.sativa.domain.GeneticType
 
 import com.sativa.enums.PartnerStatusEnum
 class BootStrap {
@@ -38,24 +39,27 @@ println "user 2 "+testUser2.id
       PartnerRole.create testUser, sellerRole, true
       PartnerRole.create testUser, userRole, true
 
-      def genetic = new Genetic(name:"genetica1", price:1, grams:1)
-      def genetic2 = new Genetic(name:"genetica2", price:1, grams:1)
-      def genetic3 = new Genetic(name:"genetica3", price:1, grams:1)
-      def genetic4 = new Genetic(name:"genetica4", price:1, grams:1)
-      def genetic5 = new Genetic(name:"genetica5", price:1, grams:1)
-      def genetic6 = new Genetic(name:"genetica6", price:1, grams:1)
-      def genetic7 = new Genetic(name:"genetica7", price:1, grams:1)
-      def genetic8 = new Genetic(name:"genetica8", price:1, grams:1)
-      def genetic9 = new Genetic(name:"genetica9", price:1, grams:1)
-      def genetic10 = new Genetic(name:"genetica10", price:1, grams:1)
-      def genetic11 = new Genetic(name:"genetica12", price:1, grams:1)
-      def genetic12 = new Genetic(name:"genetica13", price:1, grams:1)
-      def genetic13 = new Genetic(name:"genetica14", price:1, grams:1)
-      def genetic14= new Genetic(name:"genetica15", price:1, grams:1)
-      def genetic15 = new Genetic(name:"genetica16", price:1, grams:1)
-      def genetic16 = new Genetic(name:"genetica17", price:1, grams:1)
-      def genetic17 = new Genetic(name:"genetica18", price:1, grams:1)
-      def genetic18= new Genetic(name:"genetica19", price:1, grams:1)
+      def geneticType = new GeneticType(name:"TIPO1", price:1.34, grams:0.80)
+      geneticType.save(flush:true)
+
+      def genetic = new Genetic(name:"genetica1", type:geneticType)
+      def genetic2 = new Genetic(name:"genetica2", type:geneticType)
+      def genetic3 = new Genetic(name:"genetica3", type:geneticType)
+      def genetic4 = new Genetic(name:"genetica4", type:geneticType)
+      def genetic5 = new Genetic(name:"genetica5", type:geneticType)
+      def genetic6 = new Genetic(name:"genetica6", type:geneticType)
+      def genetic7 = new Genetic(name:"genetica7", type:geneticType)
+      def genetic8 = new Genetic(name:"genetica8", type:geneticType)
+      def genetic9 = new Genetic(name:"genetica9", type:geneticType)
+      def genetic10 = new Genetic(name:"genetica10", type:geneticType)
+      def genetic11 = new Genetic(name:"genetica12", type:geneticType)
+      def genetic12 = new Genetic(name:"genetica13", type:geneticType)
+      def genetic13 = new Genetic(name:"genetica14", type:geneticType)
+      def genetic14= new Genetic(name:"genetica15", type:geneticType)
+      def genetic15 = new Genetic(name:"genetica16", type:geneticType)
+      def genetic16 = new Genetic(name:"genetica17", type:geneticType)
+      def genetic17 = new Genetic(name:"genetica18", type:geneticType)
+      def genetic18= new Genetic(name:"genetica19", type:geneticType)
       genetic.save(flush:true)
       genetic2.save(flush:true)
       genetic3.save(flush:true)

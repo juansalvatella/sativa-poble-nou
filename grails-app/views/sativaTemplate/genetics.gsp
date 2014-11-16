@@ -20,17 +20,13 @@
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
-                      <label class="col-lg-3 control-label">Precios</label>
+                      <label class="col-lg-3 control-label">Tipos genetico</label>
                       <div class="col-lg-9">
-                       <input type="text" class="form-control" name="price" />
-                     </div>
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                      <label class="col-lg-3 control-label">Gramos</label>
-                      <div class="col-lg-9">
-                       <input type="text" class="form-control" name="grams" />
+                       <select  class="form-control" name="type">
+                          <g:each in="${listTypes}">
+                            <option value="${it.id}">${it.name}</option>
+                        </g:each>
+                       </select>
                      </div>
                   </div>
                 </div>

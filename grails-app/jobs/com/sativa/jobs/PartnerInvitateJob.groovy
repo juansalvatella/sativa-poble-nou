@@ -16,6 +16,7 @@ class PartnerInvitateJob {
 	
 	
 	def doJobTask() {
+		log.info "startpartnerinvitate"
 		Date maxInvitation = new Date()
 		use(TimeCategory){
 			maxInvitation = maxInvitation - 24.hours

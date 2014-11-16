@@ -17,6 +17,7 @@ class PartnerDetoxifiedJob {
     }
 	
 	def doJobTask() {
+		log.info "startpartnerrenovation"
 		Date maxDetoxified = new Date()
 		use(TimeCategory){
 			maxDetoxified = maxDetoxified - 3.month

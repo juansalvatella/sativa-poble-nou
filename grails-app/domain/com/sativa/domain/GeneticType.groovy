@@ -4,13 +4,12 @@ import static com.sativa.enums.GeneticStatusEnum.GENETIC_STATUS__ENABLED
 
 import com.sativa.enums.GeneticStatusEnum
 
-class Genetic {
+class GeneticType {
 
 	Long   				id
-	Date 				dateCreated
 	String 				name
-	GeneticStatusEnum   status        = GENETIC_STATUS__ENABLED
-	GeneticType			type
+	BigDecimal			price
+	BigDecimal			grams
 
 
 	static constraints = {

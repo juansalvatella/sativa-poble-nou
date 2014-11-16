@@ -4,6 +4,7 @@ package com.sativa.controller
 import grails.plugin.springsecurity.annotation.Secured
 
 import com.sativa.domain.Genetic
+import com.sativa.domain.GeneticType
 
 
 
@@ -13,11 +14,13 @@ class GeneticController  {
 
 	def list () {
 		def listGenetics = geneticService.list()
-		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics])
+		def listTypes	 = geneticService.listTypes()
+		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics, listTypes:listTypes])
 	}
 
-	def create(String name, Float price, Float grams){
-		geneticService.create(name, price, grams)
+	def create(String name, Long type){
+		GeneticType	auxType = GeneticType.get(type)
+		geneticService.create(name, auxType)
 		def listGenetics = geneticService.list()
 		redirect(controller: "genetic", action: "list")
 	}

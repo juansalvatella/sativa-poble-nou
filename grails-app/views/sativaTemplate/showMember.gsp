@@ -251,6 +251,7 @@ jQuery(document).ready(function() {
 
    });
 
+
    if ("${notification}" != "") {
    		var dateCreatedNotification = new Date("${notification?.dateCreated}");
    		$('#dateNotification').html(dateCreatedNotification.toLocaleString());

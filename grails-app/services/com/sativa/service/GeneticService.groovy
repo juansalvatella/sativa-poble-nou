@@ -6,6 +6,7 @@ import com.sativa.enums.GeneticStatusEnum
 import grails.transaction.Transactional
 
 import com.sativa.domain.Genetic
+import com.sativa.domain.GeneticType
 
 class GeneticService {
 	
@@ -14,6 +15,13 @@ class GeneticService {
 		return Genetic.createCriteria().list {}
 	}
 
+	@Transactional(readOnly = true)
+	def listTypes () {
+		return GeneticType.createCriteria().list {}
+	}
+
+	
+
 	def active () {
 		return Genetic.createCriteria().list {
 			eq "status", GENETIC_STATUS__ENABLED
@@ -21,11 +29,10 @@ class GeneticService {
 	}
 
 	@Transactional
-	def create (String name, BigDecimal price, BigDecimal grams) {
+	def create (String name, GeneticType type) {
 		Genetic genetic = new Genetic()
 		genetic.name    = name
-		genetic.price	= price
-		genetic.grams	= grams
+		genetic.type	= type
 		genetic.save(flush:true)
 	}
 

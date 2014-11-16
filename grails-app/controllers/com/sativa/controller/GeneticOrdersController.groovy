@@ -2,6 +2,7 @@ package com.sativa.controller
 
 
 import grails.plugin.springsecurity.annotation.Secured
+import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__BUY
 
 import com.sativa.domain.Genetic
 import com.sativa.domain.Partner
@@ -13,18 +14,27 @@ import java.text.DateFormat
 @Secured(['ROLE_ADMIN', 'ROLE_SELLER'])
 class GeneticOrdersController  {
 	def geneticOrdersService
+	def eventService
 
 	def create(Long memberId, String listGenetics, String listAmount, String signature){
 		Partner partner = Partner.get(memberId)
 		def genetics = listGenetics.split(',')
 		def amounts = listAmount.split(',')
-		
+		def stringEvent = ""
 		
 		genetics.eachWithIndex { gen, index ->
 			def genetic 	= Genetic.get(gen)
 			def amount 		= amounts[index] as Long
+			stringEvent += amount+" dosis de "+genetic.name
+			if (index != genetics.size()-1)  {
+				stringEvent += ', '
+			}
+			
 			geneticOrdersService.create(partner, genetic, amount, signature)	
 		}
+		
+
+		eventService.create("Ha retirado un total de "+stringEvent, partner, EVENT_TYPE__BUY)
 		redirect(controller: "member", action: "show", params:[memberId:memberId])
 	}
 

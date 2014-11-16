@@ -77,7 +77,7 @@
 				 										<g:img dir="css/img" file="semaforoVerde.jpg"/>
 				 									</g:if>
 				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__DISABLED'}">
-				 										<g:img dir="css/img" file="semaforoAzul.jpg"/>
+				 										<g:img dir="css/img" file="semaforoAzul.jpg "/>
 				 									</g:elseif>
 				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__BANNED'}">
 				 										<g:img dir="css/img" file="semaforoRojo.jpg"/>

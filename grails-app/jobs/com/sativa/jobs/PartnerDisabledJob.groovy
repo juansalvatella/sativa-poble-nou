@@ -16,6 +16,7 @@ class PartnerDisabledJob {
 	
 	
 	def doJobTask() {
+		log.info "startpartnerdisabled"
 		Date maxDisabled = new Date()
 		use(TimeCategory){
 			maxDisabled = maxDisabled - 1.year

@@ -91,12 +91,12 @@ class LoginController  {
 	 */
 	def denied() {
 		log.info "Entry to denied"
-		render (view:"/sativaTemplate/login", model:[error:msg])
+		render (view:"/sativaTemplate/login", model:[error:"no autorizado"])
 	}
 	
 	def ajaxDenied() {
 		log.info "Entry to ajax denied"
-		render (view:"/sativaTemplate/login", model:[error:msg])
+		render (view:"/sativaTemplate/login", model:[error:"no autorizado"])
 	}
 
 	/**

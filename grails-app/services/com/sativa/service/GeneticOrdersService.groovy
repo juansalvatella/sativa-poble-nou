@@ -33,7 +33,7 @@ class GeneticOrdersService {
     	BufferedImage newImg = ImageUtils.decodeToImage(signature)
 
         ImageIO.write(newImg, "jpg", new File("${basePath}/css/img/geneticOrdersSigns/"+go.id+".png"))		
-		eventService.create("Ha retirado un total de ${amount} de Black Valley en la barra", partner, EVENT_TYPE__BUY)
+	
 	}
 
 
@@ -53,7 +53,7 @@ class GeneticOrdersService {
 		}
 		def countGrams = 0
 		listGenetics.each { go->
-			countGrams += go.genetic.grams*go.amount
+			countGrams += go.genetic.type.grams*go.amount
 		}
 		return countGrams
 	}
