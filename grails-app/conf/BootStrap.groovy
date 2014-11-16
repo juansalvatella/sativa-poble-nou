@@ -15,18 +15,20 @@ class BootStrap {
       def sellerRole = new Role(authority: 'ROLE_SELLER').save(flush: true)
       def testUser
       try {
-         testUser = new Partner(username: 'me', password: 'password', code:"001", firstname:"pedro", lastname:"garcia", email:"aa", address:"calle anonimo 123 Barcelona", image:"srcImage", identificationNumber:"38879780M", status:PartnerStatusEnum.PARTNER_STATUS__ACTIVED)
+         testUser = new Partner(username: 'me', password: 'password', code:"001", firstname:"pedro", lastname:"garcia", email:"aa", address:"calle anonimo 123 Barcelona", identificationNumber:"38879780M", status:PartnerStatusEnum.PARTNER_STATUS__ACTIVED)
          if (!testUser.validate()) println "eroress "+testUser.errors
          testUser.save(flush: true)
+         testUser.encodePassword()
 
       }
       catch(all){
          println "all "+all.getMessage()
          println "aaaaaaa "+all.dump()
       }
-      def testUser2 = new Partner(username: 'me2', password: 'password2', code:"002", firstname:"juan", lastname:"garcia", email:"aa", address:"calle anonimo 123 Barcelona", image:"srcImage", identificationNumber:"38879780M", status:PartnerStatusEnum.PARTNER_STATUS__ACTIVED)
+      def testUser2 = new Partner(username: 'me2', password: 'password2', code:"002", firstname:"juan", lastname:"garcia", email:"aa", address:"calle anonimo 123 Barcelona", identificationNumber:"38879780M", status:PartnerStatusEnum.PARTNER_STATUS__ACTIVED)
       
       testUser2.save(flush: true)
+      testUser2.encodePassword()
 
 
 println "user 1 "+testUser.id
@@ -72,13 +74,6 @@ println "user 2 "+testUser2.id
       genetic16.save(flush:true)
       genetic17.save(flush:true)
       genetic18.save(flush:true)
-
-
-      GeneticOrders go = new GeneticOrders()
-      go.partner = testUser
-      go.genetic = genetic 
-      go.amount  = 1
-      go.save(flush:true)
 
         Date.metaClass.'static'.fromISO = { String date ->
             if (!date) return null

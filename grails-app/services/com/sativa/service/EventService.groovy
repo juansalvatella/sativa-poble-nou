@@ -1,4 +1,6 @@
 package com.sativa.service
+import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__CUSTOM
+
 
 import grails.transaction.Transactional
 
@@ -26,6 +28,28 @@ class EventService {
 		event.observation	 = observation
 		event.member		 = partner 
 		event.type			 = type
+		event.save(flush:true)
+	}
+
+	@Transactional(readOnly = true)
+	def notification (Partner partner) {
+		def listNotifications = Event.createCriteria().list {
+			eq "member", partner
+			eq "type",EVENT_TYPE__CUSTOM
+			eq "viewed", false
+			order("dateCreated", "desc")
+		}
+
+		if (!listNotifications.isEmpty()) {
+			return listNotifications.first()
+		}
+		return null
+	}
+
+
+	@Transactional(readOnly = true)
+	def viewed (Event event) {
+		event.viewed=true
 		event.save(flush:true)
 	}
 

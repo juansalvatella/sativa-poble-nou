@@ -16,8 +16,8 @@ class GeneticController  {
 		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics])
 	}
 
-	def create(String name){
-		geneticService.create(name)
+	def create(String name, Float price, Float grams){
+		geneticService.create(name, price, grams)
 		def listGenetics = geneticService.list()
 		redirect(controller: "genetic", action: "list")
 	}

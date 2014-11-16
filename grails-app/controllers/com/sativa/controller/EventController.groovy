@@ -15,10 +15,17 @@ class EventController  {
 	def eventService
 
 
-	def create(String observation, Long partnerId) {
+	def create(String observation, Long partnerId, String page) {
 		Partner partner = Partner.read(partnerId)
 		
 		eventService.create(observation, partner, EVENT_TYPE__CUSTOM)
+		if (page == "edit") redirect(controller: "member", action: "showEdit", params:[memberId:partnerId])
+		else redirect(controller: "member", action: "show", params:[memberId:partnerId])
+	}
+
+	def viewed(Long eventId, Long partnerId){
+		Event event = Event.get(eventId)
+		eventService.viewed(event)
 		redirect(controller: "member", action: "show", params:[memberId:partnerId])
 	}
 

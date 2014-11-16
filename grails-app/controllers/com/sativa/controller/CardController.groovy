@@ -14,11 +14,13 @@ import com.sativa.domain.Partner
 class CardController  {
 	def eventService
 
-
+	def memberService
+	
 	def dispatcher(String num_tarjeta){
 		def card = Card.findByCode(num_tarjeta)
-		if (!card) {
-			render(view: "/sativaTemplate/createMember", model: [numCard:num_tarjeta])
+		if (!card) {	
+			def listMembers = memberService.list()
+			render(view: "/sativaTemplate/createMember", model: [listMembers:listMembers, numCard:num_tarjeta])
 		}
 		else {
 			redirect(controller: "member", action: "show", params:[memberId:card.member.id])	

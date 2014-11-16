@@ -9,22 +9,39 @@
 				<div class="row well">
 			 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'genetic']" >
               <div class="row">
-              	<div class="col-lg-8">
-              		<div class="form-group">
-                			<label class="col-lg-3 control-label">Nombre</label>
-                			<div class="col-lg-9">
-                 	 			<input type="text" class="form-control" name="name" />
-                			 </div>
-                		</div>
-                	</div>
-                	<div class="col-lg-4">
-              		<div class="form-group">
-                			<input type="submit" class="btn btn-success" value="Crear nueva genética" />
-                		</div>
-                	</div>
-               </div>
+              	<div class="col-lg-4">
+                  <div class="form-group">
+                      <label class="col-lg-3 control-label">Nombre</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="name" />
+                       </div>
+                      
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                      <label class="col-lg-3 control-label">Precios</label>
+                      <div class="col-lg-9">
+                       <input type="text" class="form-control" name="price" />
+                     </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                      <label class="col-lg-3 control-label">Gramos</label>
+                      <div class="col-lg-9">
+                       <input type="text" class="form-control" name="grams" />
+                     </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 pull-right">
+                  <div class="form-group pull-right" id="newGenetic">
+                      <button class="btn btn-primary" type="submit" >Nueva genetica</button>
+                  </div>
+                </div>
           </g:form>
 				</div>
+        <hr />
 				<div class="row">
 					<h4><b>Genéticas</b></h4>
           <g:set var="count" value="${1}" />

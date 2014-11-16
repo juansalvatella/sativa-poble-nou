@@ -23,6 +23,7 @@ class Partner {
 	String				signature
 	String  			identificationNumber
 	PartnerStatusEnum   status 
+	Partner             friend
 
 
 	static transients = ['springSecurityService']
@@ -38,6 +39,7 @@ class Partner {
 		signature			 nullable:true
 		image 	  			 nullable:true
 		identificationNumber nullable:true
+		friend				 nullable:true
 	}
 
 	static mapping = {
@@ -53,15 +55,6 @@ class Partner {
 		PartnerRole.findAllByPartner(this).collect { it.role }
 	}
 
-	def beforeInsert() {
-		encodePassword()
-	}
-
-	def beforeUpdate() {
-		if (isDirty('password')) {
-			encodePassword()
-		}
-	}
 		
 
 	protected void encodePassword() {

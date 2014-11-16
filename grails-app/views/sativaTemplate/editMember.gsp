@@ -10,7 +10,7 @@
 				 	<g:if test="${success}">
 				 		<div class="alert alert-success">${success}</div>
 				 	</g:if>
-				 	<div class="row">
+				 	<div class="row" id="divEditMember">
 				 		<div class="col-lg-3">
 				 			<g:if test="${member.image}">
 				 			<g:img dir="css/img/partners" file="${member.image}" width="200" height="180"/>
@@ -22,10 +22,7 @@
 				 			 	<a href="#disabledMember" class="btn center btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
 				 			</g:if>
 				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
-				 			 	<a href="#disabledMember" class="btn btn-success" data-toggle="modal" class="config">Activar socio</a>
-				 			</g:elseif>
-				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
-				 			 	<a href="#disabledMember" class="btn btn-primary" data-toggle="modal" class="config">Renovar socio</a>
+				 			 	<a href="#disabledMember" class="btn center btn-success" data-toggle="modal" class="config">Activar socio</a>
 				 			</g:elseif>
 				 			<p></p>
 			 				<div class="form-group">
@@ -38,7 +35,7 @@
 								<p><b>Última cuota:</b><br/> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/></p>
 							</div>
 							<div class="form-group">
-								<p><b>Tarjeta:</b><br />${card.code}</p>
+								<p><b>Tarjeta:</b><br />${card?.code}</p>
 							</div>
 
 				 		</div>
@@ -77,7 +74,7 @@
     								</div>
     							</div>
     							<input type="hidden" name="image" id="foto_canvas" value="">
-					 			<input type="submit" class="btn center pull-right btn-success" value="Actualizar socio" />
+					 			<input class="btn center pull-right btn-success" type="submit" id="updatePartner" value="Actualizar socio" />
 					 			
 				 			</g:form>
 				 		</div>
@@ -87,9 +84,9 @@
 				 				<i class="icon-camera"></i>
 				 				 HACER FOTO
 				 			</a>
-				            <div id="divCanvas">  
+				            <div id="divCanvas" class="hide">  
 				                <p><b>Imagen:</b></p>
-				               <canvas name="canvas" id="canvas" class="hide" width="300" height="200"></canvas>
+				               <canvas name="canvas" id="canvas"  width="300" height="200"></canvas>
 				            </div>
 				 		</div>
 				 	</div>
@@ -105,6 +102,7 @@
 				 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
 					 		<textarea  name="observation" class="textareaHistoric"></textarea>
 					 		<input type="hidden" name="partnerId" value="${member.id}" />
+					 		<input type="hidden" name="page" value="edit" />
 					 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
 				 		</g:form>
 				 		<table id="tableHistoric" class="table table-bordered table-condensed">
@@ -112,8 +110,9 @@
 				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
 
 				 					<g:if test="${it.type.name() == 'EVENT_TYPE__ACTIVATE'}"><td class="textGreen"></g:if>
-				 					<g:if test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:if>
-				 					<g:else><td ></g:else>
+				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:elseif>
+				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__RENOVATE'}"><td class="textBlue"></g:elseif>
+				 					<g:else><td></g:else>
 				 					${it.observation}</td>
 				 				</tr>
 				 			</g:each>
@@ -137,9 +136,6 @@
 				<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 	 			 	<h4 class="modal-title">ACTIVAR SOCIO</h4>
 	 			</g:elseif>
-	 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
-	 			 	<h4 class="modal-title">RENOVAR SOCIO</h4>
-	 			</g:elseif>
 			</div>
 			
 			<g:set var="controllerBtn" value="" />
@@ -155,18 +151,16 @@
 			</g:elseif>
 
 		
-			<g:form name="myForm" role="form"  class="form-horizontal" url="[controller:'member', action:actionBtn ]" >
+			<g:form name="myForm" role="form" id="formMemberEdit"  class="form-horizontal" url="[controller:'member', action:actionBtn ]" >
 				<div class="modal-body">
 					<input type="hidden" name="memberId" value="${member.id}" />
+					<input type="hidden" name="page" value="edit" />
 					 <g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
 						 <p>¿Estas seguro que quieres desactivarlo?.<br /> Escribe el motivo de la baja</p>
 						 <textarea name="observation" id="textareaDisabled"></textarea>
 					 </g:if>
 					 <g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 		 			 	 <p>¿Estas seguro que quieres reactivarlo?.</p>
-		 			</g:elseif>
-		 			<g:elseif test="${member.status.name() == PARTNER_STATUS__DISABLED}">
-		 			 	 <p>¿Estas seguro que quieres renovarlo?.</p>
 		 			</g:elseif>
 				</div>
 				<div class="modal-footer">
@@ -176,9 +170,6 @@
 					</g:if>
 					<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 						<input type="submit" class="btn btn-success" value="Activar" />
-					</g:elseif>
-					<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
-						<input type="submit" class="btn btn-primary" value="Renovar" />
 					</g:elseif>
 				</div>
 			</g:form>
@@ -200,6 +191,14 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
+
+   if ("${member.status.name()}" == 'PARTNER_STATUS__BANNED' || "${member.status.name()}" == 'PARTNER_STATUS__DISABLED') {
+   		$('#divEditMember').css("border", "red solid 2px").css("padding", 20); 
+   }
+
+    $('#updatePartner').click(function() {
+   		$('#divCanvas').addClass('hide');
+   });
 
 
     // Put event listeners into place
@@ -231,12 +230,12 @@ jQuery(document).ready(function() {
             }, errBack);
         }
     
-        document.getElementById("snap").addEventListener("click", function() {
-        	$('#canvas').removeClass('hide');
+        document.getElementById("snap").addEventListener("click", function(e) {
+        	$('#divCanvas').removeClass('hide');
             context.drawImage(video, 0, 0, 310, 200);
             var jpegUrl = canvas.toDataURL("image/jpeg");
             document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
-            cevent.preventDefault(); 
+            e.preventDefault(); 
         });
     }, false);
 });

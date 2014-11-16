@@ -10,6 +10,7 @@
 						<ul class="nav nav-tabs" role="tablist">
 						  <li class="active"><a href="#tablePerDay" role="tab" data-toggle="tab">Tabla del dia</a></li>
 						  <li id="tableDivPeriod"><a href="#tablePerPeriod" role="tab" data-toggle="tab">Ventas por período</a></li>
+						  <li id="tableDivGeneticPeriod"><a href="#tablePerGeneticPeriod" role="tab" data-toggle="tab">Ventas geneticas período</a></li>
 						</ul>
 
 						<!-- Tab panes -->
@@ -32,11 +33,11 @@
 						  		<table class="tableStadistic table table-bordered table-condensed">
 						 			<thead>
 						 				<tr>
-							 				<th>Numero de socio</th>
-							 				<th>Genética</th>
-							 				<th>Cantidad</th>
-							 				<th>Fecha</th>
-							 				<th>Firma</th>
+							 				<th class="col-lg-2">Numero de socio</th>
+							 				<th class="col-lg-2">Genética</th>
+							 				<th class="col-lg-2">Cantidad</th>
+							 				<th class="col-lg-2">Fecha</th>
+							 				<th class="col-lg-4 center">Firma</th>
 						 				</tr>
 						 			</thead>
 						 			<tbody>
@@ -47,7 +48,7 @@
 					 								<td>${it.genetic.name}</td>
 					 								<td>${it.amount}</td>
 					 								<td><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/> </td>
-					 								<td>${it.partner.signature}</td>
+					 								<td class="center"><g:img dir="css/img/geneticOrdersSigns" file="${it.id}.png" class="imageSign" base="${grailsApplication.config.grails.serverURL}" />
 					 							</tr>
 					 						</g:each>
 						 				</g:if>
@@ -71,37 +72,26 @@
 							        	<div class="row">
 											  <div class="col-lg-3">
 											    <div class="input-group">
-											    	<input type="hidden" name="currentDate" id="hiddenCalendar2">
-											     <input type="date" id="calendar2" value="${new Date().format('dd/MM/yyyy')}" class="form-control">
+											    	
+											     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" class="calendar2 form-control">
 											    </div>
 											  </div>
 											  <div class="col-lg-3">
+											  	<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'periodic',controller:'geneticOrders']" >
 												    <div class="input-group">
-												    	<input type="hidden" name="currentDate" id="hiddenCalendar3">
-												     <input type="date" id="calendar3" value="${new Date().format('dd/MM/yyyy')}" class="form-control">
+												    	<input type="hidden" name="start" value="" class="hiddenCalendar2">
+												    	<input type="hidden" name="end" value="" class="hiddenCalendar3">
+												     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" class="calendar3 form-control">
 												      <span class="input-group-btn">
-												        <a class="btn btn-default" >Filtrar</a>
+												        <button type="submit" class="btn btn-default" >Filtrar</button>
 												      </span>
 												    </div>
+												</g:form>
 											</div>
 							        </div>
 							    </div>
-							    <g:if test="${listGenetics}">
-									<h4>Resumen genéticas</h4>
-									<table class="table table-condensed">
-										<g:set var="count" value="${1}" />
-				 						<g:each in="${listGenetics}">
-				 							<tr>
-				 								<td><b>${it.name}</b>: ${it.amount}</td>
-				 								 <g:if test="${count % 3 == 0 && count!=0}">
-							                        </tr><tr>
-							                      </g:if>
-							                    <g:set var="count" value="${count + 1}" />
-				 							</tr>
-				 						</g:each>
-					 				</table>						  		
-
-							  		<table class="table table-bordered table-condensed">
+							    <g:if test="${stadisticsPerPeriod}">									
+							  		<table class="table tableStadistic2 table-bordered table-condensed">
 							 			<thead>
 							 				<tr>
 								 				<th>Numero de socio</th>
@@ -112,8 +102,7 @@
 							 				<g:if test="${stadisticsPerPeriod}">
 						 						<g:each in="${stadisticsPerPeriod}">
 						 							<tr>
-						 								<td>${it.code}</td>
-						 								<td>${it.amount}</td>
+						 								<td>${it.partner.id}</td><td>${it.amount}</td>
 						 							</tr>
 						 						</g:each>
 							 				</g:if>
@@ -124,7 +113,57 @@
 					 				</table>
 					 			</g:>
 						  </div>
-						</div>
+						 </div>
+						  <div class="tab-pane" id="tablePerGeneticPeriod">
+						  		<div class="row">
+							        <div class='col-lg-3'>
+							        	<p>Desde</p>
+							        </div>
+							        <div class='col-lg-3'>
+							        	<p>Hasta</p>
+							        </div>
+							    </div>
+						  		<div class="row">
+							        <div class='col-lg-12'>
+							        	<div class="row">
+											  <div class="col-lg-3">
+											    <div class="input-group">
+											    	
+											     <input type="date" value="${new Date().format('dd/MM/yyyy')}" class="form-control calendar2">
+											    </div>
+											  </div>
+											  <div class="col-lg-3">
+											  	<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'genetics',controller:'geneticOrders']" >
+												    <div class="input-group">
+												    	<input type="hidden" name="start" value="" class="hiddenCalendar2">
+												    	<input type="hidden" name="end" value="" class="hiddenCalendar3">
+												     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" class="calendar3 form-control">
+												      <span class="input-group-btn">
+												        <button type="submit" class="btn btn-default" >Filtrar</button>
+												      </span>
+												    </div>
+												</g:form>
+											</div>
+							        </div>
+							    </div>
+							    <g:if test="${listGenetics}">	
+							    	<g:set var="count" value="${1}" />								
+							  		
+							  		<table class="tableStadistic2 table" id="tableGenetics" >
+							 			 	<tr>
+								                 <g:each in="${listGenetics}">
+								                    <td><b>${it.name.name}:</b> ${it.amount}</td>                   
+								                      <g:if test="${count % 5 == 0 && count!=0}">
+								                        </tr><tr>
+								                      </g:if>
+								                    <g:set var="count" value="${count + 1}" />
+								                 </g:each>
+								            </tr>
+					 				</table>
+					 			</g:>
+						  		
+						  </div>
+						
 
 				 </div>
 		</div>
@@ -145,44 +184,63 @@
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
    var now = new Date("${daySelected}")
+   var start = new Date("${start}")
    var end = new Date("${end}")
-   
+
+
 
    var day = ("0" + now.getDate()).slice(-2);
    var month = ("0" + (now.getMonth() + 1)).slice(-2);
    var today 	 = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+
+
+   day = ("0" + start.getDate()).slice(-2);
+   month = ("0" + (start.getMonth() + 1)).slice(-2);
+   var auxStart 	 = start.getFullYear()+"-"+(month)+"-"+(day) ;
+
+
 
    day = ("0" + end.getDate()).slice(-2);
    month = ("0" + (end.getMonth() + 1)).slice(-2);
    var auxEnd 	 = end.getFullYear()+"-"+(month)+"-"+(day) ;
 
 
-   
+
+   if ("${page}" == "periodic") {
+   		$('#tableDivPeriod').tab('show')
+   		$('#tablePerPeriod').addClass('active');
+   		$('#tablePerDay').removeClass('active');
+   } 
+
 
    $('#calendar1').val(today)
+   $('.calendar2').val(auxStart)
+   $('.calendar3').val(auxEnd)
+
+ 	if (now) {
+   		$('#hiddenCalendar').val(now.toISOString())
+   	}
+   $('.hiddenCalendar2').val(start.toISOString())
+   $('.hiddenCalendar3').val(end.toISOString())
 
    $('#calendar1').on('change', function(){
    		var auxDate = new Date($('#calendar1').val());
    		$('#hiddenCalendar').val(auxDate.toISOString())
    });
 
-   $('#calendar2').on('change', function(){
-   		var auxDate = new Date($('#calendar2').val());
-   		$('#hiddenCalendar2').val(auxDate.toISOString())
+   $('.calendar2').on('change', function(){
+   		var auxDate = new Date($('.calendar2').val());
+   		$('.hiddenCalendar2').val(auxDate.toISOString())
    });
 
-   $('#calendar3').on('change', function(){
-   		var auxDate = new Date($('#calendar3').val());
-   		$('#hiddenCalendar3').val(auxDate.toISOString())
+   $('.calendar3').on('change', function(){
+   		var auxDate = new Date($('.calendar3').val());
+   		$('.hiddenCalendar3').val(auxDate.toISOString())
    });
 
-   $('#calendar3').val(today)
-   $('#calendar2').val(auxEnd)
-   
-   $('#tableDivPeriod').click(function() {
-
-   })
-
+ 
+  
 });
 </script>
 </body>

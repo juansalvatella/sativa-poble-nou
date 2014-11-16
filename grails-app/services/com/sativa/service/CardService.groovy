@@ -19,4 +19,13 @@ class CardService {
 	}
 
 
+	@Transactional
+	def add (Partner member, String code) {
+		Card card   = new Card()
+		card.code   = code
+		card.member = member
+		card.save()
+	}
+
+
 }

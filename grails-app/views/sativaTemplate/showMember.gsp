@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+`<!DOCTYPE html>
 
 	<g:render template="/sativaTemplate/menuTemplate" model="${username}" />
+	<script src="${resource(dir:'js/scriptsSativa', file: 'signature.js')}" type="text/javascript"></script>
 	<!-- END SIDEBAR -->
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
@@ -16,13 +17,19 @@
 					 		</g:else>
 					 		<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
 				 			 	<a href="#disabledMember" class="btn btn-block btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
+				 			 	<a href="#renovationMember" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
+				 			 	<g:form name="myForm" id="formFriend" role="form"  class="form-horizontal" url="[action:'invite',controller:'member']" >
+				 			 		<input type="hidden" name="memberId" value="${member.id}" />
+				 			 		<button type="submit" class="btn btn-block  btn-warning">Invitar a un amigo</button>
+				 				 </g:form>
 				 			</g:if>
 				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
-				 			 	<a href="#disabledMember" class="btn btn-block  btn-success" data-toggle="modal" class="config">Activar socio</a>
+				 				<sec:ifAllGranted roles="ROLE_ADMIN">
+				 			 		<a href="#disabledMember" class="btn btn-block  btn-success" data-toggle="modal" class="config">Activar socio</a>
+				 			 	</sec:ifAllGranted>
 				 			</g:elseif>
-				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
-				 			 	<a href="#disabledMember" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Renovar socio</a>
-				 			</g:elseif>
+				 			 
+				 			
 				 		</div>
 				 		<div class="col-lg-5">
 				 			<p><b>Nombre:</b> ${member.firstname}</p>
@@ -30,32 +37,49 @@
 				 			<p><b>DNI:</b>  ${member.identificationNumber}</p>
 				 			<p><b>Domicilio:</b>  ${member.address}</p>
 				 			<p><b>Email:</b>  ${member.email}</p>
-				 			<p><b>Numero de socio:</b>  ${member.code}</p>
 				 			<p><b>Fecha de inscripción:</b> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
 				 			<p><b>Última cuota:</b> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
-				 			<p><b>Tarjeta:</b>  ${card.code}</p>
+				 			<p><b>Tarjeta:</b>  ${card?.code}</p>
 				 		</div>
 				 		<div class="col-lg-4">
-				 			<!--<video id="video" width="200" height="150" class="gapPhoto videoWebcam" autoplay></video>
+				 			<video id="video" width="200" height="150" class="gapPhoto videoWebcam" autoplay></video>
 				 			<a id="snap" class="btn btn-block btn-warning">
 				 				<i class="icon-camera"></i>
 				 				 HACER FOTO
 				 			</a>
-				            <div id="divCanvas">  
+				            <div id="divCanvas"  class="hide" >  
 				                <p><b>Imagen:</b></p>
-				               <canvas name="canvas" id="canvas" width="300" height="200"></canvas>
-				            </div>-->
+				               <canvas name="canvas" id="canvas" width="310" height="200"></canvas>
+				               <g:form name="myForm" id="formPhoto" role="form"  class="form-horizontal" url="[action:'photo',controller:'member']" >
+				               		<input type="hidden" name="image" id="foto_canvas" value="">
+				               		<input type="hidden" name="memberId" value="${member.id}" />
+				               		<a id="savePhoto" class="btn btn-block btn-primary" >Guardar foto</a>
+				           		</g:form>
+				            </div>
 								 		
 				 		</div>
 				 	</div>
 				 	<div class="row" id="listActiveGenetics">
-				 		<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
+				 		<g:if test="${(member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
 					 		<g:each in="${listGenetics}">
-					 			<a class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
+					 			<a  id="genetic_${it.id}" class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
 					 		</g:each>
 				 		</g:if>
 				 	</div>
 				 	<hr />
+				 	<div class="row">
+				 		<div class="col-lg-8">
+						 	<div class="row" id="divBill">
+						 		<div id="resumBill"></div>
+						 		<div id="resumBillTotal"></div>
+						 			<img id="saveSignature" src="" class="hide imagenGenerada">
+						 			<input type="hidden" name="memberId" value="${member.id}" />
+						 			<input type="hidden" name="signature" id="firma_canvas" value="">
+						 			<a id="signElectric" class="btn btn-primary" disabled>Firma elctrónica</a>
+						 			<a  id="registerBuy" class="btn btn-primary" disabled>Registrar entrega</a>
+						 	</div>
+					 	</div>
+				 	</div>
 				 	<div class="row">
 				 		<g:cookie name="myCookie" />
 				 		<h3>Historial del usuario</h3>
@@ -66,9 +90,11 @@
 				 		</g:form>
 				 		<table id="tableHistoric" class="table table-bordered table-condensed">
 				 			<g:each in="${listEvents}">
+				 				
 				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
 				 					<g:if test="${it.type.name() == 'EVENT_TYPE__ACTIVATE'}"><td class="textGreen"></g:if>
-				 					<g:if test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:if>
+				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:elseif>
+				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__RENOVATE'}"><td class="textBlue"></g:elseif>
 				 					<g:else><td ></g:else>
 				 					${it.observation}</td>
 				 					
@@ -94,9 +120,6 @@
 				<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 	 			 	<h4 class="modal-title">ACTIVAR SOCIO</h4>
 	 			</g:elseif>
-	 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
-	 			 	<h4 class="modal-title">RENOVAR SOCIO</h4>
-	 			</g:elseif>
 			</div>
 			
 			<g:set var="controllerBtn" value="" />
@@ -106,9 +129,6 @@
 			</g:if>
 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 				<g:set var="actionBtn" value="activate" />
-			</g:elseif>
-			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
-				<g:set var="actionBtn" value="renovation" />
 			</g:elseif>
 
 		
@@ -122,9 +142,6 @@
 					 <g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 		 			 	 <p>¿Estas seguro que quieres reactivarlo?.</p>
 		 			</g:elseif>
-		 			<g:elseif test="${member.status.name() == PARTNER_STATUS__DISABLED}">
-		 			 	 <p>¿Estas seguro que quieres renovarlo?.</p>
-		 			</g:elseif>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -133,9 +150,6 @@
 					</g:if>
 					<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 						<input type="submit" class="btn btn-success" value="Activar" />
-					</g:elseif>
-					<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">
-						<input type="submit" class="btn btn-primary" value="Renovar" />
 					</g:elseif>
 				</div>
 			</g:form>
@@ -146,6 +160,69 @@
 </div>
 
 
+<div class="modal fade" id="renovationMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				 <h4 class="modal-title">RENOVAR SOCIO</h4>
+			</div>
+			
+			<g:set var="controllerBtn" value="" />
+			<g:set var="actionBtn" value="" />
+			
+			<g:form name="myForm" role="form"  class="form-horizontal" url="[controller:'member', action:'renovation']" >
+				<div class="modal-body">
+					<input type="hidden" name="memberId" value="${member.id}" />
+					<p>¿Estas seguro que quieres renovarlo?.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-primary" value="Renovar" />
+				</div>
+			</g:form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				 <h4 class="modal-title">ÚLTIMO MENSAJE <small id="dateNotification"></small></h4>
+			</div>
+			
+			<g:set var="controllerBtn" value="" />
+			<g:set var="actionBtn" value="" />
+			
+			<g:form name="myForm" role="form"  class="form-horizontal" url="[controller:'event', action:'viewed']" >
+				<div class="modal-body">
+					<input type="hidden" name="partnerId" value="${member.id}" />
+					<input type="hidden" id="eventId" name="eventId" value="" />
+					<p id="messageText"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Ignorar</button>
+					<input type="submit" class="btn btn-primary" value="Aceptar" />
+				</div>
+			</g:form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+
+<div id="scrennEncima" class="hide">
+    <div id="canvasFirma">
+        <canvas class="roundCorners" id="newSignature" width="1000" height="500"></canvas>
+        <script>signatureCapture();</script>
+        <button type="button" class="btn btn-success" id="generarFirma" onclick="signatureSave()">guardar firma</button>
+        <button type="button" class="btn btn-danger"id="limpiarFirma" onclick="signatureClear()">borrar firma</button>
+        
+    </div>
+</div>
 
 <div class="footer">
 	<div class="footer-inner">
@@ -155,11 +232,152 @@
 
 <g:render template="/sativaTemplate/scriptsTemplate"  />
 <script>
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() { 
+   var carroGenetics = [];   
+   var carroObject	 = [];
+
+ 
    App.init(); // initlayout and core plugins
-   if ("${member.status.name()}" == 'PARTNER_STATUS__BANNED' || "${member.status.name()}" == 'PARTNER_STATUS__DISABLED') {
+   if ("${grams}" > 90 || "${member.status.name()}" == 'PARTNER_STATUS__BANNED' || "${member.status.name()}" == 'PARTNER_STATUS__DISABLED') {
    		$('#divShowMember').css("border", "red solid 2px").css("padding", 20); 
    }
+   if ("${grams}" > 90) {
+   		$('#listActiveGenetics').html("<h4 style='color:red'>Este socio ya ha retirado mas de 90gr</h4>");
+   }
+
+   $('#savePhoto').click(function() {
+   		$('#formPhoto').submit()
+   		$('#divCanvas').addClass('hide');
+
+   });
+
+   if ("${notification}" != "") {
+   		var dateCreatedNotification = new Date("${notification?.dateCreated}");
+   		$('#dateNotification').html(dateCreatedNotification.toLocaleString());
+   		$('#eventId').val("${notification?.id}");
+   		$('#messageText').html("${notification?.observation}");
+   		$('#notificationModal').modal('show');
+	}
+  
+	$('.geneticAdd').click(function() {
+		$('#signElectric').removeAttr('disabled');
+		var auxId = $(this).attr('id').split('_')[1];		
+		var numCount = 0
+		$('#resumBill').html("");
+
+		if( $.inArray(auxId, carroGenetics) != -1) {
+			carroObject[$.inArray(auxId, carroGenetics)].amount++
+		}
+		else {
+			carroGenetics.push(auxId)
+			carroObject.push({geneticId:auxId, amount:1});				
+		}
+
+		$.each(carroObject, function(key, value) {
+			numCount += value.amount;
+			$('#resumBill').append('<p class="label label-success"><b>'+$('#genetic_'+value.geneticId).html()+' x'+value.amount+'</b> <img id="geneticClose_'+value.geneticId+'" class="removeGenetic" src="/images/imageSativa/botonBorrar.png"</p>');
+		});
+		$('#resumBillTotal').html("<b>TOTAL= "+numCount+"</b>");
+
+		$('.removeGenetic').click(function() {
+			var idAux = $(this).attr('id').split('_')[1];
+			var indexGenetic = $.inArray(idAux, carroGenetics);
+			carroGenetics.splice(indexGenetic,1);
+			carroObject.splice(indexGenetic,1);
+			$('#resumBill').html("");
+			$.each(carroObject, function(key, value) {
+				numCount += value.amount;
+				$('#resumBill').append('<p class="label label-success"><b>'+$('#genetic_'+value.geneticId).html()+' x'+value.amount+'</b> <img id="geneticClose_'+value.geneticId+'" class="removeGenetic" src="/images/imageSativa/botonBorrar.png"</p>');
+			});
+			$('#resumBillTotal').html("<b>TOTAL= "+numCount+"</b>");
+		});
+	})
+
+	$('#signElectric').click(function() {
+		$("html, body").animate({ scrollTop: 0 }, "slow");
+		$("#scrennEncima").removeClass('hide');
+		$('#saveSignature').removeClass('hide');
+	});
+
+	$("#generarFirma").click(function() { 
+        $("#scrennEncima").addClass('hide');
+        $('#registerBuy').removeAttr('disabled');
+    });   
+
+	$('#registerBuy').click(function() {
+		var listGenetics =""
+		var listAmount	 =""
+		$.each(carroObject, function(key, value) {
+			listGenetics += value.geneticId
+			listAmount	 += value.amount
+			if (key+1 != carroObject.length) {
+				listGenetics +=',';
+				listAmount +=',';
+			}
+		})
+
+		var params = '{"memberId":"${member.id}", "signature":"'+$('#firma_canvas').val()+'","listGenetics":"'+listGenetics+'","listAmount":"'+listAmount+'"}'
+		
+		params = $.parseJSON(params);
+		$.ajax({
+			cache: false,
+			data: params,
+			type: 'POST',
+			url: '/geneticOrders/create?time='+new Date().getTime(),
+			dataType:'json',
+			success: function(data) {
+				window.location.reload()
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				window.location.reload()
+			},
+			xhrFields: {
+				withCredentials: true
+			}
+		});
+	});
+
+
+
+
+
+    // Put event listeners into place
+    window.addEventListener("DOMContentLoaded", function() {
+        // Grab elements, create settings, etc.
+        var canvas = document.getElementById("canvas"),
+            context = canvas.getContext("2d"),
+            video = document.getElementById("video"),
+            videoObj = { "video": true },
+            errBack = function(error) {
+                console.log("Video capture error: ", error.code); 
+            };
+    
+        // Put video listeners into place
+        if(navigator.getUserMedia) { // Standard
+            navigator.getUserMedia(videoObj, function(stream) {
+                video.src = stream;
+                video.play();
+            }, errBack);
+        } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+            navigator.webkitGetUserMedia(videoObj, function(stream){
+                video.src = window.webkitURL.createObjectURL(stream);
+                video.play();
+            }, errBack);
+        } else if(navigator.mozGetUserMedia) { // WebKit-prefixed
+            navigator.mozGetUserMedia(videoObj, function(stream){
+                video.src = window.URL.createObjectURL(stream);
+                video.play();
+            }, errBack);
+        }
+    
+        document.getElementById("snap").addEventListener("click", function(e) {
+        	$('#divCanvas').removeClass('hide');
+            context.drawImage(video, 0, 0, 310, 200);
+            var jpegUrl = canvas.toDataURL("image/jpeg");
+            document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
+            e.preventDefault(); 
+        });
+    }, false);
 
 });
 </script>

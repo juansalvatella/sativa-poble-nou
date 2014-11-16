@@ -6,7 +6,8 @@ enum PartnerStatusEnum {
 	PARTNER_STATUS__DISABLED 	(200, "partnerStatusEnum.disabled"),
 	PARTNER_STATUS__BANNED 		(300, "partnerStatusEnum.banned"),    
 	PARTNER_STATUS__DETOXIFIED	(400, "partnerStatusEnum.detoxified"),
-	PARTNER_STATUS__UNKNOWN		(500, "partnerStatusEnum.detoxified")
+	PARTNER_STATUS__UNKNOWN		(500, "partnerStatusEnum.detoxified"),
+	PARTNER_STATUS__INVITE		(600, "partnerStatusEnum.invite")
 
 	//ACTIVED -> Green --> All is correct
 	//DISABLED -> Red --> Must renew

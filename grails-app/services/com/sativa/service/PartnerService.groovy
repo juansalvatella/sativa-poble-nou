@@ -29,6 +29,7 @@ class PartnerService {
 		partner.password = password
 		PartnerRole.create(partner, Role.findByAuthority(Role.ROLE_SELLER), true)
 		partner.save(flush:true)
+		partner.encodePassword()
 	}
 
 	@Transactional

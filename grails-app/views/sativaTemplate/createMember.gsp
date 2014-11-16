@@ -20,7 +20,7 @@
 				 			</a>
               <div id="divCanvas">  
                   <p><b>Imagen:</b></p>
-                 <canvas name="canvas" id="canvas" width="300" height="200"></canvas>
+                 <canvas name="canvas" id="canvas" width="300"    height="200"></canvas>
               </div>
 				 		</div>
 				 		<div class="col-lg-8">
@@ -54,9 +54,21 @@
     								 <div class="col-sm-10">
       									<input type="text" class="form-control" name="email" placeholder="algo@algo.com">
     								</div>
-                    <input type="hidden" name="image" id="foto_canvas" value="">
-                    <input type="hidden" name="codeCard" id="codeCard" value="">
+                                    <input type="hidden" name="image" id="foto_canvas" value="">
+                                    <input type="hidden" name="codeCard" id="codeCard" value="">
+                                    <input type="hidden" name="friend" id="friend" value="${memberId}">
     							</div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">Seleccionar miembro:</label>
+                                     <div class="col-sm-10">
+                                        <select name="oldPartner" class="form-control">
+                                            <option  value="">Seleccinar socio</option>
+                                            <g:each in="${listMembers}">
+                                                <option value="${it.id}">${it.firstname} ${it.lastname}</option>
+                                            </g:each>
+                                        </select>
+                                    </div>
+                                </div>
 					 			<input type="submit" class="btn center  pull-right btn-success" value="Nuevo socio" />
 				 			</g:form>
 				 		</div>
@@ -121,11 +133,12 @@ jQuery(document).ready(function() {
             }, errBack);
         }
     
-        document.getElementById("snap").addEventListener("click", function() {
+        document.getElementById("snap").addEventListener("click", function(e) {
+            $('#canvas').removeClass('hide');
             context.drawImage(video, 0, 0, 310, 200);
             var jpegUrl = canvas.toDataURL("image/jpeg");
             document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
-            cevent.preventDefault(); 
+            e.preventDefault(); 
         });
     }, false);
 });

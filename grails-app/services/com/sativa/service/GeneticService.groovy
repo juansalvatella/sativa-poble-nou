@@ -21,9 +21,11 @@ class GeneticService {
 	}
 
 	@Transactional
-	def create (String name) {
+	def create (String name, BigDecimal price, BigDecimal grams) {
 		Genetic genetic = new Genetic()
 		genetic.name    = name
+		genetic.price	= price
+		genetic.grams	= grams
 		genetic.save(flush:true)
 	}
 

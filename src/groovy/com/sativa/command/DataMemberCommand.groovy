@@ -7,6 +7,7 @@ import javax.naming.*
 import javax.naming.directory.*
 
 import grails.validation.Validateable
+import com.sativa.domain.Partner
 
 
 @Validateable
@@ -20,6 +21,7 @@ class DataMemberCommand {
 	String 				image 
 	String  			identificationNumber
 	String 				codeCard
+	Partner				friend
 
 	static constraints = {
 		username  			 nullable:true
@@ -30,6 +32,7 @@ class DataMemberCommand {
 		address   			 nullable:true
 		image 	  			 nullable:true
 		codeCard		     nullable:true
+		friend				 nullable:true
 		identificationNumber nullable:true, validator:idNValidator
 	}
 

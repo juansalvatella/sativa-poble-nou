@@ -9,6 +9,7 @@ class Event {
 	String 			observation
 	String			writer		
 	EventTypeEnum	type
+	boolean			viewed = false
 
 	static belongsTo 	= [member	: Partner]
 

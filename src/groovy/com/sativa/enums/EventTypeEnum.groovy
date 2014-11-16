@@ -7,7 +7,8 @@ enum EventTypeEnum {
 	EVENT_TYPE__DISABLED		(300, "eventTypeEnum.disabled"),
 	EVENT_TYPE__NEW_CARD		(400, "eventTypeEnum.newcard"),
 	EVENT_TYPE__BUY				(500, "eventTypeEnum.buy"),
-	EVENT_TYPE__NEW_USER		(400, "eventTypeEnum.newUser"),
+	EVENT_TYPE__NEW_USER		(600, "eventTypeEnum.newUser"),
+	EVENT_TYPE__RENOVATE		(700,"eventTypeEnum.renovate")
 	
 	
 	final int id

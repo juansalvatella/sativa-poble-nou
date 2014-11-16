@@ -3,6 +3,19 @@ Core script to handle the entire theme and core functions
 **/
 var App = function () {
 
+    Array.prototype.count = function(obj){
+        var count = this.length;
+        if(typeof(obj) !== "undefined"){
+            var array = this.slice(0), count = 0; // clone array and reset count
+            for(i = 0; i < array.length; i++){
+                if(array[i] == obj){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     // IE mode
     var isRTL = false;
     var isIE8 = false;

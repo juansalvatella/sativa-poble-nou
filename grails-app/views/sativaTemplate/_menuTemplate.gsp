@@ -98,12 +98,14 @@ License: You must have a valid license purchased only from themeforest(the above
 					</g:link>
 					
 				</li>
+				<sec:ifAllGranted roles="ROLE_ADMIN">
 				<li class="menuManageMember">
 					<g:link mapping="managementMembers">
 						<i class="icon-settings"></i>
 						<span class="title">Gestion de socios</span>
 					</g:link>
 				</li>
+
 				<li class="menuManagerGenetics">
 					<g:link mapping="managementGenetics">
 					<i class="icon-tag"></i>
@@ -122,6 +124,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					<span class="title">Socios colaboradores</span>
 					</g:link>
 				</li>
+				</sec:ifAllGranted>
 				<li class="last menuClass">
 
 					<a href="${createLink(uri:'j_spring_security_logout')}">

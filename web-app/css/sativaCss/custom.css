@@ -5,6 +5,70 @@
 	margin-left:1%;
 }
 
+#scrennEncima { 
+	position:absolute; top:0px; 
+	left:0px; 
+	margin:0px; 
+	padding:0px; 
+	width:100%; 
+	height:auto; 
+	background:url(/images/imageSativa/fondoScreenFirma.png) repeat; 
+}
+
+.removeGenetic {
+	cursor: pointer;
+}
+
+#newGenetic {
+	margin-right: 2%;
+}
+
+.imageSign {
+	width:40%;
+}
+.imagenGenerada { 
+	width:250px;
+	border:0px solid #006600; 
+	border-radius:3px; 
+	border-radius:3px;
+	-moz-border-radius:3px; 
+	-webkit-border-radius:3px; 
+}
+
+
+.center {
+	text-align: center;
+}
+
+#generarFirma{ 
+	position:absolute; 
+	top:6px; 
+	left:10px; 
+	margin:0px 0px 0px 0px; 
+	padding:8px 22px; 
+	height:auto; 
+	font-size:normal;
+}
+
+#limpiarFirma { 
+	position:absolute; 
+	top:6px; 
+	left:860px; 
+	margin:0px 0px 0px 0px; 
+	padding:8px 22px; 
+	height:auto; 
+	font-size:normal;
+}
+
+#canvasFirma { 
+ 	position:relative; 
+ 	margin:90px auto 800px auto; 
+ 	padding:0px; 
+ 	width:1000px; 
+ 	height:500px; 
+ }
+
+
 .textareaHistoric {
 	width:100%;
 	height: 100px;
@@ -19,7 +83,19 @@
 	margin-top:5%;
 }
 
+#resumBillTotal {
+	margin-bottom:2%;
+}
 
+#resumBill {
+	margin-bottom:2%;
+}
+
+
+#resumBill p{
+	margin-right:1%;
+	padding:7px;
+}
 
 .geneticAdd {
 	margin-right:1%;
@@ -58,9 +134,19 @@
 	margin-top:2%;
 }
 
+.tableStadistic2 {
+	margin-top:5%;
+}
+
 
 .textGreen {
 	color:green;
+	font-weight: bold;
+}
+
+
+.textBlue {
+	color:blue;
 	font-weight: bold;
 }
 

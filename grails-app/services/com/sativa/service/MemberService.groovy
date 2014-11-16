@@ -4,11 +4,15 @@ import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__BANNED
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__ACTIVED
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DISABLED
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__UNKNOWN
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__INVITE
 
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__ACTIVATE
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__DISABLED
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__NEW_CARD
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__NEW_USER
+import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__RENOVATE
+
+
 
 
 
@@ -30,6 +34,7 @@ class MemberService {
 
 	def eventService
 	def grailsApplication
+	def cardService
 
 	@Transactional(readOnly = true)
 	def search (String firstname, String lastname, String identificationNumber) {
@@ -93,17 +98,7 @@ class MemberService {
 		partner.address 			 = cpc.address
 		partner.identificationNumber = cpc.identificationNumber
 		
-		if (cpc.image) {
-		 	def applicationContext = grailsApplication.mainContext
-    		String basePath = applicationContext.getResource("/").getFile().toString()
-			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/prueba.png"))
-        	partner.image = "prueba.png"
-        	partner.status = PARTNER_STATUS__ACTIVED
-    	}
-    	else {
-    		partner.status = PARTNER_STATUS__UNKNOWN
-    	}
+	
     	
     	Date now 		   = new Date()
     	String dayString   = now.getAt(Calendar.DATE)
@@ -121,13 +116,27 @@ class MemberService {
 		String countString = count as String
 
 		partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
-		partner.save(flush:true)
+		
+
+		if (cpc.image) {
+		 	def applicationContext = grailsApplication.mainContext
+    		String basePath = applicationContext.getResource("/").getFile().toString()
+			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
+        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+partner.code+".png"))
+        	partner.image = partner.code+".png"
+        	if (!cpc.friend) partner.status = PARTNER_STATUS__ACTIVED
+        	else partner.status = PARTNER_STATUS__INVITE
+    	}
+    	else {
+    		if (!cpc.friend) partner.status = PARTNER_STATUS__UNKNOWN
+    		else partner.status = PARTNER_STATUS__INVITE
+    		
+    	}
+
+    	partner.save(flush:true)
 
 		if (cpc.codeCard) {
-			Card card   = new Card()
-			card.code   = cpc.codeCard
-			card.member = partner
-			card.save()
+			cardService.add(partner, cpc.codeCard)
 		}
 		return partner
 	}
@@ -142,13 +151,11 @@ class MemberService {
 		partner.identificationNumber = cpc.identificationNumber
 
 		if (cpc.image) {
-		 	println "save image "
 		 	def applicationContext = grailsApplication.mainContext
     		String basePath = applicationContext.getResource("/").getFile().toString()
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
         	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/prueba.png"))
         	partner.image = "prueba.png"
-        	println "image"
         	partner.status = PARTNER_STATUS__ACTIVED
     	}
     	else {
@@ -180,8 +187,19 @@ class MemberService {
 	@Transactional
 	def renovation(Partner member) {
 		member.status = PARTNER_STATUS__ACTIVED
+		member.dateRenovation = new Date()
 		member.save()
 		String observation = "Se ha renovado correctamente"
-		eventService.create(observation, member, EVENT_TYPE__ACTIVATE)
+		eventService.create(observation, member, EVENT_TYPE__RENOVATE)
+	}
+
+	@Transactional
+	def photo(Partner member, String image) {
+		def applicationContext = grailsApplication.mainContext
+    	String basePath = applicationContext.getResource("/").getFile().toString()
+		BufferedImage newImg = ImageUtils.decodeToImage(image);
+        ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+member.code+".png"))
+        member.image = member.code+".png"
+        member.save(flush:true)
 	}
 }

@@ -7,33 +7,70 @@ import com.sativa.domain.Partner
 import com.sativa.domain.Genetic 
 import com.sativa.domain.GeneticOrders
 
+import com.sativa.utils.ImageUtils
+
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
+
 class GeneticOrdersService {
 
 	def eventService
+	def grailsApplication
 
 
 	@Transactional
-	def create (Long amount, Partner partner, Genetic genetic) {
+	def create ( Partner partner, Genetic genetic, Long amount, String signature) {
 		GeneticOrders go = new GeneticOrders()
 		go.amount  = amount 
 		go.partner = partner
 		go.genetic = genetic
 		go.save(flush:true)
+
+
+		def applicationContext = grailsApplication.mainContext
+    	String basePath = applicationContext.getResource("/").getFile().toString()
+    	BufferedImage newImg = ImageUtils.decodeToImage(signature)
+
+        ImageIO.write(newImg, "jpg", new File("${basePath}/css/img/geneticOrdersSigns/"+go.id+".png"))		
 		eventService.create("Ha retirado un total de ${amount} de Black Valley en la barra", partner, EVENT_TYPE__BUY)
+	}
+
+
+	@Transactional
+	def grams (Partner partner) {
+		def auxStart = new Date()
+		def start = Calendar.instance
+		def end = Calendar.instance
+		start.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH)-1, date: auxStart.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
+		start = start.getTime()
+		end.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH), date: auxStart.getAt(Calendar.DATE), hourOfDay:24, minute:0, second:0)
+		end   = end.getTime()
+
+		def listGenetics =  GeneticOrders.createCriteria().list {
+			between "dateCreated", start, end
+			eq "partner", partner
+		}
+		def countGrams = 0
+		listGenetics.each { go->
+			countGrams += go.genetic.grams*go.amount
+		}
+		return countGrams
 	}
 
 	@Transactional
 	def listGenetics (Date auxStart, Date auxEnd) {
 		def start = Calendar.instance
 		def end = Calendar.instance
-		start.set(year:start.getAt(Calendar.YEAR), month: start.getAt(Calendar.MONTH), date: start.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
+		start.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH), date: auxStart.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
 		start = start.getTime()
-		end.set(year:start.getAt(Calendar.YEAR), month: start.getAt(Calendar.MONTH), date: start.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
+		end.set(year:auxEnd.getAt(Calendar.YEAR), month: auxEnd.getAt(Calendar.MONTH), date: auxEnd.getAt(Calendar.DATE), hourOfDay:24, minute:0, second:0)
 		end   = end.getTime()
 		return GeneticOrders.createCriteria().list {
 			between "dateCreated", start, end
 			 projections{
             	groupProperty("genetic")
+            	count("amount")
         	}
 		}
 	}
@@ -42,14 +79,15 @@ class GeneticOrdersService {
 	def listPeriodicsPerDay (Date auxStart, Date auxEnd) {
 		def start = Calendar.instance
 		def end = Calendar.instance
-		start.set(year:start.getAt(Calendar.YEAR), month: start.getAt(Calendar.MONTH), date: start.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
+		start.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH), date: auxStart.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
 		start = start.getTime()
-		end.set(year:start.getAt(Calendar.YEAR), month: start.getAt(Calendar.MONTH), date: start.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
+		end.set(year:auxEnd.getAt(Calendar.YEAR), month: auxEnd.getAt(Calendar.MONTH), date: auxEnd.getAt(Calendar.DATE), hourOfDay:24, minute:0, second:0)
 		end   = end.getTime()
 		return GeneticOrders.createCriteria().list {
 			between "dateCreated", start, end
 			 projections{
             	groupProperty("partner")
+            	count("amount")
         	}
 		}
 	}

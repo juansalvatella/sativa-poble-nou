@@ -60,8 +60,7 @@ class LoginController  {
 	 * username: 
 	 */
 	def success() {
-		log.info "Entry to success"
-		println "successssssss"
+		
 		Partner user = springSecurityService.currentUser
 		if (!user) {
 			render (status:HttpServletResponse.SC_UNAUTHORIZED,
@@ -92,28 +91,20 @@ class LoginController  {
 	 */
 	def denied() {
 		log.info "Entry to denied"
-		render (status:HttpServletResponse.SC_FORBIDDEN,
-			contentType:'text/json'){
-			['error':message(code:"login.denied.unauthorized")]
-		}
+		render (view:"/sativaTemplate/login", model:[error:msg])
 	}
 	
 	def ajaxDenied() {
 		log.info "Entry to ajax denied"
-		render (status:HttpServletResponse.SC_FORBIDDEN,
-			contentType:'text/json'){
-			['error':message(code:"login.denied.unauthorized")]
-		}
+		render (view:"/sativaTemplate/login", model:[error:msg])
 	}
 
 	/**
 	 * Callback after a failed login. Redirects to the auth page with a warning message.
 	 */
 	def authfail() {
-		println "authfaillllllllllllllllll"
+		
 		def aaa = session[UsernamePasswordAuthenticationFilter.SPRING_SECURITY_LAST_USERNAME_KEY]
-
-		println "username=== "+aaa
 
 		String msg = message(code:'login.denied.undefined')
 		def exception = session[WebAttributes.AUTHENTICATION_EXCEPTION]
