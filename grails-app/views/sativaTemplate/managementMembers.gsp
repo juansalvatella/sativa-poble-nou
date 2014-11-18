@@ -6,7 +6,7 @@
 		<div class="page-content">
 			<div class="container-fluid">
 				 <div class="row well">
-				 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'list',controller:'member']" >
+				 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'all',controller:'member']" >
 	                            <div class="row">
 	                            	<div class="col-lg-4">
 	                            		<div class="form-group">

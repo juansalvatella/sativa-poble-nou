@@ -7,13 +7,13 @@ import groovy.time.TimeCategory
 import com.sativa.domain.Partner
 
 
-class PartnerDetoxifiedJob {
+class PartnerRenovationJob {
 	
 	
     	
     static triggers = {
 		// Execucio cada 4 minuts al segon 10
-		cron name:'partnerDetoxifiedJob', cronExpression: '10 1 * * * ?' 
+		cron name:'partnerRenovationJob', cronExpression: '10 1 * * * ?' 
     }
 	
 	def doJobTask() {
