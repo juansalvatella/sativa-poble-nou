@@ -36,6 +36,9 @@
 							 				<th class="col-lg-2">Numero de socio</th>
 							 				<th class="col-lg-2">Genética</th>
 							 				<th class="col-lg-2">Cantidad</th>
+							 				<th class="col-lg-2">Gramos</th>
+							 				<th class="col-lg-2">Precios</th>
+							 				
 							 				<th class="col-lg-2">Fecha</th>
 							 				<th class="col-lg-4 center">Firma</th>
 						 				</tr>
@@ -47,7 +50,10 @@
 					 								<td>${it.partner.code}</td>
 					 								<td>${it.genetic.name}</td>
 					 								<td>${it.amount}</td>
-					 								<td><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/> </td>
+					 								<td>${it.genetic.type.grams*it.amount}gr</td>
+					 								<td>${it.genetic.type.price*it.amount}</td>
+					 								
+					 								<td><g:formatDate  timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/> </td>
 					 								<td class="center"><g:img dir="css/img/geneticOrdersSigns" file="${it.id}.png" class="imageSign" base="${grailsApplication.config.grails.serverURL}" />
 					 							</tr>
 					 						</g:each>
@@ -102,7 +108,8 @@
 							 				<g:if test="${stadisticsPerPeriod}">
 						 						<g:each in="${stadisticsPerPeriod}">
 						 							<tr>
-						 								<td>${it.partner.id}</td><td>${it.amount}</td>
+						 								<td>${it.partner.id}</td>
+						 								<td>${it.amount}</td>
 						 							</tr>
 						 						</g:each>
 							 				</g:if>
@@ -152,7 +159,7 @@
 							  		<table class="tableStadistic2 table" id="tableGenetics" >
 							 			 	<tr>
 								                 <g:each in="${listGenetics}">
-								                    <td><b>${it.name.name}:</b> ${it.amount}</td>                   
+								                    <td><b>${it.name.name}:</b> ${it.amount} (${it.name.type.grams * it.amount}) gr</td>                   
 								                      <g:if test="${count % 5 == 0 && count!=0}">
 								                        </tr><tr>
 								                      </g:if>

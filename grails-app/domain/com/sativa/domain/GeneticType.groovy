@@ -10,6 +10,7 @@ class GeneticType {
 	String 				name
 	BigDecimal			price
 	BigDecimal			grams
+	String 				color
 
 
 	static constraints = {

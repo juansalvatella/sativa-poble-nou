@@ -20,11 +20,13 @@ class GeneticOrdersController  {
 		Partner partner = Partner.get(memberId)
 		def genetics = listGenetics.split(',')
 		def amounts = listAmount.split(',')
+		def numGrams = 0
 		def stringEvent = ""
 		
 		genetics.eachWithIndex { gen, index ->
 			def genetic 	= Genetic.get(gen)
 			def amount 		= amounts[index] as Long
+			numGrams += genetic.type.grams
 			stringEvent += amount+" dosis de "+genetic.name
 			if (index != genetics.size()-1)  {
 				stringEvent += ', '
@@ -33,7 +35,7 @@ class GeneticOrdersController  {
 			geneticOrdersService.create(partner, genetic, amount, signature)	
 		}
 		
-
+		stringEvent += ' ('+numGrams+'gr)'
 		eventService.create("Ha retirado un total de "+stringEvent, partner, EVENT_TYPE__BUY)
 		redirect(controller: "member", action: "show", params:[memberId:memberId])
 	}

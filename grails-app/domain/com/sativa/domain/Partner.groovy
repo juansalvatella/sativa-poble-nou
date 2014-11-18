@@ -33,7 +33,6 @@ class Partner {
 		password  			 nullable:true
 		code 	  			 nullable:true
 		email 	  			 nullable:true
-		firstname 			 nullable:true
 		lastname  			 nullable:true
 		address   			 nullable:true
 		signature			 nullable:true

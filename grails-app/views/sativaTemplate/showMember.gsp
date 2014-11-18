@@ -17,17 +17,18 @@
 					 		</g:else>
 					 		<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
 				 			 	<a href="#disabledMember" class="btn btn-block btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
-				 			 	<a href="#renovationMember" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
+				 			</g:if>
+				 			 	<a href="#renovationMember" id="renovationMember" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
 				 			 	<g:form name="myForm" id="formFriend" role="form"  class="form-horizontal" url="[action:'invite',controller:'member']" >
 				 			 		<input type="hidden" name="memberId" value="${member.id}" />
 				 			 		<button type="submit" class="btn btn-block  btn-warning">Invitar a un amigo</button>
 				 				 </g:form>
-				 			</g:if>
-				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
+				 			
+				 			<g:if test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 				 				<sec:ifAllGranted roles="ROLE_ADMIN">
 				 			 		<a href="#disabledMember" class="btn btn-block  btn-success" data-toggle="modal" class="config">Activar socio</a>
 				 			 	</sec:ifAllGranted>
-				 			</g:elseif>
+				 			</g:if>
 				 			 
 				 			
 				 		</div>
@@ -37,12 +38,12 @@
 				 			<p><b>DNI:</b>  ${member.identificationNumber}</p>
 				 			<p><b>Domicilio:</b>  ${member.address}</p>
 				 			<p><b>Email:</b>  ${member.email}</p>
-				 			<p><b>Fecha de inscripción:</b> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
-				 			<p><b>Última cuota:</b> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
+				 			<p><b>Fecha de inscripción:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
+				 			<p><b>Última cuota:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
 				 			<p><b>Tarjeta:</b>  ${card?.code}</p>
 				 		</div>
 				 		<div class="col-lg-4">
-				 			<video id="video" width="200" height="150" class="gapPhoto videoWebcam" autoplay></video>
+				 			<video id="video" width="300" height="225" class="gapPhoto videoWebcam" autoplay></video>
 				 			<a id="snap" class="btn btn-block btn-warning">
 				 				<i class="icon-camera"></i>
 				 				 HACER FOTO
@@ -62,16 +63,16 @@
 				 	<div class="row" id="listActiveGenetics">
 				 		<g:if test="${(member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
 					 		<g:each in="${listGenetics}">
-					 			<a  id="genetic_${it.id}" class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
+					 			<a  style="background-color:${it.type.color};border-color:${it.type.color};"  id="genetic_${it.id}" price="${it.type.price}" class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
 					 		</g:each>
 				 		</g:if>
 				 	</div>
 				 	<hr />
 				 	<div class="row">
-				 		<div class="col-lg-8">
+				 		<div class="col-lg-11">
 						 	<div class="row" id="divBill">
 						 		<div id="resumBill"></div>
-						 		<div id="resumBillTotal"></div>
+						 		<div class="pull-right" id="resumBillTotal"></div>
 						 			<img id="saveSignature" src="" class="hide imagenGenerada">
 						 			<input type="hidden" name="memberId" value="${member.id}" />
 						 			<input type="hidden" name="signature" id="firma_canvas" value="">
@@ -91,7 +92,7 @@
 				 		<table id="tableHistoric" class="table table-bordered table-condensed">
 				 			<g:each in="${listEvents}">
 				 				
-				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
+				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
 				 					<g:if test="${it.type.name() == 'EVENT_TYPE__ACTIVATE'}"><td class="textGreen"></g:if>
 				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:elseif>
 				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__RENOVATE'}"><td class="textBlue"></g:elseif>
@@ -262,37 +263,48 @@ jQuery(document).ready(function() {
   
 	$('.geneticAdd').click(function() {
 		$('#signElectric').removeAttr('disabled');
-		var auxId = $(this).attr('id').split('_')[1];		
+		var priceUnit = parseFloat($(this).attr('price'))
+		var auxId = $(this).attr('id').split('_')[1];
 		var numCount = 0
+		var auxPrice = parseFloat(0)
 		$('#resumBill').html("");
 
 		if( $.inArray(auxId, carroGenetics) != -1) {
 			carroObject[$.inArray(auxId, carroGenetics)].amount++
+			carroObject[$.inArray(auxId, carroGenetics)].price = (carroObject[$.inArray(auxId, carroGenetics)].amount*priceUnit).toFixed(2)
 		}
 		else {
 			carroGenetics.push(auxId)
-			carroObject.push({geneticId:auxId, amount:1});				
+			carroObject.push({geneticId:auxId, amount:1, price:priceUnit});				
 		}
 
 		$.each(carroObject, function(key, value) {
+			auxPrice += parseFloat(value.price)
 			numCount += value.amount;
 			$('#resumBill').append('<p class="label label-success"><b>'+$('#genetic_'+value.geneticId).html()+' x'+value.amount+'</b> <img id="geneticClose_'+value.geneticId+'" class="removeGenetic" src="/images/imageSativa/botonBorrar.png"</p>');
 		});
-		$('#resumBillTotal').html("<b>TOTAL= "+numCount+"</b>");
+		$('#resumBillTotal').html("<b>TOTAL= "+numCount+" ("+auxPrice.toFixed(2)+"€)</b>");
 
-		$('.removeGenetic').click(function() {
+	
+	})
+
+	$('#resumBill').on('click', '.removeGenetic', function(e) {
+			
 			var idAux = $(this).attr('id').split('_')[1];
 			var indexGenetic = $.inArray(idAux, carroGenetics);
+			var numCount = 0
+			var auxPrice = parseFloat(0)
 			carroGenetics.splice(indexGenetic,1);
 			carroObject.splice(indexGenetic,1);
+
 			$('#resumBill').html("");
 			$.each(carroObject, function(key, value) {
+				auxPrice += parseFloat(value.price)
 				numCount += value.amount;
 				$('#resumBill').append('<p class="label label-success"><b>'+$('#genetic_'+value.geneticId).html()+' x'+value.amount+'</b> <img id="geneticClose_'+value.geneticId+'" class="removeGenetic" src="/images/imageSativa/botonBorrar.png"</p>');
 			});
-			$('#resumBillTotal').html("<b>TOTAL= "+numCount+"</b>");
+			$('#resumBillTotal').html("<b>TOTAL= "+numCount+" ("+auxPrice.toFixed(2)+"€)</b>");
 		});
-	})
 
 	$('#signElectric').click(function() {
 		$("html, body").animate({ scrollTop: 0 }, "slow");

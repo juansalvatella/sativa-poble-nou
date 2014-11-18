@@ -5,6 +5,10 @@ import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__ACTIVED
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DISABLED
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__UNKNOWN
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__INVITE
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DETOXIFIED
+
+
+
 
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__ACTIVATE
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__DISABLED
@@ -51,6 +55,10 @@ class MemberService {
 						if (identificationNumber){
 							ilike 'identificationNumber', "%${identificationNumber}%"
 						}
+					}
+					if (!identificationNumber){
+						ne "status", PARTNER_STATUS__DISABLED
+						ne "status", PARTNER_STATUS__BANNED
 					}
 				}
 			}
@@ -124,14 +132,17 @@ class MemberService {
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
         	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
-        	if (!cpc.friend) partner.status = PARTNER_STATUS__ACTIVED
-        	else partner.status = PARTNER_STATUS__INVITE
+        }
+
+        if (cpc.friend) {
+        	partner.status = PARTNER_STATUS__INVITE
     	}
-    	else {
-    		if (!cpc.friend) partner.status = PARTNER_STATUS__UNKNOWN
-    		else partner.status = PARTNER_STATUS__INVITE
+    	else if (!cpc.firstname || !cpc.lastname || !cpc.address || !cpc.codeCard || !cpc.identificationNumber) {
+    		partner.status = PARTNER_STATUS__UNKNOWN
+    	}
+    	else partner.status = PARTNER_STATUS__ACTIVED
     		
-    	}
+    
 
     	partner.save(flush:true)
 

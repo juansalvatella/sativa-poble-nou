@@ -29,10 +29,10 @@
 								<p><b>Numero de socio:</b><br />${member.code}</p>
 							</div>
 							<div class="form-group">
-								<p><b>Fecha de inscripción:</b><br/> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/></p>
+								<p><b>Fecha de inscripción:</b><br/> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/></p>
 							</div>
 							<div class="form-group">
-								<p><b>Última cuota:</b><br/> <g:formatDate format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/></p>
+								<p><b>Última cuota:</b><br/> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/></p>
 							</div>
 							<div class="form-group">
 								<p><b>Tarjeta:</b><br />${card?.code}</p>
@@ -107,7 +107,7 @@
 				 		</g:form>
 				 		<table id="tableHistoric" class="table table-bordered table-condensed">
 				 			<g:each in="${listEvents}">
-				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
+				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
 
 				 					<g:if test="${it.type.name() == 'EVENT_TYPE__ACTIVATE'}"><td class="textGreen"></g:if>
 				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:elseif>

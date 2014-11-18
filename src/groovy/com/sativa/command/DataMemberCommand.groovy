@@ -27,7 +27,6 @@ class DataMemberCommand {
 		username  			 nullable:true
 		password  			 nullable:true
 		email 	  			 nullable:true, validator:emailValidator
-		firstname 			 nullable:true
 		lastname  			 nullable:true
 		address   			 nullable:true
 		image 	  			 nullable:true

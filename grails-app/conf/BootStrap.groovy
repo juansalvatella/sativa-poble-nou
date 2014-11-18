@@ -39,7 +39,7 @@ println "user 2 "+testUser2.id
       PartnerRole.create testUser, sellerRole, true
       PartnerRole.create testUser, userRole, true
 
-      def geneticType = new GeneticType(name:"TIPO1", price:1.34, grams:0.80)
+      def geneticType = new GeneticType(name:"TIPO1", price:1.34, grams:0.80, color:"#088A08")
       geneticType.save(flush:true)
 
       def genetic = new Genetic(name:"genetica1", type:geneticType)
