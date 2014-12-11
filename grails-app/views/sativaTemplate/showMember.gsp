@@ -18,7 +18,7 @@
 					 		<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
 				 			 	<a href="#disabledMember" class="btn btn-block btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
 				 			</g:if>
-				 			 	<a href="#renovationMember" id="renovationMember" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
+				 			 	<a href="#renovationMember" id="renovationMemberBtn" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
 				 			 	<g:form name="myForm" id="formFriend" role="form"  class="form-horizontal" url="[action:'invite',controller:'member']" >
 				 			 		<input type="hidden" name="memberId" value="${member.id}" />
 				 			 		<button type="submit" class="btn btn-block  btn-warning">Invitar a un amigo</button>

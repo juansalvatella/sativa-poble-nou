@@ -47,7 +47,7 @@ class EventService {
 	}
 
 
-	@Transactional(readOnly = true)
+	@Transactional
 	def viewed (Event event) {
 		event.viewed=true
 		event.save(flush:true)

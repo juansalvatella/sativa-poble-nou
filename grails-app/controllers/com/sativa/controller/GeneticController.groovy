@@ -29,14 +29,16 @@ class GeneticController  {
 		Genetic genetic = Genetic.read(geneticId)
 		geneticService.enabled(genetic)
 		def listGenetics = geneticService.list()
-		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics])
+		def listTypes	 = geneticService.listTypes()
+		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics, listTypes:listTypes])
 	}
 
 	def disabled(Long geneticId){
 		Genetic genetic = Genetic.read(geneticId)
 		geneticService.disabled(genetic)
 		def listGenetics = geneticService.list()
-		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics])
+		def listTypes	 = geneticService.listTypes()
+		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics, listTypes:listTypes])
 	}
 
 }

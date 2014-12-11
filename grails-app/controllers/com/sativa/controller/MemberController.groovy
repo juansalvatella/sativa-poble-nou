@@ -10,6 +10,7 @@ import com.sativa.command.DataMemberCommand
 
 
 import com.sativa.exception.NotFoundException
+import grails.validation.ValidationException
 
 
 
@@ -40,9 +41,6 @@ class MemberController  {
 	}
 
 	def create(DataMemberCommand cpc, Long oldPartner){
-		if (!cpc.validate()) {
-			return
-		}
 		def member
 		if (oldPartner){
 			member = Partner.get(oldPartner)
