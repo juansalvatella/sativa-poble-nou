@@ -1,7 +1,7 @@
 dataSource {
-    //pooled = true
-    //driverClassName = "com.mysql.jdbc.Driver"
-    //dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+    pooled = true
+    driverClassName = "com.mysql.jdbc.Driver"
+    dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -14,16 +14,16 @@ hibernate {
 // environment specific settings
 environments {
     development {
-              dataSource {
+           /*   dataSource {
                   dbCreate = "create-drop" // one of 'create', 'create-drop','update'
                   url = "jdbc:h2:mem:devDb"
                   driverClassName = "org.h2.Driver"
                   username = "sa"
                   password = ""
-              }
+              }*/
     }
     production {
-       /*dataSource {
+       dataSource {
             dbCreate = "update"
             url = "jdbc:mysql://localhost/sativaBD?useUnicode=yes&characterEncoding=UTF-8"
             username = "root"
@@ -49,6 +49,6 @@ environments {
                jdbcInterceptors = "ConnectionState"
                defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
             }
-        }*/
+        }
     }
 }

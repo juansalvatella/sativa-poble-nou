@@ -70,7 +70,7 @@ class GeneticOrdersService {
 			between "dateCreated", start, end
 			 projections{
             	groupProperty("genetic")
-            	count("amount")
+            	sum("amount")
         	}
 		}
 	}
@@ -87,7 +87,7 @@ class GeneticOrdersService {
 			between "dateCreated", start, end
 			 projections{
             	groupProperty("partner")
-            	count("amount")
+            	sum("amount")
         	}
 		}
 	}
