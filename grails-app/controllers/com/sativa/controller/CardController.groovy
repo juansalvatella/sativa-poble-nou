@@ -16,12 +16,12 @@ class CardController  {
 
 	def memberService
 	
-	def dispatcher(String num_tarjeta){
+	def dispatcher(String num_tarjeta, String error){
 		def card = Card.findByCode(num_tarjeta)
 		if (!card) {	
 			def listMembers = memberService.list()
 			println "tajetaaaaa "+num_tarjeta
-			render(view: "/sativaTemplate/createMember", model: [listMembers:listMembers, numCard:num_tarjeta])
+			render(view: "/sativaTemplate/createMember", model: [error:error, listMembers:listMembers, numCard:num_tarjeta])
 		}
 		else {
 			redirect(controller: "member", action: "show", params:[memberId:card.member.id])	

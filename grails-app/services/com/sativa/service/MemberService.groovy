@@ -137,6 +137,7 @@ class MemberService {
 
         if (cpc.friend) {
         	partner.status = PARTNER_STATUS__INVITE
+        	partner.friend = cpc.friend
     	}
     	else if (!cpc.firstname || !cpc.lastname || !cpc.address || !cpc.codeCard || !cpc.identificationNumber) {
     		partner.status = PARTNER_STATUS__UNKNOWN

@@ -46,124 +46,132 @@ invokeTag('formatDate','g',35,['timeZone':(TimeZone.getTimeZone('Europe/Madrid')
 printHtmlPart(13)
 expressionOut.print(card?.code)
 printHtmlPart(14)
-createTagBody(1, {->
+if(true && (member.friend)) {
 printHtmlPart(15)
-expressionOut.print(member.id)
+expressionOut.print(member.friend.firstname)
 printHtmlPart(16)
-expressionOut.print(member.firstname)
+expressionOut.print(member.friend.lastname)
 printHtmlPart(17)
-expressionOut.print(member.lastname)
-printHtmlPart(18)
-expressionOut.print(member.identificationNumber)
-printHtmlPart(19)
-expressionOut.print(member.address)
-printHtmlPart(20)
-expressionOut.print(member.email)
-printHtmlPart(21)
-})
-invokeTag('form','g',79,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'edit',controller:'member'])],1)
-printHtmlPart(22)
-for( _it575244400 in (listGenetics) ) {
-changeItVariable(_it575244400)
-printHtmlPart(23)
-expressionOut.print(it.name)
-printHtmlPart(24)
 }
-printHtmlPart(25)
-invokeTag('cookie','g',100,['name':("myCookie")],-1)
-printHtmlPart(26)
+printHtmlPart(18)
 createTagBody(1, {->
-printHtmlPart(27)
+printHtmlPart(19)
 expressionOut.print(member.id)
-printHtmlPart(28)
+printHtmlPart(20)
+expressionOut.print(member.firstname)
+printHtmlPart(21)
+expressionOut.print(member.lastname)
+printHtmlPart(22)
+expressionOut.print(member.identificationNumber)
+printHtmlPart(23)
+expressionOut.print(member.address)
+printHtmlPart(24)
+expressionOut.print(member.phone)
+printHtmlPart(25)
 })
-invokeTag('form','g',107,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'create',controller:'event'])],1)
+invokeTag('form','g',84,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'edit',controller:'member'])],1)
+printHtmlPart(26)
+for( _it1480219089 in (listGenetics) ) {
+changeItVariable(_it1480219089)
+printHtmlPart(27)
+expressionOut.print(it.name)
+printHtmlPart(28)
+}
 printHtmlPart(29)
-for( _it161252006 in (listEvents) ) {
-changeItVariable(_it161252006)
+invokeTag('cookie','g',105,['name':("myCookie")],-1)
 printHtmlPart(30)
-expressionOut.print(it.writer)
+createTagBody(1, {->
 printHtmlPart(31)
-invokeTag('formatDate','g',110,['timeZone':(TimeZone.getTimeZone('Europe/Madrid')),'format':("dd-MM-yyyy HH:mm"),'date':(it.dateCreated)],-1)
+expressionOut.print(member.id)
 printHtmlPart(32)
-if(true && (it.type.name() == 'EVENT_TYPE__ACTIVATE')) {
+})
+invokeTag('form','g',112,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'create',controller:'event'])],1)
 printHtmlPart(33)
+for( _it1591661975 in (listEvents) ) {
+changeItVariable(_it1591661975)
+printHtmlPart(34)
+expressionOut.print(it.writer)
+printHtmlPart(35)
+invokeTag('formatDate','g',115,['timeZone':(TimeZone.getTimeZone('Europe/Madrid')),'format':("dd-MM-yyyy HH:mm"),'date':(it.dateCreated)],-1)
+printHtmlPart(36)
+if(true && (it.type.name() == 'EVENT_TYPE__ACTIVATE')) {
+printHtmlPart(37)
 }
 else if(true && (it.type.name() == 'EVENT_TYPE__DISABLED')) {
-printHtmlPart(34)
-}
-else if(true && (it.type.name() == 'EVENT_TYPE__RENOVATE')) {
-printHtmlPart(35)
-}
-else {
-printHtmlPart(36)
-}
-printHtmlPart(37)
-expressionOut.print(it.observation)
 printHtmlPart(38)
 }
+else if(true && (it.type.name() == 'EVENT_TYPE__RENOVATE')) {
 printHtmlPart(39)
-if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
+}
+else {
 printHtmlPart(40)
 }
-else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
 printHtmlPart(41)
-}
+expressionOut.print(it.observation)
 printHtmlPart(42)
-invokeTag('set','g',141,['var':("controllerBtn"),'value':("")],-1)
-printHtmlPart(43)
-invokeTag('set','g',142,['var':("actionBtn"),'value':("")],-1)
+}
 printHtmlPart(43)
 if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
 printHtmlPart(44)
-invokeTag('set','g',144,['var':("actionBtn"),'value':("remove")],-1)
-printHtmlPart(43)
 }
 else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
-printHtmlPart(44)
-invokeTag('set','g',147,['var':("actionBtn"),'value':("activate")],-1)
-printHtmlPart(43)
-}
-else if(true && (member.status.name() == 'PARTNER_STATUS__DISABLED')) {
-printHtmlPart(44)
-invokeTag('set','g',150,['var':("actionBtn"),'value':("renovation")],-1)
-printHtmlPart(43)
-}
 printHtmlPart(45)
-createTagBody(1, {->
+}
 printHtmlPart(46)
-expressionOut.print(member.id)
+invokeTag('set','g',146,['var':("controllerBtn"),'value':("")],-1)
+printHtmlPart(47)
+invokeTag('set','g',147,['var':("actionBtn"),'value':("")],-1)
 printHtmlPart(47)
 if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
 printHtmlPart(48)
+invokeTag('set','g',149,['var':("actionBtn"),'value':("remove")],-1)
+printHtmlPart(47)
 }
 else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
+printHtmlPart(48)
+invokeTag('set','g',152,['var':("actionBtn"),'value':("activate")],-1)
+printHtmlPart(47)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__DISABLED')) {
+printHtmlPart(48)
+invokeTag('set','g',155,['var':("actionBtn"),'value':("renovation")],-1)
+printHtmlPart(47)
+}
 printHtmlPart(49)
-}
+createTagBody(1, {->
 printHtmlPart(50)
-if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
+expressionOut.print(member.id)
 printHtmlPart(51)
-}
-else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
+if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
 printHtmlPart(52)
 }
+else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
 printHtmlPart(53)
-})
-invokeTag('form','g',175,['name':("myForm"),'role':("form"),'id':("formMemberEdit"),'class':("form-horizontal"),'url':([controller:'member', action:actionBtn ])],1)
+}
 printHtmlPart(54)
-invokeTag('render','g',190,['template':("/sativaTemplate/scriptsTemplate")],-1)
+if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
 printHtmlPart(55)
-expressionOut.print(member.status.name())
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
 printHtmlPart(56)
-expressionOut.print(member.status.name())
+}
 printHtmlPart(57)
+})
+invokeTag('form','g',180,['name':("myForm"),'role':("form"),'id':("formMemberEdit"),'class':("form-horizontal"),'url':([controller:'member', action:actionBtn ])],1)
+printHtmlPart(58)
+invokeTag('render','g',195,['template':("/sativaTemplate/scriptsTemplate")],-1)
+printHtmlPart(59)
+expressionOut.print(member.status.name())
+printHtmlPart(60)
+expressionOut.print(member.status.name())
+printHtmlPart(61)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1416352707000L
+public static final long LAST_MODIFIED = 1418894465000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

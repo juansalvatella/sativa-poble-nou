@@ -12,13 +12,18 @@ import com.sativa.domain.GeneticType
 class GeneticController  {
 	def geneticService
 
-	def list () {
+	def list (String error) {
 		def listGenetics = geneticService.list()
 		def listTypes	 = geneticService.listTypes()
-		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics, listTypes:listTypes])
+		render(view: "/sativaTemplate/genetics", model: [listGenetics:listGenetics, listTypes:listTypes, error:error])
 	}
 
 	def create(String name, Long type){
+		println "name "+name
+		if (name == "") {
+			redirect(controller: "genetic", action: "list",  params:[error: "No puedes crear una genetica sin nombre"])
+			return
+		}
 		GeneticType	auxType = GeneticType.get(type)
 		geneticService.create(name, auxType)
 		redirect(controller: "genetic", action: "list")

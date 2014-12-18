@@ -44,12 +44,22 @@ class GeneticOrdersController  {
 	def periodic(String start, String end){
 		Date auxStart = Date.fromISO(start)
 		Date auxEnd   = Date.fromISO(end )
+		if (!auxStart) {
+			auxStart  = new Date()-30
+		}
+		if (!auxEnd) {
+			auxEnd    = new Date()
+		}
+
+		if (auxEnd < auxStart) {
+			auxEnd = auxStart
+		}
 		def stadisticsPerPeriod = geneticOrdersService.listPeriodicsPerDay(auxStart, auxEnd)
 		stadisticsPerPeriod = stadisticsPerPeriod.collect { go ->
 				return [ "partner": go[0],
 						 "amount" : go[1] ]
 		}
-		render(view: "/sativaTemplate/stadistics", model: [page:"genetics",  stadisticsPerPeriod:stadisticsPerPeriod, daySelected:new Date() ,start:auxStart, end:auxEnd])
+		render(view: "/sativaTemplate/stadistics", model: [page:"periodic",  stadisticsPerPeriod:stadisticsPerPeriod, daySelected:new Date() ,start:auxStart, end:auxEnd])
 	}
 
 
@@ -57,12 +67,22 @@ class GeneticOrdersController  {
 	def genetics(String start, String end){
 		Date auxStart = Date.fromISO(start)
 		Date auxEnd   = Date.fromISO(end )
+		if (!auxStart) {
+			auxStart  = new Date()-30
+		}
+		if (!auxEnd) {
+			auxEnd    = new Date()
+		}
+
+		if (auxEnd < auxStart) {
+			auxEnd = auxStart
+		}
 		def listGenetics 	 = geneticOrdersService.listGenetics(auxStart, auxEnd)
 		listGenetics		 = listGenetics.collect {go ->
 					return ["name"  : go[0],
 							"amount": go[1]]
 		}
-		render(view: "/sativaTemplate/stadistics", model: [page:"periodic",  listGenetics:listGenetics, daySelected:new Date() ,start:auxStart, end:auxEnd])
+		render(view: "/sativaTemplate/stadistics", model: [page:"genetics",  listGenetics:listGenetics, daySelected:new Date() ,start:auxStart, end:auxEnd])
 	}
 
 	def day(String currentDate){

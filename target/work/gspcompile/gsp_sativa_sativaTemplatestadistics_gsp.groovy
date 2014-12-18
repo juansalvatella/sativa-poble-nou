@@ -19,74 +19,70 @@ invokeTag('form','g',30,['name':("myForm"),'role':("form"),'class':("form-horizo
 printHtmlPart(3)
 if(true && (stadisticsPerDay)) {
 printHtmlPart(4)
-for( _it824445694 in (stadisticsPerDay) ) {
-changeItVariable(_it824445694)
+for( _it1435942022 in (stadisticsPerDay) ) {
+changeItVariable(_it1435942022)
 printHtmlPart(5)
 expressionOut.print(it.partner.code)
 printHtmlPart(6)
 expressionOut.print(it.genetic.name)
 printHtmlPart(6)
-expressionOut.print(it.amount)
-printHtmlPart(6)
 expressionOut.print(it.genetic.type.grams*it.amount)
 printHtmlPart(7)
-expressionOut.print(it.genetic.type.price*it.amount)
+invokeTag('formatDate','g',51,['timeZone':(TimeZone.getTimeZone('Europe/Madrid')),'format':("dd-MM-yyyy HH:mm"),'date':(it.dateCreated)],-1)
 printHtmlPart(8)
-invokeTag('formatDate','g',56,['timeZone':(TimeZone.getTimeZone('Europe/Madrid')),'format':("dd-MM-yyyy HH:mm"),'date':(it.dateCreated)],-1)
+invokeTag('img','g',52,['dir':("css/img/geneticOrdersSigns"),'file':("${it.id}.png"),'class':("imageSign"),'base':(grailsApplication.config.grails.serverURL)],-1)
 printHtmlPart(9)
-invokeTag('img','g',57,['dir':("css/img/geneticOrdersSigns"),'file':("${it.id}.png"),'class':("imageSign"),'base':(grailsApplication.config.grails.serverURL)],-1)
+}
 printHtmlPart(10)
 }
+else {
 printHtmlPart(11)
 }
-else {
 printHtmlPart(12)
-}
+expressionOut.print(new Date().format('dd/MM/yyyy'))
 printHtmlPart(13)
-expressionOut.print(new Date().format('dd/MM/yyyy'))
-printHtmlPart(14)
 createTagBody(1, {->
-printHtmlPart(15)
+printHtmlPart(14)
 expressionOut.print(new Date().format('dd/MM/yyyy'))
-printHtmlPart(16)
+printHtmlPart(15)
 })
-invokeTag('form','g',95,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'periodic',controller:'geneticOrders'])],1)
+invokeTag('form','g',90,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'periodic',controller:'geneticOrders'])],1)
+printHtmlPart(16)
+if(true && (stadisticsPerPeriod)) {
 printHtmlPart(17)
 if(true && (stadisticsPerPeriod)) {
 printHtmlPart(18)
-if(true && (stadisticsPerPeriod)) {
+for( _it456338768 in (stadisticsPerPeriod) ) {
+changeItVariable(_it456338768)
 printHtmlPart(19)
-for( _it530810224 in (stadisticsPerPeriod) ) {
-changeItVariable(_it530810224)
-printHtmlPart(20)
 expressionOut.print(it.partner.id)
-printHtmlPart(21)
+printHtmlPart(20)
 expressionOut.print(it.amount)
+printHtmlPart(21)
+}
 printHtmlPart(22)
 }
+else {
 printHtmlPart(23)
 }
-else {
 printHtmlPart(24)
 }
 printHtmlPart(25)
-}
+expressionOut.print(new Date().format('dd/MM/yyyy'))
 printHtmlPart(26)
+createTagBody(1, {->
+printHtmlPart(14)
 expressionOut.print(new Date().format('dd/MM/yyyy'))
 printHtmlPart(27)
-createTagBody(1, {->
-printHtmlPart(15)
-expressionOut.print(new Date().format('dd/MM/yyyy'))
-printHtmlPart(16)
 })
-invokeTag('form','g',152,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'genetics',controller:'geneticOrders'])],1)
-printHtmlPart(17)
+invokeTag('form','g',147,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'genetics',controller:'geneticOrders'])],1)
+printHtmlPart(16)
 if(true && (listGenetics)) {
 printHtmlPart(28)
-invokeTag('set','g',157,['var':("count"),'value':(1)],-1)
+invokeTag('set','g',152,['var':("count"),'value':(1)],-1)
 printHtmlPart(29)
-for( _it680365130 in (listGenetics) ) {
-changeItVariable(_it680365130)
+for( _it1021570339 in (listGenetics) ) {
+changeItVariable(_it1021570339)
 printHtmlPart(30)
 expressionOut.print(it.name.name)
 printHtmlPart(31)
@@ -98,29 +94,35 @@ if(true && (count % 5 == 0 && count!=0)) {
 printHtmlPart(34)
 }
 printHtmlPart(35)
-invokeTag('set','g',166,['var':("count"),'value':(count + 1)],-1)
+invokeTag('set','g',161,['var':("count"),'value':(count + 1)],-1)
 printHtmlPart(36)
 }
 printHtmlPart(37)
 }
 printHtmlPart(38)
-invokeTag('render','g',182,['template':("/sativaTemplate/scriptsTemplate")],-1)
+invokeTag('render','g',177,['template':("/sativaTemplate/scriptsTemplate")],-1)
 printHtmlPart(39)
 expressionOut.print(daySelected)
 printHtmlPart(40)
 expressionOut.print(start)
 printHtmlPart(41)
-expressionOut.print(end)
+expressionOut.print(start)
 printHtmlPart(42)
-expressionOut.print(page)
+expressionOut.print(end)
 printHtmlPart(43)
+expressionOut.print(end)
+printHtmlPart(44)
+expressionOut.print(page)
+printHtmlPart(45)
+expressionOut.print(page)
+printHtmlPart(46)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1416352716000L
+public static final long LAST_MODIFIED = 1418896961000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

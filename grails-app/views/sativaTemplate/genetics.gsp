@@ -9,6 +9,9 @@
 				<div class="row well">
 			 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'genetic']" >
               <div class="row">
+                <g:if test="${error}">
+                  <div class="alert alert-danger">${error}</div>
+                </g:if>
               	<div class="col-lg-4">
                   <div class="form-group">
                       <label class="col-lg-3 control-label">Nombre</label>
@@ -107,6 +110,7 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
+
 });
 </script>
 </body>

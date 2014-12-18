@@ -74,7 +74,7 @@
 											  <div class="col-lg-3">
 											    <div class="input-group">
 											    	
-											     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" class="calendar2 form-control">
+											     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" id="calendar2" class=" form-control">
 											    </div>
 											  </div>
 											  <div class="col-lg-3">
@@ -82,7 +82,7 @@
 												    <div class="input-group">
 												    	<input type="hidden" name="start" value="" class="hiddenCalendar2">
 												    	<input type="hidden" name="end" value="" class="hiddenCalendar3">
-												     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" class="calendar3 form-control">
+												     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" id="calendar3" class="form-control">
 												      <span class="input-group-btn">
 												        <button type="submit" class="btn btn-default" >Filtrar</button>
 												      </span>
@@ -131,7 +131,7 @@
 											  <div class="col-lg-3">
 											    <div class="input-group">
 											    	
-											     <input type="date" value="${new Date().format('dd/MM/yyyy')}" class="form-control calendar2">
+											     <input type="date" value="${new Date().format('dd/MM/yyyy')}" id="calendar4" class="form-control ">
 											    </div>
 											  </div>
 											  <div class="col-lg-3">
@@ -139,7 +139,7 @@
 												    <div class="input-group">
 												    	<input type="hidden" name="start" value="" class="hiddenCalendar2">
 												    	<input type="hidden" name="end" value="" class="hiddenCalendar3">
-												     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" class="calendar3 form-control">
+												     <input type="date"  value="${new Date().format('dd/MM/yyyy')}" id ="calendar5" class=" form-control">
 												      <span class="input-group-btn">
 												        <button type="submit" class="btn btn-default" >Filtrar</button>
 												      </span>
@@ -186,8 +186,17 @@
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
    var now = new Date("${daySelected}")
-   var start = new Date("${start}")
-   var end = new Date("${end}")
+   var end = new Date()
+   var start   = new Date()
+   start.setDate(start.getDate()-30)
+   if ("${start}" != "") {
+   		start = new Date("${start}")
+   }
+   if ("${end}" != ""){
+   		 end = new Date("${end}")
+   }
+   
+   
 
 
 
@@ -213,31 +222,55 @@ jQuery(document).ready(function() {
    		$('#tableDivPeriod').tab('show')
    		$('#tablePerPeriod').addClass('active');
    		$('#tablePerDay').removeClass('active');
+   		$('#tablePerGeneticPeriod').removeClass('active');
+   } 
+
+   else if ("${page}" == "genetics") {
+   		$('#tableDivGeneticPeriod').tab('show')
+   		$('#tablePerGeneticPeriod').addClass('active');
+   		$('#tablePerDay').removeClass('active');
+   		$('#tablePerPeriod').removeClass('active');
    } 
 
 
    $('#calendar1').val(today)
-   $('.calendar2').val(auxStart)
-   $('.calendar3').val(auxEnd)
+   $('#calendar2').val(auxStart)
+   $('#calendar3').val(auxEnd)
+   $('#calendar4').val(auxStart)
+   $('#calendar5').val(auxEnd)
 
- 	if (now) {
-   		$('#hiddenCalendar').val(now.toISOString())
+	if (now) {
+		$('#hiddenCalendar').val(now.toISOString())
+	}
+	if (start){
+   		$('.hiddenCalendar2').val(start.toISOString())
+    }
+    if (end) {
+   		$('.hiddenCalendar3').val(end.toISOString())
    	}
-   $('.hiddenCalendar2').val(start.toISOString())
-   $('.hiddenCalendar3').val(end.toISOString())
 
    $('#calendar1').on('change', function(){
    		var auxDate = new Date($('#calendar1').val());
    		$('#hiddenCalendar').val(auxDate.toISOString())
    });
 
-   $('.calendar2').on('change', function(){
-   		var auxDate = new Date($('.calendar2').val());
+   $('#calendar2').on('change', function(){
+   		var auxDate = new Date($('#calendar2').val());
    		$('.hiddenCalendar2').val(auxDate.toISOString())
    });
 
-   $('.calendar3').on('change', function(){
-   		var auxDate = new Date($('.calendar3').val());
+   $('#calendar3').on('change', function(){
+   		var auxDate = new Date($('#calendar3').val());
+   		$('.hiddenCalendar3').val(auxDate.toISOString())
+   });
+
+    $('#calendar4').on('change', function(){
+   		var auxDate = new Date($('#calendar4').val());
+   		$('.hiddenCalendar2').val(auxDate.toISOString())
+   });
+
+   $('#calendar5').on('change', function(){
+   		var auxDate = new Date($('#calendar5').val());
    		$('.hiddenCalendar3').val(auxDate.toISOString())
    });
 

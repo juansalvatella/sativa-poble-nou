@@ -10,6 +10,9 @@
 				 	<g:if test="${success}">
 				 		<div class="alert alert-success">${success}</div>
 				 	</g:if>
+                    <g:if test="${error}">
+                        <div class="alert alert-danger">${error}</div>
+                    </g:if>
           
 				 	<div class="row">
 				 		<div class="col-lg-4">

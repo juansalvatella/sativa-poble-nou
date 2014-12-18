@@ -58,7 +58,7 @@ printHtmlPart(10)
 invokeTag('img','g',81,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
 printHtmlPart(11)
 }
-else if(true && (it.status.name() == 'PARTNER_STATUS__INVITE')) {
+else if(true && (mem.status.name() == 'PARTNER_STATUS__INVITE')) {
 printHtmlPart(10)
 invokeTag('img','g',84,['dir':("css/img"),'file':("semaforoLila.jpg")],-1)
 printHtmlPart(11)
@@ -83,7 +83,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1416353851000L
+public static final long LAST_MODIFIED = 1418894465000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

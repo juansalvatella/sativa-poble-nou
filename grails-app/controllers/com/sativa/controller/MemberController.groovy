@@ -41,6 +41,17 @@ class MemberController  {
 	}
 
 	def create(DataMemberCommand cpc, Long oldPartner){
+		if (!cpc.firstname){
+			if (!cpc.friend) {
+				redirect(controller: "card", action: "dispatcher",  params:[num_tarjeta:cpc.codeCard, error:"El nombre es un campo necesario"])
+				return	
+			}
+			else {
+				redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend.id, error:"El nombre es un campo necesario"])
+				return
+			}
+			
+		}
 		def member
 		if (oldPartner){
 			member = Partner.get(oldPartner)
@@ -63,8 +74,8 @@ class MemberController  {
 		render(view: "/sativaTemplate/showMember", model: [grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents])
 	}
 
-	def invite(Long memberId){
-		render (view:"/sativaTemplate/createMember", model:[memberId:memberId])
+	def invite(Long memberId, String error ){
+		render (view:"/sativaTemplate/createMember", model:[error:error, memberId:memberId])
 	}
 
 
