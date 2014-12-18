@@ -2,6 +2,8 @@ package com.sativa.service
 
 import static com.sativa.enums.GeneticStatusEnum.GENETIC_STATUS__ENABLED
 import static com.sativa.enums.GeneticStatusEnum.GENETIC_STATUS__DISABLED
+import static com.sativa.enums.GeneticStatusEnum.GENETIC_STATUS__REMOVED
+
 import com.sativa.enums.GeneticStatusEnum
 import grails.transaction.Transactional
 
@@ -12,7 +14,10 @@ class GeneticService {
 	
 	@Transactional(readOnly = true)
 	def list () {
-		return Genetic.createCriteria().list {}
+		return Genetic.createCriteria().list {
+			ne "status", GENETIC_STATUS__REMOVED
+
+		}
 	}
 
 	@Transactional(readOnly = true)
@@ -45,6 +50,12 @@ class GeneticService {
 	@Transactional
 	def disabled (Genetic genetic) {
 		genetic.status  = GENETIC_STATUS__DISABLED
+		genetic.save(flush:true)
+	}
+
+	@Transactional
+	def remove (Genetic genetic) {
+		genetic.status = GENETIC_STATUS__REMOVED
 		genetic.save(flush:true)
 	}
 

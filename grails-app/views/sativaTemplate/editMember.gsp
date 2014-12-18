@@ -37,6 +37,11 @@
 							<div class="form-group">
 								<p><b>Tarjeta:</b><br />${card?.code}</p>
 							</div>
+							<g:if test="${member.friend}">
+								<div class="form-group">
+									<p><b>Invitado por:</b><br />${member.friend.firstname} ${member.friend.lastname}</p>
+								</div>
+							</g:if>
 
 				 		</div>
 				 		<div class="col-lg-5">
@@ -68,9 +73,9 @@
     								</div>
     							</div>
     							<div class="form-group">
-    								<label  class="col-sm-2 control-label">Email:</label>
+    								<label  class="col-sm-2 control-label">Teléfono:</label>
     								 <div class="col-sm-10">
-      									<input type="text" class="form-control" value="${member.email}" name="email" placeholder="algo@algo.com">
+      									<input type="text" class="form-control" value="${member.phone}" name="phone" >
     								</div>
     							</div>
     							<input type="hidden" name="image" id="foto_canvas" value="">

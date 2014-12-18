@@ -80,7 +80,7 @@
 				 									<g:elseif test="${mem.status.name() == 'PARTNER_STATUS__UNKNOWN'}">
 				 										<g:img dir="css/img" file="semaforoAmarillo.jpg"/>
 				 									</g:elseif>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__INVITE'}">
+				 									<g:elseif test="${mem.status.name() == 'PARTNER_STATUS__INVITE'}">
 				 										<g:img dir="css/img" file="semaforoLila.jpg"/>
 				 									</g:elseif>
 				 								</td>

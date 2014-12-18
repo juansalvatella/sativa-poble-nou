@@ -20,6 +20,7 @@ class CardController  {
 		def card = Card.findByCode(num_tarjeta)
 		if (!card) {	
 			def listMembers = memberService.list()
+			println "tajetaaaaa "+num_tarjeta
 			render(view: "/sativaTemplate/createMember", model: [listMembers:listMembers, numCard:num_tarjeta])
 		}
 		else {

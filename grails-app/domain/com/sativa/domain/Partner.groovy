@@ -15,7 +15,7 @@ class Partner {
 	Date    			dateCreated
 	Date                dateRenovation = new Date()
 	String 				code
-	String 				email 
+	String 				phone 
 	String  			firstname
 	String 	    	    lastname
 	String  			address
@@ -32,7 +32,7 @@ class Partner {
 		username  			 nullable:true
 		password  			 nullable:true
 		code 	  			 nullable:true
-		email 	  			 nullable:true
+		phone 	  			 nullable:true
 		lastname  			 nullable:true
 		address   			 nullable:true
 		signature			 nullable:true

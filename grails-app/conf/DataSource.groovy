@@ -14,17 +14,16 @@ hibernate {
 // environment specific settings
 environments {
     development {
-        dataSource {
-            //dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            dbCreate = "create-drop"
-            url = "jdbc:mysql://localhost/sativaBD?useUnicode=yes&characterEncoding=UTF-8"
-            username = "root"
-            password = "root"
-        
-        }
+              dataSource {
+                  dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+                  url = "jdbc:h2:mem:devDb"
+                  driverClassName = "org.h2.Driver"
+                  username = "sa"
+                  password = ""
+              }
     }
     production {
-        dataSource {
+       dataSource {
             dbCreate = "update"
             url = "jdbc:mysql://localhost/sativaBD?useUnicode=yes&characterEncoding=UTF-8"
             username = "root"

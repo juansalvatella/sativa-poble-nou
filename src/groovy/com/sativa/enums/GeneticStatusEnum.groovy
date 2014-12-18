@@ -3,7 +3,8 @@ package com.sativa.enums
 
 enum GeneticStatusEnum {
 	GENETIC_STATUS__ENABLED		(100, "geneticStatusEnum.enabled"),
-	GENETIC_STATUS__DISABLED 	(200, "geneticStatusEnum.disabled")
+	GENETIC_STATUS__DISABLED 	(200, "geneticStatusEnum.disabled"),
+	GENETIC_STATUS__REMOVED 	(300, "geneticStatusEnum.removed")
 	
 	
 	final int id

@@ -50,15 +50,15 @@
     								</div>
     							</div>
     							<div class="form-group">
-    								<label  class="col-sm-2 control-label">Email:</label>
+    								<label  class="col-sm-2 control-label">Teléfono:</label>
     								 <div class="col-sm-10">
-      									<input type="text" class="form-control" name="email" placeholder="algo@algo.com">
+      									<input type="text" class="form-control" name="phone">
     								</div>
                                     <input type="hidden" name="image" id="foto_canvas" value="">
                                     <input type="hidden" name="codeCard" id="codeCard" value="">
                                     <input type="hidden" name="friend" id="friend" value="${memberId}">
     							</div>
-                                <div class="form-group">
+                                <div id="selectMember" class="form-group">
                                     <label  class="col-sm-2 control-label">Seleccionar miembro:</label>
                                      <div class="col-sm-10">
                                         <select name="oldPartner" class="form-control">
@@ -103,6 +103,10 @@ jQuery(document).ready(function() {
     
    App.init(); // initlayout and core plugins
    $('#codeCard').val("${numCard}")
+
+   if ("${memberId}" != "" &&  "${memberId}" != null)  {
+        $('#selectMember').addClass('hide');
+   }
 
     // Put event listeners into place
     window.addEventListener("DOMContentLoaded", function() {

@@ -27,7 +27,7 @@ class GeneticOrdersController  {
 			def genetic 	= Genetic.get(gen)
 			def amount 		= amounts[index] as Long
 			numGrams += genetic.type.grams
-			stringEvent += amount+" dosis de "+genetic.name
+			stringEvent += amount+" de "+genetic.name
 			if (index != genetics.size()-1)  {
 				stringEvent += ', '
 			}

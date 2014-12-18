@@ -72,6 +72,7 @@ class MemberService {
 				or {
 					eq "status", PARTNER_STATUS__ACTIVED
 					eq "status", PARTNER_STATUS__UNKNOWN
+					eq "status", PARTNER_STATUS__INVITE
 				}
 				order("id", "asc")
 			}
@@ -100,7 +101,7 @@ class MemberService {
 	@Transactional
 	def create(DataMemberCommand cpc){
 		Partner partner 			 = new Partner()
-		partner.email 				 = cpc.email
+		partner.phone 				 = cpc.phone
 		partner.firstname			 = cpc.firstname
 		partner.lastname 			 = cpc.lastname
 		partner.address 			 = cpc.address
@@ -110,7 +111,7 @@ class MemberService {
     	
     	Date now 		   = new Date()
     	String dayString   = now.getAt(Calendar.DATE)
-		String monthString = now.getAt(Calendar.MONTH)
+		String monthString = now.getAt(Calendar.MONTH)+1
 		String yearString  = now.getAt(Calendar.YEAR)
 		yearString 		   = yearString.substring(2)
 
@@ -154,7 +155,7 @@ class MemberService {
 
 	@Transactional
 	def edit(Partner partner, DataMemberCommand cpc){
-		partner.email 				 = cpc.email
+		partner.phone 				 = cpc.phone
 		partner.firstname			 = cpc.firstname
 		partner.lastname 			 = cpc.lastname
 		partner.address 			 = cpc.address

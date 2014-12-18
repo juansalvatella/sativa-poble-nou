@@ -11,12 +11,12 @@ class BootStrap {
    def init = { servletContext ->
    	 TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
 
-     def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
+      /*def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
       def userRole = new Role(authority: 'ROLE_PARTNER').save(flush: true)
       def sellerRole = new Role(authority: 'ROLE_SELLER').save(flush: true)
       def testUser
       try {
-         testUser = new Partner(username: 'me', password: 'password', code:"001", firstname:"pedro", lastname:"garcia", email:"aa", address:"calle anonimo 123 Barcelona", identificationNumber:"38879780M", status:PartnerStatusEnum.PARTNER_STATUS__ACTIVED)
+         testUser = new Partner(username: 'me', password: 'password', code:"001", firstname:"pedro", lastname:"garcia", phone:"6666666", address:"calle anonimo 123 Barcelona", identificationNumber:"38879780M", status:PartnerStatusEnum.PARTNER_STATUS__ACTIVED)
          if (!testUser.validate()) println "eroress "+testUser.errors
          testUser.save(flush: true)
          testUser.encodePassword()
@@ -33,7 +33,7 @@ class BootStrap {
       PartnerRole.create testUser, userRole, true
 
         def geneticType = new GeneticType(name:"TIPO1", price:1.34, grams:0.80, color:"#088A08")
-      geneticType.save(flush:true)
+      geneticType.save(flush:true)*/
 
       Date.metaClass.'static'.fromISO = { String date ->
             if (!date) return null

@@ -136,5 +136,5 @@ License: You must have a valid license purchased only from themeforest(the above
 		</ul>
 		<!-- END SIDEBAR MENU -->
 
-		<a href="/"><img  src="${resource(dir:'css/img', file:'logo.png')}" id="logo" alt="logo"/></a>	
+		<a href="/buscar-socio"><img  src="${resource(dir:'css/img', file:'logo.png')}" id="logo" alt="logo"/></a>	
 	</div>

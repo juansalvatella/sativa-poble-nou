@@ -21,7 +21,9 @@
 				 			 	<a href="#renovationMember" id="renovationMemberBtn" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
 				 			 	<g:form name="myForm" id="formFriend" role="form"  class="form-horizontal" url="[action:'invite',controller:'member']" >
 				 			 		<input type="hidden" name="memberId" value="${member.id}" />
-				 			 		<button type="submit" class="btn btn-block  btn-warning">Invitar a un amigo</button>
+				 			 		<g:if test="${member.status.name() != 'PARTNER_STATUS__INVITE'}">
+				 			 			<button type="submit" class="btn btn-block  btn-warning">Invitar a un amigo</button>
+				 			 		</g:if>
 				 				 </g:form>
 				 			
 				 			<g:if test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
@@ -37,10 +39,13 @@
 				 			<p><b>Apellidos:</b> ${member.lastname}</p>
 				 			<p><b>DNI:</b>  ${member.identificationNumber}</p>
 				 			<p><b>Domicilio:</b>  ${member.address}</p>
-				 			<p><b>Email:</b>  ${member.email}</p>
+				 			<p><b>Teléfono:</b>  ${member.phone}</p>
 				 			<p><b>Fecha de inscripción:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
 				 			<p><b>Última cuota:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
 				 			<p><b>Tarjeta:</b>  ${card?.code}</p>
+			 				<g:if test="${member.friend}">
+								<p><b>Invitado por:</b><br />${member.friend.firstname} ${member.friend.lastname}</p>
+							</g:if>
 				 		</div>
 				 		<div class="col-lg-4">
 				 			<video id="video" width="300" height="225" class="gapPhoto videoWebcam" autoplay></video>
@@ -281,9 +286,13 @@ jQuery(document).ready(function() {
 		$.each(carroObject, function(key, value) {
 			auxPrice += parseFloat(value.price)
 			numCount += value.amount;
-			$('#resumBill').append('<p class="label label-success"><b>'+$('#genetic_'+value.geneticId).html()+' x'+value.amount+'</b> <img id="geneticClose_'+value.geneticId+'" class="removeGenetic" src="/images/imageSativa/botonBorrar.png"</p>');
+			var contentLabel = '<p class="label label-success"><b>'+$('#genetic_'+value.geneticId).html()+' x'+value.amount+'</b> <img id="geneticClose_'+value.geneticId+'" class="removeGenetic" src="/images/imageSativa/botonBorrar.png"</p>'
+			if ($('#resumBill .label-success').length%4 ==0 && $('#resumBill .label-success').length > 1){
+				contentLabel += "<p></p><br />"
+			}
+			$('#resumBill').append(contentLabel);
 		});
-		$('#resumBillTotal').html("<b>TOTAL= "+numCount+" ("+auxPrice.toFixed(2)+"€)</b>");
+		$('#resumBillTotal').html("<b>TOTAL= "+numCount+"</b>");
 
 	
 	})
@@ -303,7 +312,7 @@ jQuery(document).ready(function() {
 				numCount += value.amount;
 				$('#resumBill').append('<p class="label label-success"><b>'+$('#genetic_'+value.geneticId).html()+' x'+value.amount+'</b> <img id="geneticClose_'+value.geneticId+'" class="removeGenetic" src="/images/imageSativa/botonBorrar.png"</p>');
 			});
-			$('#resumBillTotal').html("<b>TOTAL= "+numCount+" ("+auxPrice.toFixed(2)+"€)</b>");
+			$('#resumBillTotal').html("<b>TOTAL= "+numCount+"</b>");
 		});
 
 	$('#signElectric').click(function() {

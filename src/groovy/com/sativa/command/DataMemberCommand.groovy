@@ -15,7 +15,7 @@ import com.sativa.domain.Partner
 class DataMemberCommand {
 	String 				username
 	String 				password
-	String 				email 
+	String 				phone 
 	String  			firstname
 	String 	    	    lastname
 	String  			address
@@ -27,7 +27,7 @@ class DataMemberCommand {
 	static constraints = {
 		username  			 nullable:true
 		password  			 nullable:true
-		email 	  			 nullable:true
+		phone 	  			 nullable:true
 		lastname  			 nullable:true
 		address   			 nullable:true
 		image 	  			 nullable:true
