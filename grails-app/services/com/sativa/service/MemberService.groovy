@@ -136,16 +136,17 @@ class MemberService {
         }
 
         if (cpc.friend) {
+        	if (!cpc.image){
+        		return null
+        	}
         	partner.status = PARTNER_STATUS__INVITE
         	partner.friend = cpc.friend
     	}
-    	else if (!cpc.firstname || !cpc.lastname || !cpc.address || !cpc.codeCard || !cpc.identificationNumber) {
+    	else if (!cpc.firstname || !cpc.image || !cpc.lastname || !cpc.address || !cpc.codeCard || !cpc.identificationNumber || !cpc.phone) {
     		partner.status = PARTNER_STATUS__UNKNOWN
     	}
     	else partner.status = PARTNER_STATUS__ACTIVED
-    		
     
-
     	partner.save(flush:true)
 
 		if (cpc.codeCard) {

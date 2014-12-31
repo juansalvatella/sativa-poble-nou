@@ -60,8 +60,9 @@ class MemberController  {
 		else {
 			member = memberService.create(cpc)
 		}
-	
-		redirect(controller: "member", action: "showEdit",  params:[memberId:member.id, success:"Se ha editado correctamente"])
+
+		if (member) redirect(controller: "member", action: "showEdit",  params:[memberId:member.id, success:"Se ha editado correctamente"])
+		else redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend?.id, error: "La foto para usuarios invitados es obligatoria"])
 	}
 
 	def show(Long memberId){

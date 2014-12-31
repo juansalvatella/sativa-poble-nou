@@ -11,7 +11,7 @@ class BootStrap {
    def init = { servletContext ->
    	 TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
 
-    /*  def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
+    /* def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
       def userRole = new Role(authority: 'ROLE_PARTNER').save(flush: true)
       def sellerRole = new Role(authority: 'ROLE_SELLER').save(flush: true)
       def testUser

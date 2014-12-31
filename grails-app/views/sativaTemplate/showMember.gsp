@@ -17,14 +17,17 @@
 					 		</g:else>
 					 		<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
 				 			 	<a href="#disabledMember" class="btn btn-block btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
-				 			</g:if>
-				 			 	<a href="#renovationMember" id="renovationMemberBtn" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
+				 			
+				 				<g:if test="${member.status.name() != 'PARTNER_STATUS__INVITE'}">
+				 			 		<a href="#renovationMember" id="renovationMemberBtn" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
+				 			 	</g:if>
 				 			 	<g:form name="myForm" id="formFriend" role="form"  class="form-horizontal" url="[action:'invite',controller:'member']" >
 				 			 		<input type="hidden" name="memberId" value="${member.id}" />
 				 			 		<g:if test="${member.status.name() != 'PARTNER_STATUS__INVITE'}">
 				 			 			<button type="submit" class="btn btn-block  btn-warning">Invitar a un amigo</button>
 				 			 		</g:if>
 				 				 </g:form>
+				 			</g:if>
 				 			
 				 			<g:if test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 				 				<sec:ifAllGranted roles="ROLE_ADMIN">
@@ -65,12 +68,13 @@
 								 		
 				 		</div>
 				 	</div>
+				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
+					 	
 				 	<div class="row" id="listActiveGenetics">
-				 		<g:if test="${(member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
-					 		<g:each in="${listGenetics}">
+				 			<g:each in="${listGenetics}">
 					 			<a  style="background-color:${it.type.color};border-color:${it.type.color};"  id="genetic_${it.id}" price="${it.type.price}" class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
 					 		</g:each>
-				 		</g:if>
+				 		
 				 	</div>
 				 	<hr />
 				 	<div class="row">
@@ -86,6 +90,7 @@
 						 	</div>
 					 	</div>
 				 	</div>
+				 	</g:if>
 				 	<div class="row">
 				 		<g:cookie name="myCookie" />
 				 		<h3>Historial del usuario</h3>
