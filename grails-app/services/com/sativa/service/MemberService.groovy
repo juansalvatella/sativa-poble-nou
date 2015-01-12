@@ -42,28 +42,52 @@ class MemberService {
 
 	@Transactional(readOnly = true)
 	def search (String firstname, String lastname, String identificationNumber) {
-			return Partner.createCriteria().list {
-				order("code", "asc")
-				and {
-					or {
-						if (firstname){
-							ilike 'firstname', "%${firstname}%"
-						}
-						if (lastname){
-							ilike 'lastname', "%${lastname}%"
-						}
-						if (identificationNumber){
-							ilike 'identificationNumber', "%${identificationNumber}%"
-						}
+		return Partner.createCriteria().list {
+			order("code", "asc")
+			and {
+				or {
+					if (firstname){
+						ilike 'firstname', "%${firstname}%"
 					}
-					if (!identificationNumber){
-						ne "status", PARTNER_STATUS__DISABLED
-						ne "status", PARTNER_STATUS__BANNED
+					if (lastname){
+						ilike 'lastname', "%${lastname}%"
+					}
+					if (identificationNumber){
+						ilike 'identificationNumber', "%${identificationNumber}%"
 					}
 				}
+				if (!identificationNumber){
+					ne "status", PARTNER_STATUS__DISABLED
+					ne "status", PARTNER_STATUS__BANNED
+					ne "status", PARTNER_STATUS__INVITE
+				}
 			}
+		}
 
 	}
+
+	@Transactional(readOnly = true)
+	def searchInvitate (String firstname, String lastname, String identificationNumber) {
+		return Partner.createCriteria().list {
+			order("code", "asc")
+			and {
+				or {
+					if (firstname){
+						ilike 'firstname', "%${firstname}%"
+					}
+					if (lastname){
+						ilike 'lastname', "%${lastname}%"
+					}
+					if (identificationNumber){
+						ilike 'identificationNumber', "%${identificationNumber}%"
+					}
+				}
+				eq "status", PARTNER_STATUS__INVITE
+			}
+		}
+	}
+
+	
 
 
 	@Transactional(readOnly = true)
@@ -72,8 +96,17 @@ class MemberService {
 				or {
 					eq "status", PARTNER_STATUS__ACTIVED
 					eq "status", PARTNER_STATUS__UNKNOWN
-					eq "status", PARTNER_STATUS__INVITE
 				}
+				order("id", "asc")
+			}
+	}
+
+
+
+	@Transactional(readOnly = true)
+	def guests () {
+			return Partner.createCriteria().list {
+				eq "status", PARTNER_STATUS__INVITE
 				order("id", "asc")
 			}
 	}
@@ -95,6 +128,8 @@ class MemberService {
 				if (code){
 					eq "code", code
 				}
+				ne "status", PARTNER_STATUS__INVITE
+
 			}
 	}
 
@@ -170,11 +205,12 @@ class MemberService {
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
         	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/prueba.png"))
         	partner.image = "prueba.png"
-        	partner.status = PARTNER_STATUS__ACTIVED
     	}
-    	else {
-			partner.status = PARTNER_STATUS__UNKNOWN
-		}
+
+    	if (partner.status == PARTNER_STATUS__UNKNOWN && partner.firstname && partner.image && partner.lastname && partner.address && partner.identificationNumber && partner.phone) {
+    		partner.status = PARTNER_STATUS__ACTIVED
+    	}
+    	
 		
 		partner.save(flush:true)
 	}

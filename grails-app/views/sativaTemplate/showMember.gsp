@@ -38,6 +38,7 @@
 				 			
 				 		</div>
 				 		<div class="col-lg-5">
+							<p><b>Numero de socio:</b> ${member.code}</p>
 				 			<p><b>Nombre:</b> ${member.firstname}</p>
 				 			<p><b>Apellidos:</b> ${member.lastname}</p>
 				 			<p><b>DNI:</b>  ${member.identificationNumber}</p>

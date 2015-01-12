@@ -164,3 +164,15 @@
 	color:red;
 	font-weight: bold;
 }
+
+table#tableGuests tr td.valignInvitate{
+padding-top:2%;
+
+}
+
+#showImageTop {
+	z-index:99999 !important;
+	position:absolute;
+	top:40%;
+	left:40%;
+}

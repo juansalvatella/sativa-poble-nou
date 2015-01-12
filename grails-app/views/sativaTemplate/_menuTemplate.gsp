@@ -105,6 +105,12 @@ License: You must have a valid license purchased only from themeforest(the above
 						<span class="title">Gestion de socios</span>
 					</g:link>
 				</li>
+				<li class="menuListInvite">
+					<g:link mapping="listInvitate">
+						<i class="icon-star"></i>
+						<span class="title">Invitados</span>
+					</g:link>
+				</li>
 
 				<li class="menuManagerGenetics">
 					<g:link mapping="managementGenetics">

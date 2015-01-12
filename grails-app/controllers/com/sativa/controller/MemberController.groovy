@@ -26,9 +26,14 @@ class MemberController  {
 	def search(String firstname, String lastname, String identificationNumber) {
 		def listMembers = memberService.search(firstname, lastname, identificationNumber)
 		render(view: "/sativaTemplate/searchMembers", model: [listMembers:listMembers])
-
-
 	}
+
+	def searchInvitate(String firstname, String lastname, String identificationNumber) {
+		def listInvitates = memberService.searchInvitate(firstname, lastname, identificationNumber)
+		render(view: "/sativaTemplate/showInvitates", model: [listInvitates:listInvitates])
+	}
+
+
 
 	def list () {
 		def listMembers = memberService.list()
@@ -41,7 +46,7 @@ class MemberController  {
 	}
 
 	def create(DataMemberCommand cpc, Long oldPartner){
-		if (!cpc.firstname){
+		if (!cpc.firstname && !oldPartner){
 			if (!cpc.friend) {
 				redirect(controller: "card", action: "dispatcher",  params:[num_tarjeta:cpc.codeCard, error:"El nombre es un campo necesario"])
 				return	
@@ -123,4 +128,9 @@ class MemberController  {
 		redirect(controller: "member", action: "show", params:[memberId:memberId])
 	}
 
+
+	def guests() {
+		def listInvitates = memberService.guests()
+		render(view: "/sativaTemplate/showInvitates", model: [listInvitates:listInvitates])
+	}
 }

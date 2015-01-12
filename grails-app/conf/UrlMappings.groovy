@@ -15,6 +15,7 @@ class UrlMappings {
         name managementGenetics: "/gestionar-geneticas" (controller:"genetic", action:"list")
         name stadistics: "/estadisticas"(controller:"geneticOrders", action:"stadistics")
         name searchPartner: "/gestionar-socio"(controller:"partner", action:"list")
+        name listInvitate: "/invitados"(controller:"member", action:"guests")
 
         
         "500"(view:'/error')

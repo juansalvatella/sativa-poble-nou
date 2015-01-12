@@ -9,8 +9,8 @@
 				 		<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
 						  <li class="active"><a href="#tablePerDay" role="tab" data-toggle="tab">Tabla del dia</a></li>
-						  <li id="tableDivPeriod"><a href="#tablePerPeriod" role="tab" data-toggle="tab">Ventas por período</a></li>
-						  <li id="tableDivGeneticPeriod"><a href="#tablePerGeneticPeriod" role="tab" data-toggle="tab">Ventas geneticas período</a></li>
+						  <li id="tableDivPeriod"><a href="#tablePerPeriod" role="tab" data-toggle="tab"> Aportaciones por período</a></li>
+						  <li id="tableDivGeneticPeriod"><a href="#tablePerGeneticPeriod" role="tab" data-toggle="tab"> Geneticas período</a></li>
 						</ul>
 
 						<!-- Tab panes -->
@@ -103,7 +103,7 @@
 							 				<g:if test="${stadisticsPerPeriod}">
 						 						<g:each in="${stadisticsPerPeriod}">
 						 							<tr>
-						 								<td>${it.partner.id}</td>
+						 								<td>${it.partner.code}</td>
 						 								<td>${it.amount}</td>
 						 							</tr>
 						 						</g:each>

@@ -22,8 +22,8 @@ expressionOut.print(error)
 printHtmlPart(4)
 }
 printHtmlPart(5)
-for( _it388382488 in (listTypes) ) {
-changeItVariable(_it388382488)
+for( _it1198785023 in (listTypes) ) {
+changeItVariable(_it1198785023)
 printHtmlPart(6)
 expressionOut.print(it.id)
 printHtmlPart(7)
@@ -36,8 +36,8 @@ invokeTag('form','g',41,['name':("myForm"),'role':("form"),'class':("form-horizo
 printHtmlPart(10)
 invokeTag('set','g',51,['var':("count"),'value':(1)],-1)
 printHtmlPart(11)
-for( _it1341672583 in (listGenetics) ) {
-changeItVariable(_it1341672583)
+for( _it288305407 in (listGenetics) ) {
+changeItVariable(_it288305407)
 printHtmlPart(12)
 if(true && (it.status.name()=='GENETIC_STATUS__ENABLED')) {
 printHtmlPart(13)
@@ -66,8 +66,8 @@ printHtmlPart(20)
 printHtmlPart(21)
 invokeTag('set','g',77,['var':("count"),'value':(1)],-1)
 printHtmlPart(22)
-for( _it768707791 in (listGenetics) ) {
-changeItVariable(_it768707791)
+for( _it2033248658 in (listGenetics) ) {
+changeItVariable(_it2033248658)
 printHtmlPart(12)
 expressionOut.print(it.name)
 printHtmlPart(23)
@@ -91,7 +91,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1418897853000L
+public static final long LAST_MODIFIED = 1418917934000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'
