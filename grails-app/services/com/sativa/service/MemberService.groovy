@@ -203,8 +203,8 @@ class MemberService {
 		 	def applicationContext = grailsApplication.mainContext
     		String basePath = applicationContext.getResource("/").getFile().toString()
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/prueba.png"))
-        	partner.image = "prueba.png"
+        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+partner.code+".png"))
+        	partner.image = partner.code+".png"
     	}
 
     	if (partner.status == PARTNER_STATUS__UNKNOWN && partner.firstname && partner.image && partner.lastname && partner.address && partner.identificationNumber && partner.phone) {
