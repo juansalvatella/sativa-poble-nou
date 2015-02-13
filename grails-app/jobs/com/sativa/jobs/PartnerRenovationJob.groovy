@@ -12,11 +12,11 @@ class PartnerRenovationJob {
 	
     	
     static triggers = {
-		// Execucio cada 4 minuts al segon 10
-		cron name:'partnerRenovationJob', cronExpression: '10 1 * * * ?' 
+		// Execucio cada  hora al minuto 1 al  segon 30
+		cron name:'partnerRenovationJob', cronExpression: '30 1 0/1 * * ?' 
     }
 	
-	def doJobTask() {
+	def execute() {
 		log.info "startpartnerrenovation"
 		Date maxDetoxified = new Date()
 		use(TimeCategory){
@@ -26,6 +26,7 @@ class PartnerRenovationJob {
 			eq "status", PARTNER_STATUS__ACTIVED
 			le "dateRenovation", maxDetoxified
 		}
+
 		partners.each {Partner p->
 			p.status = PARTNER_STATUS__DETOXIFIED
 			p.save(flush:true)

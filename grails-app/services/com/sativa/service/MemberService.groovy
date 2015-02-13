@@ -91,13 +91,14 @@ class MemberService {
 
 
 	@Transactional(readOnly = true)
-	def list () {
+	def list (String orderParam) {
 			return Partner.createCriteria().list {
 				or {
 					eq "status", PARTNER_STATUS__ACTIVED
 					eq "status", PARTNER_STATUS__UNKNOWN
 				}
-				order("id", "asc")
+				if (orderParam) order (orderParam, "asc")
+				else order("id", "asc")
 			}
 	}
 
@@ -254,6 +255,9 @@ class MemberService {
 		BufferedImage newImg = ImageUtils.decodeToImage(image);
         ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+member.code+".png"))
         member.image = member.code+".png"
+        if (member.status == PARTNER_STATUS__UNKNOWN && member.firstname && member.image && member.lastname && member.address && member.identificationNumber && member.phone) {
+    		member.status = PARTNER_STATUS__ACTIVED
+    	}
         member.save(flush:true)
 	}
 }

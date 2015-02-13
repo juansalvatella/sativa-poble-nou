@@ -26,7 +26,7 @@ class GeneticOrdersController  {
 		genetics.eachWithIndex { gen, index ->
 			def genetic 	= Genetic.get(gen)
 			def amount 		= amounts[index] as Long
-			numGrams += genetic.type.grams
+			numGrams += genetic.type.grams*amount
 			stringEvent += amount+" de "+genetic.name
 			if (index != genetics.size()-1)  {
 				stringEvent += ', '

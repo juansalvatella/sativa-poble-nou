@@ -1,6 +1,6 @@
 package com.sativa.controller
 
-
+import static com.sativa.enums.CardStatusEnum.CARD_STATUS__CANCELLED
 import grails.plugin.springsecurity.annotation.Secured
 
 import com.sativa.domain.Card
@@ -18,9 +18,8 @@ class CardController  {
 	
 	def dispatcher(String num_tarjeta, String error){
 		def card = Card.findByCode(num_tarjeta)
-		if (!card) {	
-			def listMembers = memberService.list()
-			println "tajetaaaaa "+num_tarjeta
+		if (!card || card?.status == CARD_STATUS__CANCELLED) {	
+			def listMembers = memberService.list("firstname")
 			render(view: "/sativaTemplate/createMember", model: [error:error, listMembers:listMembers, numCard:num_tarjeta])
 		}
 		else {

@@ -10,12 +10,13 @@ class PartnerDisabledJob {
 	
 	
     static triggers = {
-		// Execucio cada 4 minuts al segon 10
-		cron name:'partnerDisabledJob', cronExpression: '10 1 * * * ?' 
+		// Execucio cada hora al minuto 1 segundo 10
+		cron name:'partnerDisabledJob', cronExpression: '10 1 0/10 * * ?' 
+		
     }
 	
 	
-	def doJobTask() {
+	def execute() {
 		log.info "startpartnerdisabled"
 		Date maxDisabled = new Date()
 		use(TimeCategory){
