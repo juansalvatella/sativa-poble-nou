@@ -75,7 +75,7 @@
 				 								<td class="valignInvitate"> ${mem.firstname} ${mem.lastname}</td>
 				 								<td class="valignInvitate">${mem.identificationNumber}</td>
 				 								<td class="valignInvitate">${mem.dateCreated}</td>
-				 								<td class="valignInvitate">${mem.friend.firstname} ${mem.friend.firstname}</td>
+				 								<td class="valignInvitate">${mem.friend.firstname} ${mem.friend.lastname}</td>
 				 							</tr>
 				 						</g:each>
 				 				</g:if>

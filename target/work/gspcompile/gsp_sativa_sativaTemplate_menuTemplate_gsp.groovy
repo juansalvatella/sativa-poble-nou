@@ -81,31 +81,34 @@ createClosureForHtmlPart(16, 3)
 invokeTag('link','g',106,['mapping':("managementMembers")],3)
 printHtmlPart(17)
 createClosureForHtmlPart(18, 3)
-invokeTag('link','g',113,['mapping':("managementGenetics")],3)
+invokeTag('link','g',112,['mapping':("listInvitate")],3)
 printHtmlPart(19)
 createClosureForHtmlPart(20, 3)
-invokeTag('link','g',119,['mapping':("stadistics")],3)
+invokeTag('link','g',119,['mapping':("managementGenetics")],3)
 printHtmlPart(21)
 createClosureForHtmlPart(22, 3)
-invokeTag('link','g',125,['mapping':("searchPartner")],3)
+invokeTag('link','g',125,['mapping':("stadistics")],3)
 printHtmlPart(23)
-})
-invokeTag('ifAllGranted','sec',127,['roles':("ROLE_ADMIN")],2)
-printHtmlPart(24)
-expressionOut.print(createLink(uri:'j_spring_security_logout'))
+createClosureForHtmlPart(24, 3)
+invokeTag('link','g',131,['mapping':("searchPartner")],3)
 printHtmlPart(25)
 })
-invokeTag('ifLoggedIn','sec',135,[:],1)
+invokeTag('ifAllGranted','sec',133,['roles':("ROLE_ADMIN")],2)
 printHtmlPart(26)
-expressionOut.print(resource(dir:'css/img', file:'logo.png'))
+expressionOut.print(createLink(uri:'j_spring_security_logout'))
 printHtmlPart(27)
+})
+invokeTag('ifLoggedIn','sec',141,[:],1)
+printHtmlPart(28)
+expressionOut.print(resource(dir:'css/img', file:'logo.png'))
+printHtmlPart(29)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1418917934000L
+public static final long LAST_MODIFIED = 1421673322000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

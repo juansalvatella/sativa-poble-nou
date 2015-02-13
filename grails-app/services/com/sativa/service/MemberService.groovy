@@ -207,7 +207,11 @@ class MemberService {
         	partner.image = partner.code+".png"
     	}
 
-    	if (partner.status == PARTNER_STATUS__UNKNOWN && partner.firstname && partner.image && partner.lastname && partner.address && partner.identificationNumber && partner.phone) {
+    	if (partner.status == PARTNER_STATUS__ACTIVED && !partner.firstname || !partner.image || !partner.lastname || !partner.address || !partner.identificationNumber || !partner.phone) {
+    		partner.status = PARTNER_STATUS__UNKNOWN
+    	}
+
+    	else if (partner.status == PARTNER_STATUS__UNKNOWN && partner.firstname && partner.image && partner.lastname && partner.address && partner.identificationNumber && partner.phone) {
     		partner.status = PARTNER_STATUS__ACTIVED
     	}
     	

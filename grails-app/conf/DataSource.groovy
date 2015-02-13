@@ -13,7 +13,7 @@ hibernate {
 
 // environment specific settings
 environments {
-    development {
+   /* development {
               dataSource {
                   dbCreate = "create-drop" // one of 'create', 'create-drop','update'
                   url = "jdbc:h2:mem:devDb"
@@ -21,9 +21,9 @@ environments {
                   username = "sa"
                   password = ""
               }
-    }
+    }*/
     production {
-      /* dataSource {
+       dataSource {
             dbCreate = "update"
             url = "jdbc:mysql://localhost/sativaBD?useUnicode=yes&characterEncoding=UTF-8"
             username = "root"
@@ -49,6 +49,6 @@ environments {
                jdbcInterceptors = "ConnectionState"
                defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
             }
-        }*/
+        }
     }
 }
