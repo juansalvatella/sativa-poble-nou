@@ -176,3 +176,20 @@ padding-top:2%;
 	top:40%;
 	left:40%;
 }
+
+#tableHistoricCustom {
+	margin-top:10px;
+}
+
+table#tableHistoricCustom > tbody > tr > td.alignTd {
+	padding-top: 5%;
+}
+
+
+.showAlarmGuest {
+	margin-top:20%;
+}
+
+#imageAlertGuest{
+	float:right;
+}

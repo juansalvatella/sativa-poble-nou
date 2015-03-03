@@ -1,5 +1,6 @@
 package com.sativa.service
 import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__CUSTOM
+import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__REMOVED
 
 
 import grails.transaction.Transactional
@@ -17,6 +18,18 @@ class EventService {
 		return Event.createCriteria().list {
 			eq "member", partner
 			order("dateCreated", "desc")
+			ne "type", EVENT_TYPE__REMOVED
+		}
+	}
+
+	@Transactional(readOnly = true)
+	def listCustom (Partner partner) {
+		return Event.createCriteria().list {
+			eq "member", partner
+			eq "type", EVENT_TYPE__CUSTOM
+			 maxResults(4)
+			order("dateCreated", "desc")
+			ne "type", EVENT_TYPE__REMOVED
 		}
 	}
 
@@ -50,6 +63,12 @@ class EventService {
 	@Transactional
 	def viewed (Event event) {
 		event.viewed=true
+		event.save(flush:true)
+	}
+
+	@Transactional
+	def removed (Event event) {
+		event.type=EVENT_TYPE__REMOVED
 		event.save(flush:true)
 	}
 

@@ -66,7 +66,21 @@
 				               		<a id="savePhoto" class="btn btn-block btn-primary" >Guardar foto</a>
 				           		</g:form>
 				            </div>
-								 		
+				            <h2>Histórico</h2>
+				            <g:if  test="${listCustomEvents.size() == 0}">
+					 			No hay comentarios
+					 		</g:if>
+					 		<g:else>
+					            <table id="tableHistoricCustom" class="table table-bordered table-condensed">
+
+						 			<g:each in="${listCustomEvents}">
+						 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
+						 				<td class="alignTd" >${it.observation}</td>	
+						 				<td class="alignTd"><a href="${createLink(controller:'event', action:'removed', params:[eventId:it.id, partnerId:member.id])}"><img width="20" src="/css/img/delete-genetic.png"></a></td>
+						 				</tr>
+						 			</g:each>
+					 			</table>
+				 			</g:else>	
 				 		</div>
 				 	</div>
 				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
@@ -87,7 +101,6 @@
 						 			<input type="hidden" name="memberId" value="${member.id}" />
 						 			<input type="hidden" name="signature" id="firma_canvas" value="">
 						 			<a id="signElectric" class="btn btn-primary" disabled>Firma elctrónica</a>
-						 			<a  id="registerBuy" class="btn btn-primary" disabled>Registrar entrega</a>
 						 	</div>
 					 	</div>
 				 	</div>
@@ -330,10 +343,7 @@ jQuery(document).ready(function() {
 	$("#generarFirma").click(function() { 
         $("#scrennEncima").addClass('hide');
         $('#registerBuy').removeAttr('disabled');
-    });   
-
-	$('#registerBuy').click(function() {
-		var listGenetics =""
+        var listGenetics =""
 		var listAmount	 =""
 		$.each(carroObject, function(key, value) {
 			listGenetics += value.geneticId
@@ -363,7 +373,9 @@ jQuery(document).ready(function() {
 				withCredentials: true
 			}
 		});
-	});
+    });   
+
+	
 
 
 

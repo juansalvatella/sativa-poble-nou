@@ -8,7 +8,8 @@ enum EventTypeEnum {
 	EVENT_TYPE__NEW_CARD		(400, "eventTypeEnum.newcard"),
 	EVENT_TYPE__BUY				(500, "eventTypeEnum.buy"),
 	EVENT_TYPE__NEW_USER		(600, "eventTypeEnum.newUser"),
-	EVENT_TYPE__RENOVATE		(700,"eventTypeEnum.renovate")
+	EVENT_TYPE__RENOVATE		(700,"eventTypeEnum.renovate"),
+	EVENT_TYPE__REMOVED			(800,"eventTypeEnum.removed")
 	
 	
 	final int id

@@ -57,13 +57,14 @@
 					 				<th>DNI</th>
 					 				<th>Fecha de entrada</th>
 					 				<th>Invitado por</th>
+					 				<th>#Veces invitado</th>
 				 				</tr>
 				 			</thead>
 				 			<tbody>
 				 				<g:if test="${listInvitates}">
 				 						<g:each in="${listInvitates}" var="mem" status="i">
 				 							<tr > 
-				 								<td class="valignInvitate">${i+1}</td>
+				 								<td class="valignInvitate">${i+1} ${mem.code}</td>
 				 								<td style="text-align:center">
 				 									<g:if test="${mem.image}">
 										 				<g:img dir="css/img/partners" id="${mem.image}" class="seeImage" file="${mem.image}" width="50" height="50"/></a>
@@ -76,6 +77,11 @@
 				 								<td class="valignInvitate">${mem.identificationNumber}</td>
 				 								<td class="valignInvitate">${mem.dateCreated}</td>
 				 								<td class="valignInvitate">${mem.friend.firstname} ${mem.friend.lastname}</td>
+				 								<td class="valignInvitate">${mem.numInvitations}
+				 									<g:if test="${mem.numInvitations >= 5}">
+				 										<g:img dir="images/imageSativa"  file="warning.png" width="20" height="20"/>
+				 									</g:if>
+				 								</td>
 				 							</tr>
 				 						</g:each>
 				 				</g:if>
