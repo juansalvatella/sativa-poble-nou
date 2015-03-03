@@ -1,23 +1,5 @@
 <!DOCTYPE html>
 	<g:render template="/sativaTemplate/menuTemplate" model="${username}" />
-		<div class="modal fade" id="deleteMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1>ELIMINAR USUARIO</h1>
-				</div>
-				<div class="modal-body">
-						<p>¿Estas seguro que quieres eliminar al usuario?</p>
-				</div>
-				<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<a id="btnDeleteMember" class="btn btn-danger" >Eliminar</a>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
 	<!-- END SIDEBAR -->
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
@@ -87,10 +69,10 @@
 				 				<g:if test="${listMembers}">
 				 						<g:each in="${listMembers}">
 				 							<tr>
-				 								<td style="vertical-align:middle">${it.code}</td>
-				 								<td style="vertical-align:middle">${it.firstname} ${it.lastname}</td>
-				 								<td style="vertical-align:middle">${it.identificationNumber}</td>
-				 								<td style="vertical-align:middle">
+				 								<td>${it.code}</td>
+				 								<td>${it.firstname} ${it.lastname}</td>
+				 								<td>${it.identificationNumber}</td>
+				 								<td>
 				 									<g:if test="${it.status.name() == 'PARTNER_STATUS__ACTIVED'}">
 				 										<g:img dir="css/img" file="semaforoVerde.jpg"/>
 				 									</g:if>
@@ -111,11 +93,8 @@
 				 									</g:elseif>
 				 								</td>
 				 								<td>
-				 									<a class="btn btn-primary" href="${createLink(controller:'member', action:'showEdit', params:[memberId:it.id])}">
+				 									<a href="${createLink(controller:'member', action:'showEdit', params:[memberId:it.id])}">
 				 										Editar
-				 									</a>
-				 									<a class="btn btn-danger deleteMember" id="${it.id}" >
-				 										Eliminar
 				 									</a>
 				 								</td>
 				 							</tr>
@@ -145,7 +124,6 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
-   ManagementMember.init();
 
 });
 </script>

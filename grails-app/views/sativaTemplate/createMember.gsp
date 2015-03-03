@@ -72,12 +72,7 @@
                                         </select>
                                     </div>
                                 </div>
-					 			<g:if test="${memberId != null}">
-                                    <input type="submit" class="btn center  pull-right btn-success" value="Nuevo invitado" />
-                                </g:if>
-                                <g:else>
-                                    <input type="submit" class="btn center  pull-right btn-success" value="Nuevo socio" />
-                                </g:else>
+					 			<input type="submit" class="btn center  pull-right btn-success" value="Nuevo socio" />
 				 			</g:form>
 				 		</div>
 				 		

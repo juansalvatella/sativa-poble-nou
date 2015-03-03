@@ -27,21 +27,19 @@ for( mem in (listInvitates) ) {
 printHtmlPart(6)
 expressionOut.print(i+1)
 printHtmlPart(7)
-expressionOut.print(mem.code)
-printHtmlPart(8)
 if(true && (mem.image)) {
+printHtmlPart(8)
+invokeTag('img','g',69,['dir':("css/img/partners"),'id':(mem.image),'class':("seeImage"),'file':(mem.image),'width':("50"),'height':("50")],-1)
 printHtmlPart(9)
-invokeTag('img','g',70,['dir':("css/img/partners"),'id':(mem.image),'class':("seeImage"),'file':(mem.image),'width':("50"),'height':("50")],-1)
-printHtmlPart(10)
 }
 else {
+printHtmlPart(10)
+invokeTag('img','g',72,['dir':("css/img"),'id':("avatar.png"),'class':("seeImage"),'file':("avatar.png"),'width':("200")],-1)
 printHtmlPart(11)
-invokeTag('img','g',73,['dir':("css/img"),'id':("avatar.png"),'class':("seeImage"),'file':("avatar.png"),'width':("200")],-1)
-printHtmlPart(12)
 }
-printHtmlPart(13)
+printHtmlPart(12)
 expressionOut.print(mem.firstname)
-printHtmlPart(7)
+printHtmlPart(13)
 expressionOut.print(mem.lastname)
 printHtmlPart(14)
 expressionOut.print(mem.identificationNumber)
@@ -49,35 +47,27 @@ printHtmlPart(14)
 expressionOut.print(mem.dateCreated)
 printHtmlPart(14)
 expressionOut.print(mem.friend.firstname)
-printHtmlPart(7)
+printHtmlPart(13)
 expressionOut.print(mem.friend.lastname)
-printHtmlPart(14)
-expressionOut.print(mem.numInvitations)
 printHtmlPart(15)
-if(true && (mem.numInvitations >= 5)) {
-printHtmlPart(16)
-invokeTag('img','g',82,['dir':("images/imageSativa"),'file':("warning.png"),'width':("20"),'height':("20")],-1)
-printHtmlPart(15)
-}
-printHtmlPart(17)
 i++
 }
 }
-printHtmlPart(18)
+printHtmlPart(16)
 }
 else {
-printHtmlPart(19)
+printHtmlPart(17)
 }
-printHtmlPart(20)
-invokeTag('render','g',108,['template':("/sativaTemplate/scriptsTemplate")],-1)
-printHtmlPart(21)
+printHtmlPart(18)
+invokeTag('render','g',102,['template':("/sativaTemplate/scriptsTemplate")],-1)
+printHtmlPart(19)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1425409833000L
+public static final long LAST_MODIFIED = 1421676726000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

@@ -45,11 +45,11 @@
 						 				<g:if test="${stadisticsPerDay}">
 					 						<g:each in="${stadisticsPerDay}">
 					 							<tr>
-					 								<td style="vertical-align:middle">${it.partner.code}</td>
-					 								<td style="vertical-align:middle">${it.genetic.name}</td>
-					 								<td style="vertical-align:middle">${it.genetic.type.grams*it.amount}gr</td>
-					 								<td style="vertical-align:middle"><g:formatDate  timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/> </td>
-					 								<td  style="vertical-align:middle" class="center"><g:img dir="css/img/geneticOrdersSigns" file="${it.id}.png" class="imageSign" base="${grailsApplication.config.grails.serverURL}" />
+					 								<td>${it.partner.code}</td>
+					 								<td>${it.genetic.name}</td>
+					 								<td>${it.genetic.type.grams*it.amount}gr</td>
+					 								<td><g:formatDate  timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/> </td>
+					 								<td class="center"><g:img dir="css/img/geneticOrdersSigns" file="${it.id}.png" class="imageSign" base="${grailsApplication.config.grails.serverURL}" />
 					 							</tr>
 					 						</g:each>
 						 				</g:if>

@@ -6,7 +6,6 @@ import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DISABLED
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__UNKNOWN
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__INVITE
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DETOXIFIED
-import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__REMOVED
 
 
 
@@ -63,7 +62,6 @@ class MemberService {
 					ne "status", PARTNER_STATUS__INVITE
 				}
 			}
-			ne "status", PARTNER_STATUS__REMOVED
 		}
 
 	}
@@ -118,7 +116,7 @@ class MemberService {
 	@Transactional(readOnly = true)
 	def all (String firstname, String lastname, String identificationNumber, String code) {
 			return Partner.createCriteria().list {
-				order("id", "desc")
+				order("code", "asc")
 				if (firstname){
 					ilike 'firstname', "%${firstname}%"
 				}
@@ -129,27 +127,25 @@ class MemberService {
 					ilike 'identificationNumber', "%${identificationNumber}%"
 				}
 				if (code){
-					ilike "code", "%${code}%" 
+					eq "code", code
 				}
 				ne "status", PARTNER_STATUS__INVITE
-				ne "status", PARTNER_STATUS__REMOVED
 
 			}
 	}
 
 	@Transactional
 	def create(DataMemberCommand cpc){
-		if (!cpc.identificationNumber) return "El dni es obligatorio"
-		def existUser = Partner.createCriteria().list {
-				eq "identificationNumber", cpc.identificationNumber
-				ne "status", PARTNER_STATUS__INVITE
-				ne "status", PARTNER_STATUS__REMOVED
-		}
-		if (existUser) {
-			return "El dni ya existe"
-		}
-
-		Date now 		   = new Date()
+		Partner partner 			 = new Partner()
+		partner.phone 				 = cpc.phone
+		partner.firstname			 = cpc.firstname
+		partner.lastname 			 = cpc.lastname
+		partner.address 			 = cpc.address
+		partner.identificationNumber = cpc.identificationNumber
+		
+	
+    	
+    	Date now 		   = new Date()
     	String dayString   = now.getAt(Calendar.DATE)
 		String monthString = now.getAt(Calendar.MONTH)+1
 		String yearString  = now.getAt(Calendar.YEAR)
@@ -164,36 +160,7 @@ class MemberService {
 		}
 		String countString = count as String
 
-
-		Partner partner = new Partner()
-		if (cpc.friend) {
-        	if (!cpc.image){
-        		return "La foto para usuarios invitados es obligatoria"
-        	}
-        	def existUserInvitate = Partner.createCriteria().get {
-				eq "identificationNumber", cpc.identificationNumber
-				eq "status", PARTNER_STATUS__INVITE
-			}
-			if (existUserInvitate) partner = existUserInvitate
-			else {
-				partner.status = PARTNER_STATUS__INVITE
-				partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
-			}
-        	partner.friend = cpc.friend
-        	partner.numInvitations++
-    	}
-    	else {
-    		partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
-    	}
-		partner.phone 				 = cpc.phone
-		partner.firstname			 = cpc.firstname
-		partner.lastname 			 = cpc.lastname
-		partner.address 			 = cpc.address
-		partner.identificationNumber = cpc.identificationNumber
-		
-    	
-    	
-		
+		partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
 		
 
 		if (cpc.image) {
@@ -204,11 +171,17 @@ class MemberService {
         	partner.image = partner.code+".png"
         }
 
-
-    	if (!cpc.friend && (!cpc.firstname || !cpc.image || !cpc.lastname || !cpc.address || !cpc.codeCard || !cpc.identificationNumber || !cpc.phone)) {
+        if (cpc.friend) {
+        	if (!cpc.image){
+        		return null
+        	}
+        	partner.status = PARTNER_STATUS__INVITE
+        	partner.friend = cpc.friend
+    	}
+    	else if (!cpc.firstname || !cpc.image || !cpc.lastname || !cpc.address || !cpc.codeCard || !cpc.identificationNumber || !cpc.phone) {
     		partner.status = PARTNER_STATUS__UNKNOWN
     	}
-    	else if (!cpc.friend) partner.status = PARTNER_STATUS__ACTIVED
+    	else partner.status = PARTNER_STATUS__ACTIVED
     
     	partner.save(flush:true)
 
@@ -253,15 +226,6 @@ class MemberService {
 		member.status = PARTNER_STATUS__BANNED
 		member.save()
 		String textObservation = "El usuarios ha sido desactivado. "+observation
-		eventService.create(textObservation, member, EVENT_TYPE__DISABLED)
-	}
-
-
-	@Transactional
-	def delete(Partner member, String observation) {
-		member.status = PARTNER_STATUS__REMOVED
-		member.save()
-		String textObservation = "El usuarios ha sido eliminado. "+observation
 		eventService.create(textObservation, member, EVENT_TYPE__DISABLED)
 	}
 

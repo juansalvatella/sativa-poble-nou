@@ -31,7 +31,6 @@
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="${resource(dir:'js/scriptsSativa', file:'app.js')}" type="text/javascript"></script>
-<script src="${resource(dir:'js/scriptsSativa', file:'managementMember.js')}" type="text/javascript"></script>
 <script src="${resource(dir:'js/scriptsSativa', file:'index.js')}" type="text/javascript"></script>
 <script src="${resource(dir:'js/scriptsSativa', file: 'tasks.js')}" type="text/javascript"></script>
 

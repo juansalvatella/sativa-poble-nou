@@ -19,8 +19,8 @@ invokeTag('form','g',30,['name':("myForm"),'role':("form"),'class':("form-horizo
 printHtmlPart(3)
 if(true && (stadisticsPerDay)) {
 printHtmlPart(4)
-for( _it861848529 in (stadisticsPerDay) ) {
-changeItVariable(_it861848529)
+for( _it801971421 in (stadisticsPerDay) ) {
+changeItVariable(_it801971421)
 printHtmlPart(5)
 expressionOut.print(it.partner.code)
 printHtmlPart(6)
@@ -52,8 +52,8 @@ if(true && (stadisticsPerPeriod)) {
 printHtmlPart(17)
 if(true && (stadisticsPerPeriod)) {
 printHtmlPart(18)
-for( _it311027888 in (stadisticsPerPeriod) ) {
-changeItVariable(_it311027888)
+for( _it1126304175 in (stadisticsPerPeriod) ) {
+changeItVariable(_it1126304175)
 printHtmlPart(19)
 expressionOut.print(it.partner.code)
 printHtmlPart(20)
@@ -81,8 +81,8 @@ if(true && (listGenetics)) {
 printHtmlPart(28)
 invokeTag('set','g',152,['var':("count"),'value':(1)],-1)
 printHtmlPart(29)
-for( _it470516818 in (listGenetics) ) {
-changeItVariable(_it470516818)
+for( _it1873404567 in (listGenetics) ) {
+changeItVariable(_it1873404567)
 printHtmlPart(30)
 expressionOut.print(it.name.name)
 printHtmlPart(31)
@@ -122,7 +122,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1425331651000L
+public static final long LAST_MODIFIED = 1421673322000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

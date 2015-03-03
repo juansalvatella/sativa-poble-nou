@@ -30,10 +30,4 @@ class EventController  {
 	}
 
 
-	def removed (Long eventId, Long partnerId) {
-		Event event = Event.get(eventId)
-		eventService.removed(event)
-		redirect(controller: "member", action: "show", params:[memberId:partnerId])
-	}
-
 }

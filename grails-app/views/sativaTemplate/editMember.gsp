@@ -2,25 +2,7 @@
 
 	<g:render template="/sativaTemplate/menuTemplate" model="${username}" />
 	<!-- END SIDEBAR -->
-	<!-- BEGIN CONTENT -->	
-	<div class="modal fade" id="deleteMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1>ELIMINAR USUARIO</h1>
-				</div>
-				<div class="modal-body">
-						<p>¿Estas seguro que quieres eliminar al usuario?</p>
-				</div>
-				<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<a id="btnDeleteMember" href="${createLink(controller:'member', action:'delete', params:[memberId:member.id])}" class="btn btn-danger" >Eliminar</a>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
+	<!-- BEGIN CONTENT -->
 	
 	<div class="page-content-wrapper">
 		<div class="page-content">
@@ -37,12 +19,11 @@
 								<g:img dir="css/img" file="avatar.png" width="200"/>
 					 		</g:else>
 				 			<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
-				 			 	<a href="#disabledMember" class="btn center btn-warning" data-toggle="modal" class="config">Desactivar socio</a>
+				 			 	<a href="#disabledMember" class="btn center btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
 				 			</g:if>
 				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 				 			 	<a href="#disabledMember" class="btn center btn-success" data-toggle="modal" class="config">Activar socio</a>
 				 			</g:elseif>
-				 			 	<a href="#deleteMember" class="btn center btn-danger" data-toggle="modal"  class="config">Eliminar socio</a>
 				 			<p></p>
 			 				<div class="form-group">
 								<p><b>Numero de socio:</b><br />${member.code}</p>
@@ -101,14 +82,6 @@
 					 			<input class="btn center pull-right btn-success" type="submit" id="updatePartner" value="Actualizar socio" />
 					 			
 				 			</g:form>
-							<g:if test="${member.numInvitations >= 5}">
-					 			<div class="row alert alert-warning showAlarmGuest">
-					 				
-										<h2>Este usuario ha sido invitado mas de 5 veces</h2>
-										<g:img  id="imageAlertGuest" dir="images/imageSativa"  file="warning.png" width="80" height="80"/>
-									
-					 			</div>
-				 			</g:if>
 				 		</div>
 				 		<div class="col-lg-4">
 				 			<video id="video" width="200" height="150" class="gapPhoto videoWebcam" autoplay></video>
@@ -223,7 +196,6 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
-   ManagementMember.init();
 
    if ("${member.status.name()}" == 'PARTNER_STATUS__BANNED' || "${member.status.name()}" == 'PARTNER_STATUS__DISABLED') {
    		$('#divEditMember').css("border", "red solid 2px").css("padding", 20); 

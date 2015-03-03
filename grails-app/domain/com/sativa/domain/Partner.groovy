@@ -24,7 +24,6 @@ class Partner {
 	String  			identificationNumber
 	PartnerStatusEnum   status 
 	Partner             friend
-	Long 				numInvitations = 0
 
 
 	static transients = ['springSecurityService']
@@ -38,6 +37,7 @@ class Partner {
 		address   			 nullable:true
 		signature			 nullable:true
 		image 	  			 nullable:true
+		identificationNumber nullable:true
 		friend				 nullable:true
 	}
 
