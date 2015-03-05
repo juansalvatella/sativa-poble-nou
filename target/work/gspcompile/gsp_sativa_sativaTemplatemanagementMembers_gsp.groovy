@@ -15,12 +15,12 @@ printHtmlPart(0)
 invokeTag('render','g',2,['template':("/sativaTemplate/menuTemplate"),'model':(username)],-1)
 printHtmlPart(1)
 createClosureForHtmlPart(2, 1)
-invokeTag('form','g',55,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'all',controller:'member'])],1)
+invokeTag('form','g',73,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'all',controller:'member'])],1)
 printHtmlPart(3)
 if(true && (listMembers)) {
 printHtmlPart(4)
-for( _it265354930 in (listMembers) ) {
-changeItVariable(_it265354930)
+for( _it1615321854 in (listMembers) ) {
+changeItVariable(_it1615321854)
 printHtmlPart(5)
 expressionOut.print(it.code)
 printHtmlPart(6)
@@ -32,53 +32,55 @@ expressionOut.print(it.identificationNumber)
 printHtmlPart(8)
 if(true && (it.status.name() == 'PARTNER_STATUS__ACTIVED')) {
 printHtmlPart(9)
-invokeTag('img','g',77,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
+invokeTag('img','g',95,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
 printHtmlPart(10)
 }
 else if(true && (it.status.name() == 'PARTNER_STATUS__DISABLED')) {
 printHtmlPart(9)
-invokeTag('img','g',80,['dir':("css/img"),'file':("semaforoAzul.jpg ")],-1)
+invokeTag('img','g',98,['dir':("css/img"),'file':("semaforoAzul.jpg ")],-1)
 printHtmlPart(10)
 }
 else if(true && (it.status.name() == 'PARTNER_STATUS__BANNED')) {
 printHtmlPart(9)
-invokeTag('img','g',83,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
+invokeTag('img','g',101,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
 printHtmlPart(10)
 }
 else if(true && (it.status.name() == 'PARTNER_STATUS__DETOXIFIED')) {
 printHtmlPart(9)
-invokeTag('img','g',86,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
+invokeTag('img','g',104,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
 printHtmlPart(10)
 }
 else if(true && (it.status.name() == 'PARTNER_STATUS__UNKNOWN')) {
 printHtmlPart(9)
-invokeTag('img','g',89,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
+invokeTag('img','g',107,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
 printHtmlPart(10)
 }
 else if(true && (it.status.name() == 'PARTNER_STATUS__INVITE')) {
 printHtmlPart(9)
-invokeTag('img','g',92,['dir':("css/img"),'file':("semaforoLila.jpg")],-1)
+invokeTag('img','g',110,['dir':("css/img"),'file':("semaforoLila.jpg")],-1)
 printHtmlPart(10)
 }
 printHtmlPart(11)
 expressionOut.print(createLink(controller:'member', action:'showEdit', params:[memberId:it.id]))
 printHtmlPart(12)
-}
+expressionOut.print(it.id)
 printHtmlPart(13)
 }
-else {
 printHtmlPart(14)
 }
+else {
 printHtmlPart(15)
-invokeTag('render','g',123,['template':("/sativaTemplate/scriptsTemplate")],-1)
+}
 printHtmlPart(16)
+invokeTag('render','g',144,['template':("/sativaTemplate/scriptsTemplate")],-1)
+printHtmlPart(17)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1421673322000L
+public static final long LAST_MODIFIED = 1425331622000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

@@ -54,6 +54,8 @@ expressionOut.print(resource(dir:'js/pluginsSativa', file:'jquery.sparkline.min.
 printHtmlPart(6)
 expressionOut.print(resource(dir:'js/scriptsSativa', file:'app.js'))
 printHtmlPart(1)
+expressionOut.print(resource(dir:'js/scriptsSativa', file:'managementMember.js'))
+printHtmlPart(1)
 expressionOut.print(resource(dir:'js/scriptsSativa', file:'index.js'))
 printHtmlPart(1)
 expressionOut.print(resource(dir:'js/scriptsSativa', file: 'tasks.js'))
@@ -64,7 +66,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1421673322000L
+public static final long LAST_MODIFIED = 1424546955000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

@@ -60,11 +60,11 @@
 				 			<tbody>
 				 				<g:if test="${listMembers}">
 				 						<g:each in="${listMembers}" var="mem" status="i">
-				 							<tr>
-				 								<td>${i+1}</td>
-				 								<td>${mem.firstname} ${mem.lastname}</td>
-				 								<td>${mem.identificationNumber}</td>
-				 								<td>
+				 							<tr >
+				 								<td style="vertical-align:middle">${i+1}</td>
+				 								<td style="vertical-align:middle">${mem.firstname} ${mem.lastname}</td>
+				 								<td style="vertical-align:middle">${mem.identificationNumber}</td>
+				 								<td style="vertical-align:middle">
 				 									<g:if test="${mem.status.name() == 'PARTNER_STATUS__ACTIVED'}">
 				 										<g:img dir="css/img" file="semaforoVerde.jpg"/>
 				 									</g:if>
@@ -85,7 +85,7 @@
 				 									</g:elseif>
 				 								</td>
 				 								<td>
-				 									<a href="${createLink(controller:'member', action:'show', params:[memberId:mem.id])}">
+				 									<a class="btn btn-primary" href="${createLink(controller:'member', action:'show', params:[memberId:mem.id])}">
 				 										Ver
 				 									</a>
 				 								</td>

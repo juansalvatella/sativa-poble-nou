@@ -58,26 +58,36 @@ class MemberController  {
 			
 		}
 		def member
+		def error 
 		if (oldPartner){
 			member = Partner.get(oldPartner)
 			cardService.add(member, cpc.codeCard)
+			error = member
 		}
 		else {
-			member = memberService.create(cpc)
+			error = memberService.create(cpc)
 		}
 
-		if (member) redirect(controller: "member", action: "showEdit",  params:[memberId:member.id, success:"Se ha editado correctamente"])
-		else redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend?.id, error: "La foto para usuarios invitados es obligatoria"])
+		println "error "+(error instanceof Partner)
+		println "error2 "+error
+
+		if (error &&  !(error instanceof Partner) && !cpc.friend) {
+			def listMembers = memberService.list("firstname")
+			render(view: "/sativaTemplate/createMember", model: [error:error, listMembers:listMembers, numCard:cpc.codeCard])
+		}
+		else if (error && !(error instanceof Partner)) redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend?.id, error: error])
+		else if (error && (error instanceof Partner)) redirect(controller: "member", action: "showEdit",  params:[memberId:error.id, success:"Se ha editado correctamente"])
 	}
 
 	def show(Long memberId){
 		Partner member = Partner.read(memberId)
 		def listGenetics 	  = geneticService.active()
 		def listEvents   	  = eventService.list(member)
+		def listCustomEvents  = eventService.listCustom(member)
 		def notification	  = eventService.notification(member)
 		def card  		 	  = cardService.cardActive(member)
 		def grams			  = geneticOrdersService.grams(member)
-		render(view: "/sativaTemplate/showMember", model: [grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents])
+		render(view: "/sativaTemplate/showMember", model: [grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents])
 	}
 
 	def invite(Long memberId, String error ){
@@ -106,6 +116,13 @@ class MemberController  {
 		memberService.remove(member, observation)
 		if (page == "edit") redirect(controller: "member", action: "showEdit", params:[memberId:memberId])
 		else redirect(controller: "member", action: "show", params:[memberId:memberId])
+	}
+
+	def delete(Long memberId, String observation, String page) {
+		Partner member = Partner.get(memberId)
+		memberService.delete(member, observation)
+		def listMembers = memberService.all(null, null, null, null)
+		render(view: "/sativaTemplate/managementMembers", model: [listMembers:listMembers])
 	}
 
 	def activate(Long memberId, String page) {
