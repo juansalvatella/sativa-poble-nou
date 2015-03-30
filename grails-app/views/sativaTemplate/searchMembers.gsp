@@ -9,7 +9,7 @@
 				 <div class="row well">
 				 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'search',controller:'member']" >
 	                            <div class="row">
-	                            	<div class="col-lg-3">
+	                            	<div class="col-lg-4">
 	                            		<div class="form-group">
 	                              			<label class="col-lg-3 control-label">Nombre</label>
 	                              			<div class="col-lg-9">
@@ -18,7 +18,7 @@
 	                               			
 	                            		</div>
 	                            	</div>
-	                            	<div class="col-lg-3">
+	                            	<div class="col-lg-4">
 	                             		<div class="form-group">
 	                              			<label class="col-lg-3 control-label">Apellidos</label>
 	                              			<div class="col-lg-9">
@@ -27,7 +27,12 @@
 			                               
 			                            </div>
 	                            	</div>
-	                              	<div class="col-lg-3">
+	                            	 <div class="col-lg-4">
+		                             	<div class="form-group">
+	                            			<input type="submit" class="btn btn-success" value="Buscar" />
+										</div>
+		                            </div>
+	                              	<div class="col-lg-4">
 	                              		<div class="form-group">
 	                              		   <label class="col-lg-3 control-label">DNI</label>
 	                              		   <div class="col-lg-9">
@@ -36,11 +41,16 @@
 		                               		
 		                               	</div>
 		                             </div>
-		                             <div class="col-lg-2">
-		                             	<div class="form-group">
-	                            			<input type="submit" class="btn btn-success" value="Buscar" />
-										</div>
-		                            </div>
+		                             <div class="col-lg-4">
+	                              		<div class="form-group">
+	                              		   <label class="col-lg-3 control-label">Nº Socio</label>
+	                              		   <div class="col-lg-9">
+		                               		 <input type="text" class="form-control" name="code" />
+		                               		</div>
+		                               		
+		                               	</div>
+		                             </div>
+		                            
 	                            </div>
 	                            
 			              </g:form>

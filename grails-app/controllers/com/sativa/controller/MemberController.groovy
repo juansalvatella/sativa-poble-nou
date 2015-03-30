@@ -23,8 +23,8 @@ class MemberController  {
 	def cardService
 	def geneticOrdersService
 
-	def search(String firstname, String lastname, String identificationNumber) {
-		def listMembers = memberService.search(firstname, lastname, identificationNumber)
+	def search(String firstname, String lastname, String identificationNumber, String code) {
+		def listMembers = memberService.search(firstname, lastname, identificationNumber, code)
 		render(view: "/sativaTemplate/searchMembers", model: [listMembers:listMembers])
 	}
 

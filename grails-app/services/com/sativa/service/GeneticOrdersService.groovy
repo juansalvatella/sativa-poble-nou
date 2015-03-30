@@ -42,11 +42,16 @@ class GeneticOrdersService {
 		def auxStart = new Date()
 		def start = Calendar.instance
 		def end = Calendar.instance
-		start.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH)-1, date: auxStart.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
+	
+		start.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH), date:  0, hourOfDay:24, minute:00, second:0)
 		start = start.getTime()
-		end.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH), date: auxStart.getAt(Calendar.DATE), hourOfDay:24, minute:0, second:0)
+		end.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH), date: 1, hourOfDay:24, minute:0, second:0)
+		end.set(date:end.getActualMaximum( Calendar.DATE))
 		end   = end.getTime()
 
+		println "----"
+		println start 
+		println end 
 		def listGenetics =  GeneticOrders.createCriteria().list {
 			between "dateCreated", start, end
 			eq "partner", partner

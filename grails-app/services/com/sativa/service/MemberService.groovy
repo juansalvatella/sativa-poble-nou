@@ -42,7 +42,7 @@ class MemberService {
 	def cardService
 
 	@Transactional(readOnly = true)
-	def search (String firstname, String lastname, String identificationNumber) {
+	def search (String firstname, String lastname, String identificationNumber, String code) {
 		return Partner.createCriteria().list {
 			order("code", "asc")
 			and {
@@ -55,6 +55,9 @@ class MemberService {
 					}
 					if (identificationNumber){
 						ilike 'identificationNumber', "%${identificationNumber}%"
+					}
+					if (code){
+						ilike "code", "%${code}%" 
 					}
 				}
 				if (!identificationNumber){
@@ -110,7 +113,7 @@ class MemberService {
 	def guests () {
 			return Partner.createCriteria().list {
 				eq "status", PARTNER_STATUS__INVITE
-				order("id", "asc")
+				order("id", "desc")
 			}
 	}
 

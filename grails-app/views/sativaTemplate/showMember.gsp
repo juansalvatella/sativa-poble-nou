@@ -84,6 +84,7 @@
 				 		</div>
 				 	</div>
 				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
+				 	
 					 	
 				 	<div class="row" id="listActiveGenetics">
 				 			<g:each in="${listGenetics}">
