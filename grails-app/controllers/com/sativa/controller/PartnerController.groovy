@@ -18,7 +18,6 @@ class PartnerController  {
 	def list() {
 		def listPartners = partnerService.list()
 		def listMembers  = memberService.list()
-		println "partnerss "+listPartners
 		render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners, listMembers:listMembers])
 	}
 	

@@ -49,9 +49,6 @@ class GeneticOrdersService {
 		end.set(date:end.getActualMaximum( Calendar.DATE))
 		end   = end.getTime()
 
-		println "----"
-		println start 
-		println end 
 		def listGenetics =  GeneticOrders.createCriteria().list {
 			between "dateCreated", start, end
 			eq "partner", partner

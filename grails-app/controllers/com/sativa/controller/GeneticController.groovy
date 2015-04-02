@@ -19,7 +19,6 @@ class GeneticController  {
 	}
 
 	def create(String name, Long type){
-		println "name "+name
 		if (name == "") {
 			redirect(controller: "genetic", action: "list",  params:[error: "No puedes crear una genetica sin nombre"])
 			return

@@ -68,8 +68,7 @@ class MemberController  {
 			error = memberService.create(cpc)
 		}
 
-		println "error "+(error instanceof Partner)
-		println "error2 "+error
+
 
 		if (error &&  !(error instanceof Partner) && !cpc.friend) {
 			def listMembers = memberService.list("firstname")

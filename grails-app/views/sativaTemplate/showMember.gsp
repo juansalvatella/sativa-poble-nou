@@ -85,7 +85,7 @@
 				 	</div>
 				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
 				 	
-					 	
+					 
 				 	<div class="row" id="listActiveGenetics">
 				 			<g:each in="${listGenetics}">
 					 			<a  style="background-color:${it.type.color};border-color:${it.type.color};"  id="genetic_${it.id}" price="${it.type.price}" class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
