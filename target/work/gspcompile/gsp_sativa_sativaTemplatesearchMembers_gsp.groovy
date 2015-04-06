@@ -27,7 +27,7 @@ for( mem in (listMembers) ) {
 printHtmlPart(6)
 expressionOut.print(i+1)
 printHtmlPart(7)
-expressionOut.print(mem.identificationNumber)
+expressionOut.print(mem.code)
 printHtmlPart(7)
 expressionOut.print(mem.firstname)
 printHtmlPart(8)
@@ -85,7 +85,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1427834880000L
+public static final long LAST_MODIFIED = 1428052430000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

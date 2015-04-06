@@ -2,6 +2,8 @@ package com.sativa.jobs
 
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DETOXIFIED
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DISABLED
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__ACTIVED
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__UNKNOWN
 import groovy.time.TimeCategory
 
 import com.sativa.domain.Partner
@@ -23,7 +25,11 @@ class PartnerDisabledJob {
 			maxDisabled = maxDisabled - 1.year
 		}
 		def partners = Partner.createCriteria().list {
-			eq "status", PARTNER_STATUS__DETOXIFIED
+			or {
+				eq "status", PARTNER_STATUS__ACTIVED
+				eq "status", PARTNER_STATUS__UNKNOWN
+				eq "status", PARTNER_STATUS__DETOXIFIED
+			}
 			le "dateRenovation", maxDisabled
 		}
 		partners.each {Partner p->

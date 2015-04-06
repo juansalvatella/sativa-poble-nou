@@ -7,6 +7,7 @@
 	<div class="page-content-wrapper">
 		<div class="page-content">
 				 <div class="container-fluid">
+				 	<div class="alert  hide alert-danger" id="alertDanger"></div>
 				 	<div class="row" id="divShowMember">
 				 		<div class="col-lg-3">
 				 			<g:if test="${member.image}">
@@ -84,7 +85,7 @@
 				 		</div>
 				 	</div>
 				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
-				 	
+				 
 					 
 				 	<div class="row" id="listActiveGenetics">
 				 			<g:each in="${listGenetics}">
@@ -93,6 +94,7 @@
 				 		
 				 	</div>
 				 	<hr />
+				 	
 				 	<div class="row">
 				 		<div class="col-lg-11">
 						 	<div class="row" id="divBill">
@@ -245,7 +247,7 @@
         <canvas class="roundCorners" id="newSignature" width="1000" height="500"></canvas>
         <script>signatureCapture();</script>
         <button type="button" class="btn btn-success" id="generarFirma" onclick="signatureSave()">guardar firma</button>
-        <button type="button" class="btn btn-danger"id="limpiarFirma" onclick="signatureClear()">borrar firma</button>
+        <button type="button" class="btn btn-danger" id="limpiarFirma" onclick="signatureClear()">borrar firma</button>
         
     </div>
 </div>
@@ -270,6 +272,8 @@ jQuery(document).ready(function() {
    if ("${grams}" > 90) {
    		$('#listActiveGenetics').html("<h4 style='color:red'>Este socio ya ha retirado mas de 90gr</h4>");
    }
+
+   
 
    $('#savePhoto').click(function() {
    		$('#formPhoto').submit()
@@ -365,10 +369,19 @@ jQuery(document).ready(function() {
 			url: '/geneticOrders/create?time='+new Date().getTime(),
 			dataType:'json',
 			success: function(data) {
-				window.location.reload()
+				if (data == "success") window.location.reload()
+				else  {
+					$('#alertDanger').html(data);
+   					$('#alertDanger').removeClass('hide');
+				}
 			},
 			error: function(jqXHR, textStatus, errorThrown){
-				window.location.reload()
+				var jdata = jqXHR.responseText
+				if (jdata == "success") window.location.reload()
+				else  {
+					$('#alertDanger').html(jdata);
+   					$('#alertDanger').removeClass('hide');
+				}
 			},
 			xhrFields: {
 				withCredentials: true

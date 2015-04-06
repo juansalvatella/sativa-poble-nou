@@ -15,7 +15,9 @@ class Event {
 
 
 	static constraints = {
-		
+		observation (maxSize:1000)
 	}
+		
+	
 	
 }

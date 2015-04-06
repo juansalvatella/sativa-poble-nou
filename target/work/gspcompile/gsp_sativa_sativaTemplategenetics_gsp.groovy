@@ -22,8 +22,8 @@ expressionOut.print(error)
 printHtmlPart(4)
 }
 printHtmlPart(5)
-for( _it88901532 in (listTypes) ) {
-changeItVariable(_it88901532)
+for( _it215068402 in (listTypes) ) {
+changeItVariable(_it215068402)
 printHtmlPart(6)
 expressionOut.print(it.id)
 printHtmlPart(7)
@@ -36,8 +36,8 @@ invokeTag('form','g',41,['name':("myForm"),'role':("form"),'class':("form-horizo
 printHtmlPart(10)
 invokeTag('set','g',51,['var':("count"),'value':(1)],-1)
 printHtmlPart(11)
-for( _it1666913659 in (listGenetics) ) {
-changeItVariable(_it1666913659)
+for( _it439654513 in (listGenetics) ) {
+changeItVariable(_it439654513)
 printHtmlPart(12)
 if(true && (it.status.name()=='GENETIC_STATUS__ENABLED')) {
 printHtmlPart(13)
@@ -66,8 +66,8 @@ printHtmlPart(20)
 printHtmlPart(21)
 invokeTag('set','g',77,['var':("count"),'value':(1)],-1)
 printHtmlPart(22)
-for( _it1893691698 in (listGenetics) ) {
-changeItVariable(_it1893691698)
+for( _it1929654311 in (listGenetics) ) {
+changeItVariable(_it1929654311)
 printHtmlPart(12)
 expressionOut.print(it.name)
 printHtmlPart(23)

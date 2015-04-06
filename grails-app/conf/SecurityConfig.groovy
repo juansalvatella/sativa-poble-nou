@@ -4,7 +4,7 @@ import grails.plugin.springsecurity.SecurityConfigType
 
 //	SPRING SECURITY
 grails.plugin.springsecurity.debug.useFilter = false
-
+grails.plugin.console.enabled = true
 
 
 // Added by the Spring Security Core plugin:
@@ -19,7 +19,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/js/**':                      ['permitAll'],
 	'/**/css/**':                     ['permitAll'],
 	'/**/images/**':                  ['permitAll'],
-	'/**/favicon.ico':                ['permitAll']
+	'/**/favicon.ico':                ['permitAll'],
+	'/console/**':					  ['permitAll']
 ]
 
 

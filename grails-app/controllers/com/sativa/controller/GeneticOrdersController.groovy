@@ -21,23 +21,38 @@ class GeneticOrdersController  {
 		def genetics = listGenetics.split(',')
 		def amounts = listAmount.split(',')
 		def numGrams = 0
+		def error = ""
 		def stringEvent = ""
 		
+		def auxGrams = geneticOrdersService.grams(partner)
+
 		genetics.eachWithIndex { gen, index ->
 			def genetic 	= Genetic.get(gen)
 			def amount 		= amounts[index] as Long
 			numGrams += genetic.type.grams*amount
-			stringEvent += amount+" de "+genetic.name
-			if (index != genetics.size()-1)  {
-				stringEvent += ', '
-			}
-			
-			geneticOrdersService.create(partner, genetic, amount, signature)	
 		}
 		
-		stringEvent += ' ('+numGrams+'gr)'
-		eventService.create("Ha retirado un total de "+stringEvent, partner, EVENT_TYPE__BUY)
-		redirect(controller: "member", action: "show", params:[memberId:memberId])
+		if ((auxGrams+numGrams) > 90){
+			error = "Has sobrepasado los gramos máximos"
+		}
+		else {
+			genetics.eachWithIndex { gen, index ->
+				def genetic 	= Genetic.get(gen)
+				def amount 		= amounts[index] as Long
+				numGrams += genetic.type.grams*amount
+				stringEvent += amount+" de "+genetic.name
+				if (index != genetics.size()-1)  {
+					stringEvent += ', '
+				}
+				
+				geneticOrdersService.create(partner, genetic, amount, signature)	
+			}
+			stringEvent += ' ('+numGrams+'gr)'
+			eventService.create("Ha retirado un total de "+stringEvent, partner, EVENT_TYPE__BUY)
+		}
+		
+		if (error != "") render error 
+		else render "success"
 	}
 
 

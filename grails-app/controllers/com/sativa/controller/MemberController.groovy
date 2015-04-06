@@ -75,10 +75,13 @@ class MemberController  {
 			render(view: "/sativaTemplate/createMember", model: [error:error, listMembers:listMembers, numCard:cpc.codeCard])
 		}
 		else if (error && !(error instanceof Partner)) redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend?.id, error: error])
-		else if (error && (error instanceof Partner)) redirect(controller: "member", action: "showEdit",  params:[memberId:error.id, success:"Se ha editado correctamente"])
+		else if (error && (error instanceof Partner)) {
+			if (cpc.friend ) redirect(controller: "member", action: "guests")
+			else redirect(controller: "member", action: "showEdit",  params:[memberId:error.id, success:"Se ha editado correctamente"])
+		}
 	}
 
-	def show(Long memberId){
+	def show(Long memberId, String error){
 		Partner member = Partner.read(memberId)
 		def listGenetics 	  = geneticService.active()
 		def listEvents   	  = eventService.list(member)
@@ -86,8 +89,9 @@ class MemberController  {
 		def notification	  = eventService.notification(member)
 		def card  		 	  = cardService.cardActive(member)
 		def grams			  = geneticOrdersService.grams(member)
-		render(view: "/sativaTemplate/showMember", model: [grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents])
+		render(view: "/sativaTemplate/showMember", model: [error:error, grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents])
 	}
+
 
 	def invite(Long memberId, String error ){
 		render (view:"/sativaTemplate/createMember", model:[error:error, memberId:memberId])

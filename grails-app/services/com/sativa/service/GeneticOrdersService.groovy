@@ -1,5 +1,7 @@
 package com.sativa.service
-
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DETOXIFIED
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__ACTIVED
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__UNKNOWN
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__BUY
 import grails.transaction.Transactional
 
@@ -27,6 +29,15 @@ class GeneticOrdersService {
 		go.genetic = genetic
 		go.save(flush:true)
 
+		if (partner.status == PARTNER_STATUS__DETOXIFIED) {
+			if (!partner.firstname || !partner.image || !partner.lastname || !partner.address || !partner.identificationNumber || !partner.phone) {
+    			partner.status = PARTNER_STATUS__UNKNOWN
+	    	}
+	    	else if (partner.firstname && partner.image && partner.lastname && partner.address && partner.identificationNumber && partner.phone) {
+	    		partner.status = PARTNER_STATUS__ACTIVED
+	    	}
+	    	partner.save(flush:true)
+		}
 
 		def applicationContext = grailsApplication.mainContext
     	String basePath = applicationContext.getResource("/").getFile().toString()
