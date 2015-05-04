@@ -91,7 +91,8 @@
 											</div>
 							        </div>
 							    </div>
-							    <g:if test="${stadisticsPerPeriod}">									
+							    <g:if test="${stadisticsPerPeriod}">	
+							    	<h3 style="margin-top:70px"><b>Total de gramos:</b> ${totalPerPeriod}g</h3>								
 							  		<table class="table tableStadistic2 table-bordered table-condensed">
 							 			<thead>
 							 				<tr>
@@ -150,7 +151,8 @@
 							    </div>
 							    <g:if test="${listGenetics}">	
 							    	<g:set var="count" value="${1}" />								
-							  		
+							  		<h3 style="margin-top:70px;"><b>Total de compras:</b> ${totalBuys}</h3>
+							  		<h3><b>Total de gramos:</b> ${totalGrams}g</h3>
 							  		<table class="tableStadistic2 table" id="tableGenetics" >
 							 			 	<tr>
 								                 <g:each in="${listGenetics}">
@@ -162,6 +164,8 @@
 								                 </g:each>
 								            </tr>
 					 				</table>
+
+					 				<h1>GRAFICO</h1>
 					 			</g:>
 						  		
 						  </div>

@@ -67,6 +67,9 @@
 				               		<a id="savePhoto" class="btn btn-block btn-primary" >Guardar foto</a>
 				           		</g:form>
 				            </div>
+				            <h2>Consumo</h2>
+				            <p><b>Total mensual:</b> ${grams.monthly}g</p>
+				            <p><b>Total anual:</b> ${grams.anualy}g</p>
 				            <h2>Histórico</h2>
 				            <g:if  test="${listCustomEvents.size() == 0}">
 					 			No hay comentarios
@@ -84,7 +87,7 @@
 				 			</g:else>	
 				 		</div>
 				 	</div>
-				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams > 90.00 }">
+				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams.monthly > 90.00 }">
 				 
 					 
 				 	<div class="row" id="listActiveGenetics">
@@ -266,10 +269,10 @@ jQuery(document).ready(function() {
 
  
    App.init(); // initlayout and core plugins
-   if ("${grams}" > 90 || "${member.status.name()}" == 'PARTNER_STATUS__BANNED' || "${member.status.name()}" == 'PARTNER_STATUS__DISABLED') {
+   if ("${grams.monthly}" > 90 || "${member.status.name()}" == 'PARTNER_STATUS__BANNED' || "${member.status.name()}" == 'PARTNER_STATUS__DISABLED') {
    		$('#divShowMember').css("border", "red solid 2px").css("padding", 20); 
    }
-   if ("${grams}" > 90) {
+   if ("${grams.monthly}" > 90) {
    		$('#listActiveGenetics').html("<h4 style='color:red'>Este socio ya ha retirado mas de 90gr</h4>");
    }
 

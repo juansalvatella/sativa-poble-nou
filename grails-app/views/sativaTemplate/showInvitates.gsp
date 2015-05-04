@@ -46,7 +46,7 @@
 	                            
 			              </g:form>
 			        </div>
-			        <h4><b>TOTAL DE USUARIOS: ${listInvitates?.size()}</b></h4>
+			        <h4><b>TOTAL DE USUARIOS INVITADOS, SIN DERECHO A CONSUMIR: ${listInvitates?.size()}</b></h4>
 			        <div class="row">
 				 		<table id="tableGuests" class="table table-bordered table-condensed" >
 				 			<thead>

@@ -32,7 +32,7 @@ class GeneticOrdersController  {
 			numGrams += genetic.type.grams*amount
 		}
 		
-		if ((auxGrams+numGrams) > 90){
+		if ((auxGrams.monthly+numGrams) > 90){
 			error = "Has sobrepasado los gramos máximos"
 		}
 		else {
@@ -72,8 +72,11 @@ class GeneticOrdersController  {
 		stadisticsPerPeriod = stadisticsPerPeriod.collect { go ->
 				return [ "partner": go[0],
 						 "amount" : go[1] ]
-		}
-		render(view: "/sativaTemplate/stadistics", model: [page:"periodic",  stadisticsPerPeriod:stadisticsPerPeriod, daySelected:new Date() ,start:auxStart, end:auxEnd])
+		}.sort{it.amount}.reverse()
+
+		def totalPerPeriod = stadisticsPerPeriod.amount.sum()
+
+		render(view: "/sativaTemplate/stadistics", model: [page:"periodic", totalPerPeriod:totalPerPeriod, stadisticsPerPeriod:stadisticsPerPeriod, daySelected:new Date() ,start:auxStart, end:auxEnd])
 	}
 
 
@@ -96,7 +99,14 @@ class GeneticOrdersController  {
 					return ["name"  : go[0],
 							"amount": go[1]]
 		}
-		render(view: "/sativaTemplate/stadistics", model: [page:"genetics",  listGenetics:listGenetics, daySelected:new Date() ,start:auxStart, end:auxEnd])
+
+		def totalBuys  = listGenetics.amount.sum()
+		def totalGrams =  0
+		listGenetics.each {
+			totalGrams += it.name.type.grams * it.amount
+		}
+
+		render(view: "/sativaTemplate/stadistics", model: [page:"genetics", totalGrams:totalGrams, totalBuys:totalBuys,  listGenetics:listGenetics, daySelected:new Date() ,start:auxStart, end:auxEnd])
 	}
 
 	def day(String currentDate){
@@ -119,13 +129,13 @@ class GeneticOrdersController  {
 		listGenetics		 = listGenetics.collect {go ->
 					return ["name"  : go[0],
 							"amount": go[1]]
-		}
+		}.sort{it.amount}
 
 		def stadisticsPerPeriod = geneticOrdersService.listPeriodicsPerDay(auxDate, auxEndDate)
 		stadisticsPerPeriod = stadisticsPerPeriod.collect { go ->
 				return [ "partner": go[0],
 						 "amount" : go[1] ]
-		}
+		}.sort{it.amount}
 		
 		render(view: "/sativaTemplate/stadistics", model: [stadisticsPerDay:stadisticsPerDay, daySelected:auxEndDate, listGenetics:listGenetics, stadisticsPerPeriod:stadisticsPerPeriod, start:auxDate, end:auxEndDate])
 	}

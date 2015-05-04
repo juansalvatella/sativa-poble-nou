@@ -64,7 +64,7 @@
                                   <g:img dir="css/img" file="despublicado.png" />
                                 </a>
                               </g:elseif>
-                              ${it.name}</td>                   
+                              ${it.name} <a style="padding:5px;color:white;background-color:${it.type.color};border-color:${it.type.color};">${it.type.grams}g</a></td>                   
                               <g:if test="${count % 3 == 0 && count!=0}">
                                 </tr><tr>
                               </g:if>

@@ -51,24 +51,42 @@ class GeneticOrdersService {
 	@Transactional
 	def grams (Partner partner) {
 		def auxStart = new Date()
+		def startAnual  = Calendar.instance
+		def endAnual    = new Date()
 		def start = Calendar.instance
-		def end = Calendar.instance
+		def end   = Calendar.instance
+
+
+		startAnual.set(year:auxStart.getAt(Calendar.YEAR)-1, month: 11, date:  31, hourOfDay:24, minute:00, second:0)
+		startAnual = startAnual.getTime()
 	
+		
 		start.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH), date:  0, hourOfDay:24, minute:00, second:0)
 		start = start.getTime()
 		end.set(year:auxStart.getAt(Calendar.YEAR), month: auxStart.getAt(Calendar.MONTH), date: 1, hourOfDay:24, minute:0, second:0)
 		end.set(date:end.getActualMaximum( Calendar.DATE))
 		end   = end.getTime()
 
+
 		def listGenetics =  GeneticOrders.createCriteria().list {
-			between "dateCreated", start, end
+			between "dateCreated", startAnual, endAnual
 			eq "partner", partner
 		}
+
 		def countGrams = 0
+		def countAnualGrams = 0
+
+		println start 
+		println end
 		listGenetics.each { go->
-			countGrams += go.genetic.type.grams*go.amount
+			if (go.dateCreated >= start && go.dateCreated <= end){
+				countGrams 		+= go.genetic.type.grams*go.amount
+			}
+			countAnualGrams += go.genetic.type.grams*go.amount
+			println "date "+go.dateCreated
 		}
-		return countGrams
+
+		return ["monthly":countGrams, "anualy":countAnualGrams]
 	}
 
 	@Transactional
