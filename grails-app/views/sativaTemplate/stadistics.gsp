@@ -28,6 +28,8 @@
 									    </div>
 									  </div>
 							        </g:form>
+
+							       
 							    </div>
 
 						  		<table class="tableStadistic table table-bordered table-condensed">
@@ -151,7 +153,7 @@
 							    </div>
 							    <g:if test="${listGenetics}">	
 							    	<g:set var="count" value="${1}" />								
-							  		<h3 style="margin-top:70px;"><b>Total de compras:</b> ${totalBuys}</h3>
+							  		<h3 style="margin-top:70px;"><b>Total de aportaciones:</b> ${totalBuys}</h3>
 							  		<h3><b>Total de gramos:</b> ${totalGrams}g</h3>
 							  		<table class="tableStadistic2 table" id="tableGenetics" >
 							 			 	<tr>
@@ -164,9 +166,13 @@
 								                 </g:each>
 								            </tr>
 					 				</table>
+					 			</g:>
 
 					 				<h1>GRAFICO</h1>
-					 			</g:>
+					 				 <div class="demo-container">
+			<div id="placeholder" class="demo-placeholder"></div>
+		</div>
+					 			
 						  		
 						  </div>
 						
@@ -178,7 +184,10 @@
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
+
 <g:render template="/sativaTemplate/scriptsTemplate"  />
+<script src="${resource(dir:'js/pluginsSativa/chart', file: 'jquery.flot.js')}" type="text/javascript"></script>
+
 <div class="footer">
 	<div class="footer-inner">
 		 2014 &copy; Sativa
@@ -189,6 +198,9 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
+   var listGen;
+   var amounGen;
+   var daysGen;
    var now = new Date("${daySelected}")
    var end = new Date()
    var start   = new Date()
@@ -199,50 +211,128 @@ jQuery(document).ready(function() {
    if ("${end}" != ""){
    		 end = new Date("${end}")
    }
+  
+  
+   var loadGraph = function() {
+
+   		if ("${graph}" != "") {
+		listGen   = "${graph?.name}";
+		amounGen  = "${graph?.buys}";
+		daysGen = "${graph?.days}";
+
+
+		listGen = listGen.substring(1, listGen.length-2);
+		amounGen = amounGen.substring(1, amounGen.length-1);
+		daysGen = daysGen.substring(1, daysGen.length-1);
+		
+		listGen  = listGen.split(',');
+		amounGen = amounGen.split(',');
+		daysGen  = daysGen.split(',');
+
+
+		var ticksArr = [];
+	
+		var maxY = -1;
+		for (var j=0; j < listGen.length; j++) {
+			ticksArr.push([j, j]);
+		}
+
+		var d1 = [];
+		for (var i = 0; i < amounGen.length; i ++) {
+			var auxVale;
+			if (daysGen[i] == 0){
+				auxVale = 0;
+			}
+			else auxVale = parseInt(parseInt(amounGen[i])/parseInt(daysGen[i]));
+			d1.push([i, parseInt(auxVale)]);
+			if (auxVale > maxY) maxY = auxVale;
+		}
+
+		if (maxY == 0)maxY = 1;
+	
+
+		setTimeout(function() {
+			$.plot("#placeholder", [ d1], {
+				series: {
+					lines: {
+						show: true
+					},
+					points: {
+						show: true
+					}
+				},
+				grid: { 
+					hoverable: true, 
+					clickable: true 
+				},
+				yaxis: {
+					max:maxY,
+					min:0
+				},
+				xaxis: {
+					ticks: ticksArr,
+					max:listGen.length-1,
+					min:0
+				},
+				 colors: ["#0022FF"]
+			});
+
+			$("<div id='tooltip'></div>").css({
+				position: "absolute",
+				display: "none",
+				border: "1px solid #fdd",
+				padding: "2px",
+				"background-color": "#fee",
+				opacity: 0.80
+			}).appendTo("body");
+
+
+			$("#placeholder").bind("plothover", function (event, pos, item) {
+					
+				if (item) {
+					var x = item.datapoint[0].toFixed(2),
+						y = item.datapoint[1].toFixed(2);
+
+					$("#tooltip").html(listGen[parseInt(x)]+" "+parseInt(y))
+						.css({top: item.pageY+5, left: item.pageX+5})
+						.fadeIn(200);
+				} else {
+					$("#tooltip").hide();
+				}
+					
+			});
+		}, 1000);
+		}
+	}
    
    
-
-
-
    var day = ("0" + now.getDate()).slice(-2);
    var month = ("0" + (now.getMonth() + 1)).slice(-2);
    var today 	 = now.getFullYear()+"-"+(month)+"-"+(day) ;
-
-
-
    day = ("0" + start.getDate()).slice(-2);
    month = ("0" + (start.getMonth() + 1)).slice(-2);
    var auxStart 	 = start.getFullYear()+"-"+(month)+"-"+(day) ;
-
-
-
    day = ("0" + end.getDate()).slice(-2);
    month = ("0" + (end.getMonth() + 1)).slice(-2);
    var auxEnd 	 = end.getFullYear()+"-"+(month)+"-"+(day) ;
-
-
-
    if ("${page}" == "periodic") {
    		$('#tableDivPeriod').tab('show')
    		$('#tablePerPeriod').addClass('active');
    		$('#tablePerDay').removeClass('active');
    		$('#tablePerGeneticPeriod').removeClass('active');
    } 
-
    else if ("${page}" == "genetics") {
    		$('#tableDivGeneticPeriod').tab('show')
    		$('#tablePerGeneticPeriod').addClass('active');
    		$('#tablePerDay').removeClass('active');
    		$('#tablePerPeriod').removeClass('active');
+   		loadGraph();
    } 
-
-
    $('#calendar1').val(today)
    $('#calendar2').val(auxStart)
    $('#calendar3').val(auxEnd)
    $('#calendar4').val(auxStart)
    $('#calendar5').val(auxEnd)
-
 	if (now) {
 		$('#hiddenCalendar').val(now.toISOString())
 	}
@@ -252,36 +342,37 @@ jQuery(document).ready(function() {
     if (end) {
    		$('.hiddenCalendar3').val(end.toISOString())
    	}
-
    $('#calendar1').on('change', function(){
    		var auxDate = new Date($('#calendar1').val());
    		$('#hiddenCalendar').val(auxDate.toISOString())
    });
-
    $('#calendar2').on('change', function(){
    		var auxDate = new Date($('#calendar2').val());
    		$('.hiddenCalendar2').val(auxDate.toISOString())
    });
-
    $('#calendar3').on('change', function(){
    		var auxDate = new Date($('#calendar3').val());
    		$('.hiddenCalendar3').val(auxDate.toISOString())
    });
-
     $('#calendar4').on('change', function(){
    		var auxDate = new Date($('#calendar4').val());
    		$('.hiddenCalendar2').val(auxDate.toISOString())
    });
-
    $('#calendar5').on('change', function(){
    		var auxDate = new Date($('#calendar5').val());
    		$('.hiddenCalendar3').val(auxDate.toISOString())
    });
 
+   $('#tableDivGeneticPeriod').click(function() {
+		loadGraph();
+    });
+
+	
  
   
 });
-</script>
+
+	</script>
 </body>
 
 <!-- END BODY -->

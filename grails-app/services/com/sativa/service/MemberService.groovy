@@ -24,6 +24,8 @@ import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__RENOVATE
 import grails.transaction.Transactional
 
 import com.sativa.domain.Partner
+import com.sativa.domain.PartnerRole
+import com.sativa.domain.Role
 import com.sativa.domain.Card
 import com.sativa.enums.PartnerStatusEnum
 import com.sativa.command.DataMemberCommand
@@ -40,6 +42,7 @@ class MemberService {
 	def eventService
 	def grailsApplication
 	def cardService
+	def guestHistoricService
 
 	@Transactional(readOnly = true)
 	def search (String firstname, String lastname, String identificationNumber, String code) {
@@ -101,6 +104,27 @@ class MemberService {
 				or {
 					eq "status", PARTNER_STATUS__ACTIVED
 					eq "status", PARTNER_STATUS__UNKNOWN
+					eq "status", PARTNER_STATUS__DETOXIFIED
+				}
+				if (orderParam) order (orderParam, "asc")
+				else order("id", "asc")
+			}
+	}
+
+	@Transactional(readOnly = true)
+	def list2 (String orderParam) {
+			def users = PartnerRole.createCriteria().list(){
+				eq "role", Role.findByAuthority(Role.ROLE_SELLER)
+				projections {
+					distinct "partner.id"
+				}
+			}
+			return Partner.createCriteria().list {
+				not { 'in' "id", users }
+				or {
+					eq "status", PARTNER_STATUS__ACTIVED
+					eq "status", PARTNER_STATUS__UNKNOWN
+					eq "status", PARTNER_STATUS__DETOXIFIED
 				}
 				if (orderParam) order (orderParam, "asc")
 				else order("id", "asc")
@@ -182,8 +206,7 @@ class MemberService {
 				partner.status = PARTNER_STATUS__INVITE
 				partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
 			}
-        	partner.friend = cpc.friend
-        	partner.numInvitations++
+        	guestHistoricService.add(partner, cpc.friend);
     	}
     	else {
     		partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')

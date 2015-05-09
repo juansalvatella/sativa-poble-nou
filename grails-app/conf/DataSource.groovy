@@ -19,6 +19,7 @@ environments {
             url = "jdbc:mysql://localhost/sativaBD?useUnicode=yes&characterEncoding=UTF-8"
             username = "root"
             password = ""
+            driverClassName ="com.mysql.jdbc.Driver"
         
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation

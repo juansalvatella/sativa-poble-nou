@@ -14,6 +14,8 @@ import java.text.DateFormat
 @Secured(['ROLE_ADMIN', 'ROLE_SELLER'])
 class GeneticOrdersController  {
 	def geneticOrdersService
+	def geneticHistoricService
+	def geneticService
 	def eventService
 
 	def create(Long memberId, String listGenetics, String listAmount, String signature){
@@ -106,7 +108,9 @@ class GeneticOrdersController  {
 			totalGrams += it.name.type.grams * it.amount
 		}
 
-		render(view: "/sativaTemplate/stadistics", model: [page:"genetics", totalGrams:totalGrams, totalBuys:totalBuys,  listGenetics:listGenetics, daySelected:new Date() ,start:auxStart, end:auxEnd])
+		def graph =geneticHistoricService.graph(auxStart, auxEnd)
+
+		render(view: "/sativaTemplate/stadistics", model: [page:"genetics", graph:graph, totalGrams:totalGrams, totalBuys:totalBuys,  listGenetics:listGenetics, daySelected:new Date() ,start:auxStart, end:auxEnd])
 	}
 
 	def day(String currentDate){
@@ -136,8 +140,9 @@ class GeneticOrdersController  {
 				return [ "partner": go[0],
 						 "amount" : go[1] ]
 		}.sort{it.amount}
+	
 		
-		render(view: "/sativaTemplate/stadistics", model: [stadisticsPerDay:stadisticsPerDay, daySelected:auxEndDate, listGenetics:listGenetics, stadisticsPerPeriod:stadisticsPerPeriod, start:auxDate, end:auxEndDate])
+		render(view: "/sativaTemplate/stadistics", model: [ stadisticsPerDay:stadisticsPerDay, daySelected:auxEndDate, listGenetics:listGenetics, stadisticsPerPeriod:stadisticsPerPeriod, start:auxDate, end:auxEndDate])
 	}
 
 

@@ -1,9 +1,11 @@
 package com.sativa.controller
-
+import static com.sativa.enums.CardStatusEnum.*
 
 import grails.plugin.springsecurity.annotation.Secured
 
 import com.sativa.domain.Partner
+
+	
 
 import com.sativa.exception.NotFoundException
 
@@ -17,7 +19,7 @@ class PartnerController  {
 
 	def list() {
 		def listPartners = partnerService.list()
-		def listMembers  = memberService.list()
+		def listMembers  = memberService.list2("firstname")
 		render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners, listMembers:listMembers])
 	}
 	
@@ -40,6 +42,17 @@ class PartnerController  {
 		partnerService.remove(partner)
 		def listPartners = partnerService.list()
 		render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners])
+	}
+
+	def isFull(Long id){
+		Partner partner = Partner.read(id)
+		def hasCard = partner.cards?true:false
+		if (!partner.firstname || !partner.image || !partner.lastname || !partner.address || !hasCard || !partner.identificationNumber || !partner.phone) {
+			render("false")
+			return
+		}	
+		render("true")
+		return
 	}
 
 }

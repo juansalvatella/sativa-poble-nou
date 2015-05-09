@@ -56,9 +56,9 @@
 							<div class="form-group">
 								<p><b>Tarjeta:</b><br />${card?.code}</p>
 							</div>
-							<g:if test="${member.friend}">
+							<g:if test="${member.status.name() == 'PARTNER_STATUS__INVITE'}">
 								<div class="form-group">
-									<p><b>Invitado por:</b><br />${member.friend.firstname} ${member.friend.lastname}</p>
+									<p><b>Invitado por:</b><br />${member.lastFriend().firstname} ${member.lastFriend().lastname}</p>
 								</div>
 							</g:if>
 
@@ -101,7 +101,7 @@
 					 			<input class="btn center pull-right btn-success" type="submit" id="updatePartner" value="Actualizar socio" />
 					 			
 				 			</g:form>
-							<g:if test="${member.numInvitations >= 5}">
+							<g:if test="${numInvitations >= 5}">
 					 			<div class="row alert alert-warning showAlarmGuest">
 					 				
 										<h2>Este usuario ha sido invitado mas de 5 veces</h2>

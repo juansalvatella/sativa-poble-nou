@@ -43,7 +43,7 @@
 	                              		<div class="form-group">
 	                              		   <label class="col-lg-3 control-label">Nuevo colaborador</label>
 	                              		   <div class="col-lg-9">
-		                               		 <select name="partnerId" class="form-control"><option>Selecciona el colaborador</option>
+		                               		 <select id="selectParner" name="partnerId" class="form-control"><option>Selecciona el colaborador</option>
 													<g:if test="${listMembers}">
 									 						<g:each in="${listMembers}">
 									 							<option value="${it.id}">
@@ -59,7 +59,7 @@
 		                             <div class="col-lg-4"></div>
 		                             <div class="col-lg-2">
 		                             	<div class="form-group">
-	                            			<input type="submit" class="btn btn-success" value="Nuevo colaborador" />
+	                            			<input id="btnNewPartner" type="submit" class="btn btn-success" value="Nuevo colaborador" />
 										</div>
 		                            </div>
 	                            </div>
@@ -114,7 +114,31 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
-})
+
+
+$('#selectParner').change(function() {
+		var params = "id="+$('#selectParner').val();
+   		$.ajax({
+			cache: false,
+			data: params,
+			type: 'POST',
+			url: '/partner/isFull?time='+new Date().getTime(),
+			dataType:'json',
+			success: function(data) {
+				if(data != true){
+					alert('Este usuario no esta activo del todo')
+					$('#btnNewPartner').hide();
+				}
+				else {
+					$('#btnNewPartner').show();	
+				}
+			},
+			xhrFields: {
+				withCredentials: true
+			}
+		});
+	});
+});
 </script>
 </body>
 

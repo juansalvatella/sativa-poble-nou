@@ -48,8 +48,8 @@
 				 			<p><b>Fecha de inscripción:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
 				 			<p><b>Última cuota:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
 				 			<p><b>Tarjeta:</b>  ${card?.code}</p>
-			 				<g:if test="${member.friend}">
-								<p><b>Invitado por:</b><br />${member.friend.firstname} ${member.friend.lastname}</p>
+			 				<g:if test="${member.status.name() == 'PARTNER_STATUS__INVITE'}">
+								<p><b>Invitado por:</b><br />${member.lastFriend().firstname} ${member.lastFriend().lastname}</p>
 							</g:if>
 				 		</div>
 				 		<div class="col-lg-4">

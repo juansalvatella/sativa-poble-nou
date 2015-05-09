@@ -11,6 +11,9 @@ import com.sativa.domain.Genetic
 import com.sativa.domain.GeneticType
 
 class GeneticService {
+
+	def geneticHistoricService
+	
 	
 	@Transactional(readOnly = true)
 	def list () {
@@ -45,18 +48,28 @@ class GeneticService {
 	def enabled (Genetic genetic) {
 		genetic.status  = GENETIC_STATUS__ENABLED
 		genetic.save(flush:true)
+		geneticHistoricService.enabled(genetic)
 	}
 
 	@Transactional
 	def disabled (Genetic genetic) {
 		genetic.status  = GENETIC_STATUS__DISABLED
 		genetic.save(flush:true)
+		geneticHistoricService.disabled(genetic)
 	}
 
 	@Transactional
 	def remove (Genetic genetic) {
 		genetic.status = GENETIC_STATUS__REMOVED
 		genetic.save(flush:true)
+		geneticHistoricService.disabled(genetic)
 	}
+
+	@Transactional
+	def graph () {
+		
+	}
+
+
 
 }

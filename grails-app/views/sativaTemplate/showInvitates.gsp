@@ -57,28 +57,28 @@
 					 				<th>DNI</th>
 					 				<th>Fecha de entrada</th>
 					 				<th>Invitado por</th>
-					 				<th>#Veces invitado</th>
+					 				<th>#Entrada</th>
 				 				</tr>
 				 			</thead>
 				 			<tbody>
-				 				<g:if test="${listInvitates}">
-				 						<g:each in="${listInvitates}" var="mem" status="i">
+				 				<g:if test="${historicGuests}">
+				 						<g:each in="${historicGuests}" var="mem" status="i">
 				 							<tr > 
-				 								<td class="valignInvitate">${i+1} ${mem.code}</td>
+				 								<td class="valignInvitate">${i+1} ${mem.guest.code}</td>
 				 								<td style="text-align:center">
-				 									<g:if test="${mem.image}">
-										 				<g:img dir="css/img/partners" id="${mem.image}" class="seeImage" file="${mem.image}" width="50" height="50"/></a>
+				 									<g:if test="${mem.guest.image}">
+										 				<g:img dir="css/img/partners" id="${mem.guest.image}" class="seeImage" file="${mem.guest.image}" width="50" height="50"/></a>
 											 		</g:if>
 											 		<g:else>
 														<g:img dir="css/img" id="avatar.png" class="seeImage" file="avatar.png" width="200"/>
 								 					</g:else>
 				 								</td>
-				 								<td class="valignInvitate"> ${mem.firstname} ${mem.lastname}</td>
-				 								<td class="valignInvitate">${mem.identificationNumber}</td>
-				 								<td class="valignInvitate">${mem.dateCreated}</td>
-				 								<td class="valignInvitate">${mem.friend.firstname} ${mem.friend.lastname}</td>
-				 								<td class="valignInvitate">${mem.numInvitations}
-				 									<g:if test="${mem.numInvitations >= 5}">
+				 								<td class="valignInvitate"> ${mem.guest.firstname} ${mem.guest.lastname}</td>
+				 								<td class="valignInvitate">${mem.guest.identificationNumber}</td>
+				 								<td class="valignInvitate">${mem.entry}</td>
+				 								<td class="valignInvitate">${mem.guest.lastFriend().firstname} ${mem.guest.lastFriend().lastname}</td>
+				 								<td class="valignInvitate">${mem.numberEntries}
+				 									<g:if test="${mem.numberEntries >= 5}">
 				 										<g:img dir="images/imageSativa"  file="warning.png" width="20" height="20"/>
 				 									</g:if>
 				 								</td>

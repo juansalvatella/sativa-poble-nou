@@ -22,6 +22,7 @@ class MemberController  {
 	def eventService
 	def cardService
 	def geneticOrdersService
+	def guestHistoricService
 
 	def search(String firstname, String lastname, String identificationNumber, String code) {
 		def listMembers = memberService.search(firstname, lastname, identificationNumber, code)
@@ -99,11 +100,12 @@ class MemberController  {
 
 
 	def showEdit (Long memberId){
-		Partner member = Partner.read(memberId)
-		def listEvents   = eventService.list(member)
-		def notification = eventService.notification(member)
-		def card  		 = cardService.cardActive(member)
-		render(view: "/sativaTemplate/editMember", model: [card:card, notification:notification, member:member,  listEvents:listEvents])
+		Partner member 		  = Partner.read(memberId)
+		def listEvents   	  = eventService.list(member)
+		def notification 	  = eventService.notification(member)
+		def card  		 	  = cardService.cardActive(member)
+		def numberInvitations = guestHistoricService.numberInvitations(member)
+		render(view: "/sativaTemplate/editMember", model: [card:card, numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents])
 
 	}
 
@@ -150,7 +152,11 @@ class MemberController  {
 
 
 	def guests() {
+		def historicGuests = guestHistoricService.historic()
 		def listInvitates = memberService.guests()
-		render(view: "/sativaTemplate/showInvitates", model: [listInvitates:listInvitates])
+
+		println "lisst "+listInvitates
+		println "aaaa  "+historicGuests
+		render(view: "/sativaTemplate/showInvitates", model: [historicGuests:historicGuests, listInvitates:listInvitates])
 	}
 }

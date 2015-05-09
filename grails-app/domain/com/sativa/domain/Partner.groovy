@@ -3,6 +3,7 @@ package com.sativa.domain
 import com.sativa.enums.PartnerStatusEnum
 
 class Partner {
+	def guestHistoricService
 
 	transient springSecurityService
 	Long   				id
@@ -23,7 +24,7 @@ class Partner {
 	String				signature
 	String  			identificationNumber
 	PartnerStatusEnum   status 
-	Partner             friend
+	Partner             friend 
 	Long 				numInvitations = 0
 
 
@@ -38,7 +39,7 @@ class Partner {
 		address   			 nullable:true
 		signature			 nullable:true
 		image 	  			 nullable:true
-		friend				 nullable:true
+		friend 				 nullable:true
 	}
 
 	static mapping = {
@@ -54,7 +55,16 @@ class Partner {
 		PartnerRole.findAllByPartner(this).collect { it.role }
 	}
 
+
+
+	def guestHistoricService() {
+		return guestHistoricService.numberInvitations(this)
+	}
 		
+	def lastFriend() {
+		return guestHistoricService.lastFriend(this)
+	}
+
 
 	protected void encodePassword() {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
