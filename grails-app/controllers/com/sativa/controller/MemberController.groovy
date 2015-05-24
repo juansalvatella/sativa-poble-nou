@@ -154,9 +154,6 @@ class MemberController  {
 	def guests() {
 		def historicGuests = guestHistoricService.historic()
 		def listInvitates = memberService.guests()
-
-		println "lisst "+listInvitates
-		println "aaaa  "+historicGuests
 		render(view: "/sativaTemplate/showInvitates", model: [historicGuests:historicGuests, listInvitates:listInvitates])
 	}
 }

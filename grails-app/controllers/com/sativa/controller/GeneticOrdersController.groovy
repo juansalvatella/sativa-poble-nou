@@ -71,12 +71,8 @@ class GeneticOrdersController  {
 			auxEnd = auxStart
 		}
 		def stadisticsPerPeriod = geneticOrdersService.listPeriodicsPerDay(auxStart, auxEnd)
-		stadisticsPerPeriod = stadisticsPerPeriod.collect { go ->
-				return [ "partner": go[0],
-						 "amount" : go[1] ]
-		}.sort{it.amount}.reverse()
 
-		def totalPerPeriod = stadisticsPerPeriod.amount.sum()
+		def totalPerPeriod = stadisticsPerPeriod.grams.sum()
 
 		render(view: "/sativaTemplate/stadistics", model: [page:"periodic", totalPerPeriod:totalPerPeriod, stadisticsPerPeriod:stadisticsPerPeriod, daySelected:new Date() ,start:auxStart, end:auxEnd])
 	}
@@ -109,6 +105,7 @@ class GeneticOrdersController  {
 		}
 
 		def graph =geneticHistoricService.graph(auxStart, auxEnd)
+		graph = graph.sort{it.ratio}.reverse()
 
 		render(view: "/sativaTemplate/stadistics", model: [page:"genetics", graph:graph, totalGrams:totalGrams, totalBuys:totalBuys,  listGenetics:listGenetics, daySelected:new Date() ,start:auxStart, end:auxEnd])
 	}

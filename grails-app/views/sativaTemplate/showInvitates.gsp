@@ -46,7 +46,7 @@
 	                            
 			              </g:form>
 			        </div>
-			        <h4><b>TOTAL DE USUARIOS INVITADOS, SIN DERECHO A CONSUMIR: ${listInvitates?.size()}</b></h4>
+			       <h4><b>TOTAL DE USUARIOS INVITADOS, SIN DERECHO A CONSUMIR: ${listInvitates?.size()}</b></h4>
 			        <div class="row">
 				 		<table id="tableGuests" class="table table-bordered table-condensed" >
 				 			<thead>
@@ -76,7 +76,7 @@
 				 								<td class="valignInvitate"> ${mem.guest.firstname} ${mem.guest.lastname}</td>
 				 								<td class="valignInvitate">${mem.guest.identificationNumber}</td>
 				 								<td class="valignInvitate">${mem.entry}</td>
-				 								<td class="valignInvitate">${mem.guest.lastFriend().firstname} ${mem.guest.lastFriend().lastname}</td>
+				 								<td class="valignInvitate">${mem.friend.firstname} ${mem.friend.lastname}</td>
 				 								<td class="valignInvitate">${mem.numberEntries}
 				 									<g:if test="${mem.numberEntries >= 5}">
 				 										<g:img dir="images/imageSativa"  file="warning.png" width="20" height="20"/>

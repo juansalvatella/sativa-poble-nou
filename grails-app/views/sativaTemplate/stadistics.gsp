@@ -107,7 +107,7 @@
 						 						<g:each in="${stadisticsPerPeriod}">
 						 							<tr>
 						 								<td>${it.partner.code}</td>
-						 								<td>${it.amount}</td>
+						 								<td>${it.grams} gr</td>
 						 							</tr>
 						 						</g:each>
 							 				</g:if>
@@ -168,7 +168,7 @@
 					 				</table>
 					 			</g:>
 
-					 				<h1>GRAFICO</h1>
+					 				
 					 				 <div class="demo-container">
 			<div id="placeholder" class="demo-placeholder"></div>
 		</div>
@@ -254,12 +254,9 @@ jQuery(document).ready(function() {
 		setTimeout(function() {
 			$.plot("#placeholder", [ d1], {
 				series: {
-					lines: {
-						show: true
-					},
-					points: {
-						show: true
-					}
+					 bars: {
+					        show: true
+					    }
 				},
 				grid: { 
 					hoverable: true, 

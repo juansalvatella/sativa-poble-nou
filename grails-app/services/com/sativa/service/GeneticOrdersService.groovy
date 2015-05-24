@@ -114,13 +114,39 @@ class GeneticOrdersService {
 		start = start.getTime()
 		end.set(year:auxEnd.getAt(Calendar.YEAR), month: auxEnd.getAt(Calendar.MONTH), date: auxEnd.getAt(Calendar.DATE), hourOfDay:24, minute:0, second:0)
 		end   = end.getTime()
-		return GeneticOrders.createCriteria().list {
+		def listGroupBy = GeneticOrders.createCriteria().list {
 			between "dateCreated", start, end
 			 projections{
-            	groupProperty("partner")
+			 	groupProperty("partner")
+			 	groupProperty("genetic")
             	sum("amount")
         	}
 		}
+
+		def results = []
+		def countGrams = 0;
+		for (int i = 0; i < listGroupBy.size(); i++) {
+		  if (i>0 && listGroupBy[i][0] == listGroupBy[i-1][0]) {
+		   		countGrams += listGroupBy[i][1].type.grams*listGroupBy[i][2]	    
+		    	if (i == listGroupBy.size()-1) {
+		      		results.push("partner":listGroupBy[i-1][0], "grams":countGrams)
+		    	}
+		  }
+		  else {
+		    if (i>0){
+		      results.push("partner":listGroupBy[i-1][0], "grams":countGrams)
+		    }
+		     countGrams = listGroupBy[i][1].type.grams*listGroupBy[i][2]      
+		   	 if (i == listGroupBy.size()-1) {
+		      		results.push("partner":listGroupBy[i][0], "grams":countGrams)
+		    }
+		   
+		  }
+		  
+		}
+		results = results.sort{it.grams}.reverse()
+		return results
+
 	}
 
 

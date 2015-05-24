@@ -193,6 +193,7 @@ class MemberService {
 
 
 		Partner partner = new Partner()
+		boolean addGuess = false
 		if (cpc.friend) {
         	if (!cpc.image){
         		return "La foto para usuarios invitados es obligatoria"
@@ -206,7 +207,8 @@ class MemberService {
 				partner.status = PARTNER_STATUS__INVITE
 				partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
 			}
-        	guestHistoricService.add(partner, cpc.friend);
+        	addGuess = true
+        	
     	}
     	else {
     		partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
@@ -237,6 +239,11 @@ class MemberService {
     	else if (!cpc.friend) partner.status = PARTNER_STATUS__ACTIVED
     
     	partner.save(flush:true)
+
+    	if (addGuess){
+    		guestHistoricService.add(partner, cpc.friend)
+    	}
+
 
 		if (cpc.codeCard) {
 			cardService.add(partner, cpc.codeCard)

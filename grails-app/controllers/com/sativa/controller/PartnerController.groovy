@@ -26,22 +26,30 @@ class PartnerController  {
 
 	def add(String username, String password, String repeatPassword, Long partnerId) {
 		
-		if (password != repeatPassword) {
+		if (username && password && repeatPassword && partnerId){
+			if (password != repeatPassword) {
+				render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners, error:"Los passwords deben ser iguales"])		
+				return
+			}
+			Partner partner = Partner.read(partnerId)
+			partnerService.add(username, password, partner)
 			def listPartners = partnerService.list()
-			render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners, error:"Los passwords deben ser iguales"])		
-			return
+			def listMembers  = memberService.list2("firstname")
+			render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners,listMembers:listMembers])
 		}
-		Partner partner = Partner.read(partnerId)
-		partnerService.add(username, password, partner)
-		def listPartners = partnerService.list()
-		render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners])
+		else {
+			def listPartners = partnerService.list()
+			def listMembers  = memberService.list2("firstname")
+			render(view: "/sativaTemplate/searchPartners", model: [error:"Faltan datos", listPartners:listPartners,listMembers:listMembers])
+		}
 	}
 
 	def remove (Long partnerId) {
 		Partner partner = Partner.read(partnerId)
 		partnerService.remove(partner)
 		def listPartners = partnerService.list()
-		render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners])
+		def listMembers  = memberService.list2("firstname")
+		render(view: "/sativaTemplate/searchPartners", model: [listPartners:listPartners,listMembers:listMembers])
 	}
 
 	def isFull(Long id){

@@ -54,7 +54,11 @@ class GeneticHistoricService {
 	        	}
 			}	
 			int sum = genSum.first()?:0
-			listGraph.push(["name":g.name, "buys":sum, "days": count])
+			int ratiopedro = 0
+			if (count != 0) ratiopedro = sum/count
+			if (ratiopedro  != 0){
+				listGraph.push(["name":g.name, "buys":sum, "days": count, "ratio":ratiopedro])
+			}
 		}
 		return listGraph	
 		
