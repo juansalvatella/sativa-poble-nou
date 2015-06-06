@@ -104,7 +104,7 @@ class MemberService {
 				or {
 					eq "status", PARTNER_STATUS__ACTIVED
 					eq "status", PARTNER_STATUS__UNKNOWN
-					eq "status", PARTNER_STATUS__DETOXIFIED
+					//eq "status", PARTNER_STATUS__DETOXIFIED
 				}
 				if (orderParam) order (orderParam, "asc")
 				else order("id", "asc")
