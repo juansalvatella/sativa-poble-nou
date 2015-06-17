@@ -76,6 +76,7 @@ class MemberService {
 
 	@Transactional(readOnly = true)
 	def searchInvitate (String firstname, String lastname, String identificationNumber) {
+		println "identifi "+identificationNumber
 		return Partner.createCriteria().list {
 			order("code", "asc")
 			and {
@@ -202,7 +203,14 @@ class MemberService {
 				eq "identificationNumber", cpc.identificationNumber
 				eq "status", PARTNER_STATUS__INVITE
 			}
-			if (existUserInvitate) partner = existUserInvitate
+			if (existUserInvitate) {
+				partner = existUserInvitate
+				def numEntr = guestHistoricService.numberInvitations(partner)
+
+				if (numEntr > 3) {
+					return "Este usuario ya ha sido invitado 3 veces"
+				}
+			}
 			else {
 				partner.status = PARTNER_STATUS__INVITE
 				partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
@@ -213,6 +221,11 @@ class MemberService {
     	else {
     		partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
     	}
+    	def stringBirthday = cpc.birthday.split('-');
+		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
+		dateBirthday.set(year:stringBirthday[0] as Integer)
+
+    	partner.birthday			 = dateBirthday
 		partner.phone 				 = cpc.phone
 		partner.firstname			 = cpc.firstname
 		partner.lastname 			 = cpc.lastname
@@ -228,7 +241,7 @@ class MemberService {
 		 	def applicationContext = grailsApplication.mainContext
     		String basePath = applicationContext.getResource("/").getFile().toString()
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/"+partner.code+".png"))
         	partner.image = partner.code+".png"
         }
 
@@ -257,6 +270,13 @@ class MemberService {
 		partner.firstname			 = cpc.firstname
 		partner.lastname 			 = cpc.lastname
 		partner.address 			 = cpc.address
+
+
+		def stringBirthday = cpc.birthday.split('-');
+		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
+		dateBirthday.set(year:stringBirthday[0] as Integer)
+
+		partner.birthday  = dateBirthday
 		
 		partner.identificationNumber = cpc.identificationNumber
 

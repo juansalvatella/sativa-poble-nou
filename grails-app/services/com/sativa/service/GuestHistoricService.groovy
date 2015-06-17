@@ -1,7 +1,9 @@
 package com.sativa.service
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__INVITE
 
 import com.sativa.domain.Partner
 import com.sativa.domain.GuestHistoric
+
 
 import grails.transaction.Transactional
 class GuestHistoricService {
@@ -25,7 +27,32 @@ class GuestHistoricService {
 		def ghList = GuestHistoric.createCriteria().list {
 			order("entry", "desc")
 		}
+		return ghList
 
+	}
+
+
+	def searchInvitate (String firstname, String lastname, String identificationNumber) {
+		return GuestHistoric.createCriteria().list {
+			guest {
+				order("code", "asc")
+				and {
+					or {
+						if (firstname){
+							ilike 'firstname', "%${firstname}%"
+						}
+						if (lastname){
+							ilike 'lastname', "%${lastname}%"
+						}
+						if (identificationNumber){
+							ilike 'identificationNumber', "%${identificationNumber}%"
+						}
+					}
+					eq "status", PARTNER_STATUS__INVITE
+				}
+			}
+			
+		}
 	}
 
 	@Transactional

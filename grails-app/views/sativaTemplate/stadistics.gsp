@@ -47,7 +47,7 @@
 						 				<g:if test="${stadisticsPerDay}">
 					 						<g:each in="${stadisticsPerDay}">
 					 							<tr>
-					 								<td style="vertical-align:middle">${it.partner.code}</td>
+					 								<td style="vertical-align:middle">${it.partner?.code}</td>
 					 								<td style="vertical-align:middle">${it.genetic.name}</td>
 					 								<td style="vertical-align:middle">${it.genetic.type.grams*it.amount}gr</td>
 					 								<td style="vertical-align:middle"><g:formatDate  timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/> </td>
@@ -106,7 +106,7 @@
 							 				<g:if test="${stadisticsPerPeriod}">
 						 						<g:each in="${stadisticsPerPeriod}">
 						 							<tr>
-						 								<td>${it.partner.code}</td>
+						 								<td>${it.partner?.code}</td>
 						 								<td>${it.grams} gr</td>
 						 							</tr>
 						 						</g:each>

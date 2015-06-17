@@ -19,10 +19,10 @@ invokeTag('form','g',30,['name':("myForm"),'role':("form"),'class':("form-horizo
 printHtmlPart(3)
 if(true && (stadisticsPerDay)) {
 printHtmlPart(4)
-for( _it88535189 in (stadisticsPerDay) ) {
-changeItVariable(_it88535189)
+for( _it655764443 in (stadisticsPerDay) ) {
+changeItVariable(_it655764443)
 printHtmlPart(5)
-expressionOut.print(it.partner.code)
+expressionOut.print(it.partner?.code)
 printHtmlPart(6)
 expressionOut.print(it.genetic.name)
 printHtmlPart(6)
@@ -54,10 +54,10 @@ expressionOut.print(totalPerPeriod)
 printHtmlPart(18)
 if(true && (stadisticsPerPeriod)) {
 printHtmlPart(19)
-for( _it1952237799 in (stadisticsPerPeriod) ) {
-changeItVariable(_it1952237799)
+for( _it546917097 in (stadisticsPerPeriod) ) {
+changeItVariable(_it546917097)
 printHtmlPart(20)
-expressionOut.print(it.partner.code)
+expressionOut.print(it.partner?.code)
 printHtmlPart(21)
 expressionOut.print(it.grams)
 printHtmlPart(22)
@@ -87,8 +87,8 @@ expressionOut.print(totalBuys)
 printHtmlPart(31)
 expressionOut.print(totalGrams)
 printHtmlPart(32)
-for( _it2005528927 in (listGenetics) ) {
-changeItVariable(_it2005528927)
+for( _it805640119 in (listGenetics) ) {
+changeItVariable(_it805640119)
 printHtmlPart(33)
 expressionOut.print(it.name.name)
 printHtmlPart(34)
@@ -138,7 +138,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1432475291000L
+public static final long LAST_MODIFIED = 1434546207000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

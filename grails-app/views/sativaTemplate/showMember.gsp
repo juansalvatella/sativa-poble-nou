@@ -45,6 +45,7 @@
 				 			<p><b>DNI:</b>  ${member.identificationNumber}</p>
 				 			<p><b>Domicilio:</b>  ${member.address}</p>
 				 			<p><b>Teléfono:</b>  ${member.phone}</p>
+				 			<p><b>Fecha de nacimiento:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy" date="${member.birthday}"/> </p>
 				 			<p><b>Fecha de inscripción:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
 				 			<p><b>Última cuota:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
 				 			<p><b>Tarjeta:</b>  ${card?.code}</p>

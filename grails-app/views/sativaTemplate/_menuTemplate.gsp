@@ -108,7 +108,7 @@ License: You must have a valid license purchased only from themeforest(the above
 				<li class="menuManageMember">
 					<g:link mapping="managementMembers">
 						<i class="icon-settings"></i>
-						<span class="title">Gestion de socios</span>
+						<span class="title">Gestion de usuarios</span>
 					</g:link>
 				</li>
 				

@@ -61,6 +61,12 @@
                                     <input type="hidden" name="codeCard" id="codeCard" value="">
                                     <input type="hidden" name="friend" id="friend" value="${memberId}">
     							</div>
+                                <div class="form-group">
+                                         <label  class="col-sm-2 control-label">Fecha de nacimiento:</label>
+                                        <div class="col-sm-10">
+                                          <input name="birthday" type="date" id="calendar1" class="form-control">
+                                        </div>
+                                </div>
                                 <div id="selectMember" class="form-group groupGuest">
                                     <label  class="col-sm-2 control-label">Seleccionar miembro:</label>
                                      <div class="col-sm-10">
@@ -118,6 +124,8 @@ jQuery(document).ready(function() {
         $('.groupGuest').addClass('hide');
    }
 
+
+    $('#calendar1').val("")
     // Put event listeners into place
     window.addEventListener("DOMContentLoaded", function() {
         // Grab elements, create settings, etc.

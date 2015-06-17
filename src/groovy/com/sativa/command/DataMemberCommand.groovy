@@ -15,7 +15,8 @@ import com.sativa.domain.Partner
 class DataMemberCommand {
 	String 				username
 	String 				password
-	String 				phone 
+	String 				phone
+	String              birthday 
 	String  			firstname
 	String 	    	    lastname
 	String  			address
@@ -34,6 +35,7 @@ class DataMemberCommand {
 		codeCard		     nullable:true
 		friend				 nullable:true
 		identificationNumber nullable:true
+		birthday			 nullable:true
 	}
 
 	

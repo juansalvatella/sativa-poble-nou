@@ -25,6 +25,7 @@ class Partner {
 	String  			identificationNumber
 	PartnerStatusEnum   status 
 	Partner             friend 
+	Date  				birthday
 	Long 				numInvitations = 0
 
 

@@ -30,8 +30,8 @@ class MemberController  {
 	}
 
 	def searchInvitate(String firstname, String lastname, String identificationNumber) {
-		def listInvitates = memberService.searchInvitate(firstname, lastname, identificationNumber)
-		render(view: "/sativaTemplate/showInvitates", model: [listInvitates:listInvitates])
+		def listInvitates = guestHistoricService.searchInvitate(firstname, lastname, identificationNumber)
+		render(view: "/sativaTemplate/showInvitates", model: [historicGuests:listInvitates])
 	}
 
 
@@ -47,6 +47,8 @@ class MemberController  {
 	}
 
 	def create(DataMemberCommand cpc, Long oldPartner){
+		
+
 		if (!cpc.firstname && !oldPartner){
 			if (!cpc.friend) {
 				redirect(controller: "card", action: "dispatcher",  params:[num_tarjeta:cpc.codeCard, error:"El nombre es un campo necesario"])
@@ -56,8 +58,37 @@ class MemberController  {
 				redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend.id, error:"El nombre es un campo necesario"])
 				return
 			}
-			
 		}
+		if (!cpc.birthday) {
+			if (!cpc.friend) {
+				redirect(controller: "card", action: "dispatcher",  params:[num_tarjeta:cpc.codeCard, error:"La fecha de nacimiento es necesaria"])
+				return	
+			}
+			else {
+				redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend.id, error:"La fecha de nacimiento es necesaria"])
+				return
+			}
+		}
+
+		def stringBirthday = cpc.birthday.split('-');
+		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
+		dateBirthday.set(year:stringBirthday[0] as Integer)
+		
+		def now = new Date() - 18*365
+
+		println "now date "+dateBirthday
+
+		if (now < dateBirthday) {
+			if (!cpc.friend) {
+				redirect(controller: "card", action: "dispatcher",  params:[num_tarjeta:cpc.codeCard, error:"¡¡Es menor de edad!!"])
+				return	
+			}
+			else {
+				redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend.id, error:"¡¡Es menor de edad!!"])
+				return
+			}
+		}
+
 		def member
 		def error 
 		if (oldPartner){
@@ -105,7 +136,8 @@ class MemberController  {
 		def notification 	  = eventService.notification(member)
 		def card  		 	  = cardService.cardActive(member)
 		def numberInvitations = guestHistoricService.numberInvitations(member)
-		render(view: "/sativaTemplate/editMember", model: [card:card, numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents])
+		def grams			  = geneticOrdersService.grams(member)
+		render(view: "/sativaTemplate/editMember", model: [card:card, grams:grams,  numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents])
 
 	}
 

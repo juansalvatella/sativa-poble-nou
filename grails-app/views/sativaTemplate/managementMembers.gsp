@@ -73,6 +73,7 @@
 			              </g:form>
 			        </div>
 			        <div class="row">
+			        	<h4><b>TOTAL DE USUARIOS: ${listMembers?.size()}</b></h4>
 				 		<table class="table table-bordered table-condensed">
 				 			<thead>
 				 				<tr>

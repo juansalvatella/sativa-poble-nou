@@ -97,6 +97,15 @@
       									<input type="text" class="form-control" value="${member.phone}" name="phone" >
     								</div>
     							</div>
+    							<div class="form-group">
+    								<label  class="col-sm-2 control-label">Fecha nacimiento:</label>
+    								 <div class="col-sm-10">
+      									<div class="col-sm-10">
+
+                                          <input name="birthday" type="date" id="calendar1"  class="form-control">
+                                        </div>
+    								</div>
+    							</div>
     							<input type="hidden" name="image" id="foto_canvas" value="">
 					 			<input class="btn center pull-right btn-success" type="submit" id="updatePartner" value="Actualizar socio" />
 					 			
@@ -120,6 +129,9 @@
 				                <p><b>Imagen:</b></p>
 				               <canvas name="canvas" id="canvas"  width="300" height="200"></canvas>
 				            </div>
+				            <h2>Consumo</h2>
+				            <p><b>Total mensual:</b> ${grams.monthly}g</p>
+				            <p><b>Total anual:</b> ${grams.anualy}g</p>
 				 		</div>
 				 	</div>
 				 	<div class="row" id="listActiveGenetics">
@@ -233,6 +245,18 @@ jQuery(document).ready(function() {
    		$('#divCanvas').addClass('hide');
    });
 
+    var birthday = new Date("${member.birthday}");
+
+
+    var showBirthday =  birthday.toLocaleDateString().split('/');
+
+
+ 	showBirthday[2]+'-'+showBirthday[1]+'-'+showBirthday[0]
+ 	var month = ("0" + showBirthday[1]).slice(-2); 
+ 	var day    =("0" + showBirthday[0]).slice(-2); 
+
+    $('#calendar1').val(showBirthday[2]+'-'+day+'-'+month);
+   
 
     // Put event listeners into place
     window.addEventListener("DOMContentLoaded", function() {
