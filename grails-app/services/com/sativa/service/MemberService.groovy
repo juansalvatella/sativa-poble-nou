@@ -241,7 +241,7 @@ class MemberService {
 		 	def applicationContext = grailsApplication.mainContext
     		String basePath = applicationContext.getResource("/").getFile().toString()
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
         }
 
