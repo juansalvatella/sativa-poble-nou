@@ -272,11 +272,12 @@ class MemberService {
 		partner.address 			 = cpc.address
 
 
-		def stringBirthday = cpc.birthday.split('-');
-		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
-		dateBirthday.set(year:stringBirthday[0] as Integer)
-
-		partner.birthday  = dateBirthday
+		if (cpc.birthday){
+			def stringBirthday = cpc.birthday.split('-');
+			def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
+			dateBirthday.set(year:stringBirthday[0] as Integer)
+			partner.birthday  = dateBirthday
+		}
 		
 		partner.identificationNumber = cpc.identificationNumber
 
