@@ -42,6 +42,9 @@ class GeneticService {
 		genetic.name    = name
 		genetic.type	= type
 		genetic.save(flush:true)
+		geneticHistoricService.enabled(genetic)
+
+
 	}
 
 	@Transactional

@@ -215,7 +215,8 @@ jQuery(document).ready(function() {
   
    var loadGraph = function() {
 
-   		if ("${graph}" != "") {
+   	if ("${graph}" != "") {
+   		console.log("${graph}")
 		listGen   = "${graph?.name}";
 		amounGen  = "${graph?.buys}";
 		daysGen = "${graph?.days}";

@@ -28,6 +28,10 @@
 				 	<g:if test="${success}">
 				 		<div class="alert alert-success">${success}</div>
 				 	</g:if>
+				 	  <g:if test="${error}">
+                        <div class="alert alert-danger">${error}</div>
+                    </g:if>
+          
 				 	<div class="row" id="divEditMember">
 				 		<div class="col-lg-3">
 				 			<g:if test="${member.image}">

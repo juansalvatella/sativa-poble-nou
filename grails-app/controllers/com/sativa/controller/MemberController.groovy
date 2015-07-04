@@ -128,20 +128,31 @@ class MemberController  {
 	}
 
 
-	def showEdit (Long memberId){
+	def showEdit (Long memberId, String error){
 		Partner member 		  = Partner.read(memberId)
 		def listEvents   	  = eventService.list(member)
 		def notification 	  = eventService.notification(member)
 		def card  		 	  = cardService.cardActive(member)
 		def numberInvitations = guestHistoricService.numberInvitations(member)
 		def grams			  = geneticOrdersService.grams(member)
-		render(view: "/sativaTemplate/editMember", model: [card:card, grams:grams,  numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents])
+		render(view: "/sativaTemplate/editMember", model: [card:card, grams:grams,  numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents, error:error])
 
 	}
 
 
 	def edit (Long memberId, DataMemberCommand cpc){
 		Partner member = Partner.get(memberId)
+
+		def stringBirthday = cpc.birthday.split('-');
+		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
+		dateBirthday.set(year:stringBirthday[0] as Integer)
+		
+		def now = new Date() - 18*365
+
+		if (now < dateBirthday) {
+			redirect(controller: "member", action: "showEdit",  params:[memberId:memberId, error:"¡¡Es menor de edad!!"])	
+			return
+		}
 		memberService.edit(member, cpc)
 		redirect(controller: "member", action: "showEdit",  params:[memberId:memberId])
 	}

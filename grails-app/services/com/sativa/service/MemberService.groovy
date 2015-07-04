@@ -222,10 +222,10 @@ class MemberService {
     		partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
     	}
     	def stringBirthday = cpc.birthday.split('-');
-		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
+		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 12, 0)
 		dateBirthday.set(year:stringBirthday[0] as Integer)
 
-    	partner.birthday			 = dateBirthday+1
+    	partner.birthday			 = dateBirthday
 		partner.phone 				 = cpc.phone
 		partner.firstname			 = cpc.firstname
 		partner.lastname 			 = cpc.lastname
@@ -274,9 +274,9 @@ class MemberService {
 
 		if (cpc.birthday){
 			def stringBirthday = cpc.birthday.split('-');
-			def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
+			def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 12, 0)
 			dateBirthday.set(year:stringBirthday[0] as Integer)
-			partner.birthday  = dateBirthday+1
+			partner.birthday  = dateBirthday
 		}
 		
 		partner.identificationNumber = cpc.identificationNumber

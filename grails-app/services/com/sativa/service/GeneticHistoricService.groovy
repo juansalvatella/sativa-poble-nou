@@ -85,7 +85,22 @@ class GeneticHistoricService {
 					le "changeDate", auxEnd
 			}
 
-			if (listGH.size() == 1 && listGH.first().active) {
+			if (listGH.size() == 0){
+				def lastGH = GeneticHistoric.createCriteria().list {
+					eq "genetic", genetic
+					order ("changeDate", "desc")
+				}?.first();
+				def aux2
+				use(TimeCategory){
+					 aux2 = lastGH.changeDate - auxStart
+				}
+				countSeconds = (aux2.days*24*60*60) + (aux2.hours*60*60) + (aux2.minutes*60) + aux2.seconds
+				if (countSeconds > 12*60*60){
+					count++
+				}
+
+			}
+			else if (listGH.size() == 1 && listGH.first().active) {
 				def aux2
 				use(TimeCategory){
 					 aux2 = listGH.first().changeDate - auxStart
