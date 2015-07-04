@@ -70,7 +70,6 @@ class GeneticHistoricService {
 		def numberOfDays = 0;
 		use(TimeCategory) {
 		   numberOfDays = (end-start).days
-		   println "days: ${numberOfDays.days}"
 		}
 		def auxStart = start
 		def auxEnd   = end  

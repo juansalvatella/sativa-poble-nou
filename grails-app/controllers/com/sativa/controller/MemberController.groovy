@@ -76,8 +76,6 @@ class MemberController  {
 		
 		def now = new Date() - 18*365
 
-		println "now date "+dateBirthday
-
 		if (now < dateBirthday) {
 			if (!cpc.friend) {
 				redirect(controller: "card", action: "dispatcher",  params:[num_tarjeta:cpc.codeCard, error:"¡¡Es menor de edad!!"])
