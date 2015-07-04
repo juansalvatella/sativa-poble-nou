@@ -76,14 +76,12 @@ class GeneticOrdersService {
 		def countGrams = 0
 		def countAnualGrams = 0
 
-		println start 
-		println end
+
 		listGenetics.each { go->
 			if (go.dateCreated >= start && go.dateCreated <= end){
 				countGrams 		+= go.genetic.type.grams*go.amount
 			}
 			countAnualGrams += go.genetic.type.grams*go.amount
-			println "date "+go.dateCreated
 		}
 
 		return ["monthly":countGrams, "anualy":countAnualGrams]

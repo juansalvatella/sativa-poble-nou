@@ -76,7 +76,7 @@ class MemberService {
 
 	@Transactional(readOnly = true)
 	def searchInvitate (String firstname, String lastname, String identificationNumber) {
-		println "identifi "+identificationNumber
+
 		return Partner.createCriteria().list {
 			order("code", "asc")
 			and {
@@ -225,7 +225,7 @@ class MemberService {
 		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
 		dateBirthday.set(year:stringBirthday[0] as Integer)
 
-    	partner.birthday			 = dateBirthday
+    	partner.birthday			 = dateBirthday+1
 		partner.phone 				 = cpc.phone
 		partner.firstname			 = cpc.firstname
 		partner.lastname 			 = cpc.lastname
@@ -276,7 +276,7 @@ class MemberService {
 			def stringBirthday = cpc.birthday.split('-');
 			def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
 			dateBirthday.set(year:stringBirthday[0] as Integer)
-			partner.birthday  = dateBirthday
+			partner.birthday  = dateBirthday+1
 		}
 		
 		partner.identificationNumber = cpc.identificationNumber
