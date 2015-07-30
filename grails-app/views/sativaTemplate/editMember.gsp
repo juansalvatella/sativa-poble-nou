@@ -35,7 +35,7 @@
 				 	<div class="row" id="divEditMember">
 				 		<div class="col-lg-3">
 				 			<g:if test="${member.image}">
-				 			<g:img dir="css/img/partners" file="${member.image}" width="200" height="180"/>
+				 			<img src="data:image/png;base64,${imagePerson}" width="200" height="180"/>
 					 		</g:if>
 					 		<g:else>
 								<g:img dir="css/img" file="avatar.png" width="200"/>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-
+<%@ page import="sun.misc.BASE64Encoder" %>
+<%@ page import="sun.misc.BASE64Decoder" %>
+<%@ page import="javax.imageio.ImageIO" %>
 	<g:render template="/sativaTemplate/menuTemplate" model="${username}" />
 	<!-- END SIDEBAR -->
 	<!-- BEGIN CONTENT -->
@@ -67,7 +69,19 @@
 				 								<td class="valignInvitate">${i+1} ${mem.guest.code}</td>
 				 								<td style="text-align:center">
 				 									<g:if test="${mem.guest.image}">
-										 				<g:img dir="css/img/partners" id="${mem.guest.image}" class="seeImage" file="${mem.guest.image}" width="50" height="50"/></a>
+										 				<%
+					 										def guestImage
+					 										try {
+																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+mem.guest.image));
+																ByteArrayOutputStream bos = new ByteArrayOutputStream();
+															 	ImageIO.write(imageAux, "png", bos);
+																byte[] imageBytes	  = bos.toByteArray();
+																BASE64Encoder encoder = new BASE64Encoder();
+													        	guestImage = encoder.encode(imageBytes);
+													        }catch(all){}
+					 									%>
+
+										 				<img src="data:image/png;base64,${guestImage}" id="${mem.guest.image}" class="seeImage" width="50" height="50"/></a>
 											 		</g:if>
 											 		<g:else>
 														<g:img dir="css/img" id="avatar.png" class="seeImage" file="avatar.png" width="200"/>
@@ -110,8 +124,8 @@
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
    $('.seeImage').mouseover(function(){
-   		var image = $(this).attr('id')
-  		$("#showImageTop").html('<img src="/css/img/partners/'+image+'" />');
+   		var imgSrc = $(this).attr('src')
+  		$("#showImageTop").html('<img src="'+imgSrc+'" />');
   		$('#showImageTop').removeClass('hide');
 	});
    $('.seeImage').mouseout(function(){

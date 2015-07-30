@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-
+<%@ page import="sun.misc.BASE64Encoder" %>
+<%@ page import="sun.misc.BASE64Decoder" %>
+<%@ page import="javax.imageio.ImageIO" %>
 	<g:render template="/sativaTemplate/menuTemplate" model="${username}" />
 	<!-- END SIDEBAR -->
 	<!-- BEGIN CONTENT -->
@@ -51,7 +53,19 @@
 					 								<td style="vertical-align:middle">${it.genetic.name}</td>
 					 								<td style="vertical-align:middle">${it.genetic.type.grams*it.amount}gr</td>
 					 								<td style="vertical-align:middle"><g:formatDate  timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/> </td>
-					 								<td  style="vertical-align:middle" class="center"><g:img dir="css/img/geneticOrdersSigns" file="${it.id}.png" class="imageSign" base="${grailsApplication.config.grails.serverURL}" />
+					 								<td  style="vertical-align:middle" class="center">
+					 									<%
+					 										def signatureImage
+					 										try {
+																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/firmas/"+it.id+".png"));
+																ByteArrayOutputStream bos = new ByteArrayOutputStream();
+															 	ImageIO.write(imageAux, "png", bos);
+																byte[] imageBytes	  = bos.toByteArray();
+																BASE64Encoder encoder = new BASE64Encoder();
+													        	signatureImage = encoder.encode(imageBytes);
+													        }catch(all){}
+					 									%>
+					 								<img src="data:image/png;base64,${signatureImage}" class="imageSign" />
 					 							</tr>
 					 						</g:each>
 						 				</g:if>

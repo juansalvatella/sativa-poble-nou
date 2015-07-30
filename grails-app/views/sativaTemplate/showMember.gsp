@@ -1,4 +1,4 @@
-`<!DOCTYPE html>
+<!DOCTYPE html>
 
 	<g:render template="/sativaTemplate/menuTemplate" model="${username}" />
 	<script src="${resource(dir:'js/scriptsSativa', file: 'signature.js')}" type="text/javascript"></script>
@@ -11,7 +11,7 @@
 				 	<div class="row" id="divShowMember">
 				 		<div class="col-lg-3">
 				 			<g:if test="${member.image}">
-				 			<g:img dir="css/img/partners" file="${member.image}" width="225" height="180"/>
+				 			<img src="data:image/png;base64,${imagePerson}" width="225" height="180"/>
 					 		</g:if>
 					 		<g:else>
 								<g:img dir="css/img" file="avatar.png" width="200"/>

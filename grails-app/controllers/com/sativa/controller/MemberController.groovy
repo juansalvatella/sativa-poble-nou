@@ -12,7 +12,9 @@ import com.sativa.command.DataMemberCommand
 import com.sativa.exception.NotFoundException
 import grails.validation.ValidationException
 
-
+import sun.misc.BASE64Encoder;
+import sun.misc.BASE64Decoder;
+import javax.imageio.ImageIO;
 
 
 @Secured(['ROLE_ADMIN', 'ROLE_SELLER'])
@@ -119,7 +121,16 @@ class MemberController  {
 		def notification	  = eventService.notification(member)
 		def card  		 	  = cardService.cardActive(member)
 		def grams			  = geneticOrdersService.grams(member)
-		render(view: "/sativaTemplate/showMember", model: [error:error, grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents])
+		def pedro
+		try {
+			def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+member.code+".png"));
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		 	ImageIO.write(imageAux, "png", bos);
+			byte[] imageBytes	  = bos.toByteArray();
+			BASE64Encoder encoder = new BASE64Encoder();
+        	pedro = encoder.encode(imageBytes);
+        }catch(all){}
+		render(view: "/sativaTemplate/showMember", model: [error:error, imagePerson:pedro, grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents])
 	}
 
 
@@ -135,7 +146,16 @@ class MemberController  {
 		def card  		 	  = cardService.cardActive(member)
 		def numberInvitations = guestHistoricService.numberInvitations(member)
 		def grams			  = geneticOrdersService.grams(member)
-		render(view: "/sativaTemplate/editMember", model: [card:card, grams:grams,  numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents, error:error])
+		def pedro
+		try {
+			def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+member.code+".png"));
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		 	ImageIO.write(imageAux, "png", bos);
+			byte[] imageBytes	  = bos.toByteArray();
+			BASE64Encoder encoder = new BASE64Encoder();
+        	pedro = encoder.encode(imageBytes);
+        }catch(all){}
+		render(view: "/sativaTemplate/editMember", model: [card:card,imagePerson:pedro, grams:grams,  numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents, error:error])
 
 	}
 

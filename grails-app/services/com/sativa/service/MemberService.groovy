@@ -33,6 +33,7 @@ import com.sativa.command.DataMemberCommand
 
 import com.sativa.utils.ImageUtils
 
+import org.apache.commons.io.FileUtils;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
@@ -239,9 +240,9 @@ class MemberService {
 
 		if (cpc.image) {
 		 	def applicationContext = grailsApplication.mainContext
-    		String basePath = applicationContext.getResource("/").getFile().toString()
+    		
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
         }
 
@@ -283,9 +284,8 @@ class MemberService {
 
 		if (cpc.image) {
 		 	def applicationContext = grailsApplication.mainContext
-    		String basePath = applicationContext.getResource("/").getFile().toString()
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
     	}
 
@@ -341,9 +341,8 @@ class MemberService {
 	@Transactional
 	def photo(Partner member, String image) {
 		def applicationContext = grailsApplication.mainContext
-    	String basePath = applicationContext.getResource("/").getFile().toString()
 		BufferedImage newImg = ImageUtils.decodeToImage(image);
-        ImageIO.write(newImg, "png", new File("${basePath}/css/img/partners/"+member.code+".png"))
+        ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+member.code+".png"))
         member.image = member.code+".png"
         if (member.status == PARTNER_STATUS__UNKNOWN && member.firstname && member.image && member.lastname && member.address && member.identificationNumber && member.phone) {
     		member.status = PARTNER_STATUS__ACTIVED
