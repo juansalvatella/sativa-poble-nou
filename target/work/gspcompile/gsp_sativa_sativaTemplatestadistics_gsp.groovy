@@ -25,8 +25,8 @@ invokeTag('form','g',32,['name':("myForm"),'role':("form"),'class':("form-horizo
 printHtmlPart(5)
 if(true && (stadisticsPerDay)) {
 printHtmlPart(6)
-for( _it1852111109 in (stadisticsPerDay) ) {
-changeItVariable(_it1852111109)
+for( _it532040857 in (stadisticsPerDay) ) {
+changeItVariable(_it532040857)
 printHtmlPart(7)
 expressionOut.print(it.partner?.code)
 printHtmlPart(8)
@@ -72,8 +72,8 @@ expressionOut.print(totalPerPeriod)
 printHtmlPart(21)
 if(true && (stadisticsPerPeriod)) {
 printHtmlPart(22)
-for( _it655945698 in (stadisticsPerPeriod) ) {
-changeItVariable(_it655945698)
+for( _it374535320 in (stadisticsPerPeriod) ) {
+changeItVariable(_it374535320)
 printHtmlPart(23)
 expressionOut.print(it.partner?.code)
 printHtmlPart(24)
@@ -105,8 +105,8 @@ expressionOut.print(totalBuys)
 printHtmlPart(34)
 expressionOut.print(totalGrams)
 printHtmlPart(35)
-for( _it1445786235 in (listGenetics) ) {
-changeItVariable(_it1445786235)
+for( _it540553883 in (listGenetics) ) {
+changeItVariable(_it540553883)
 printHtmlPart(36)
 expressionOut.print(it.name.name)
 printHtmlPart(37)

@@ -30,8 +30,8 @@ createTagBody(1, {->
 printHtmlPart(8)
 expressionOut.print(memberId)
 printHtmlPart(9)
-for( _it968246912 in (listMembers) ) {
-changeItVariable(_it968246912)
+for( _it1305241297 in (listMembers) ) {
+changeItVariable(_it1305241297)
 printHtmlPart(10)
 expressionOut.print(it.id)
 printHtmlPart(11)
@@ -51,8 +51,8 @@ printHtmlPart(17)
 })
 invokeTag('form','g',88,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'create',controller:'member'])],1)
 printHtmlPart(18)
-for( _it1842256665 in (listGenetics) ) {
-changeItVariable(_it1842256665)
+for( _it645024574 in (listGenetics) ) {
+changeItVariable(_it645024574)
 printHtmlPart(19)
 expressionOut.print(it.name)
 printHtmlPart(20)

@@ -23,9 +23,12 @@ class GuestHistoricService {
 	}
 
 	@Transactional
-	def historic (){
+	def historic (Integer offset){
+		offset = offset?:0
 		def ghList = GuestHistoric.createCriteria().list {
 			order("entry", "desc")
+			maxResults 50
+			firstResult offset
 		}
 		return ghList
 

@@ -19,6 +19,7 @@ class GeneticService {
 	def list () {
 		return Genetic.createCriteria().list {
 			ne "status", GENETIC_STATUS__REMOVED
+			order "name", "asc"
 
 		}
 	}

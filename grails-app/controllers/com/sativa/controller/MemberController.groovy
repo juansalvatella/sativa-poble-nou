@@ -212,9 +212,10 @@ class MemberController  {
 	}
 
 
-	def guests() {
-		def historicGuests = guestHistoricService.historic()
+	def guests(Integer offset) {
+		offset = offset?:1
+		def historicGuests = guestHistoricService.historic(offset)
 		def listInvitates = memberService.guests()
-		render(view: "/sativaTemplate/showInvitates", model: [historicGuests:historicGuests, listInvitates:listInvitates])
+		render(view: "/sativaTemplate/showInvitates", model: [offset:offset, historicGuests:historicGuests, listInvitates:listInvitates])
 	}
 }
