@@ -196,7 +196,10 @@ class MemberService {
 
 		Partner partner = new Partner()
 		boolean addGuess = false
+
+
 		if (cpc.friend) {
+
         	if (!cpc.image){
         		return "La foto para usuarios invitados es obligatoria"
         	}
@@ -216,10 +219,12 @@ class MemberService {
 				partner.status = PARTNER_STATUS__INVITE
 				partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
 			}
+			
         	addGuess = true
         	
     	}
     	else {
+    		
     		partner.code = dayString+monthString+yearString+countString.padLeft(3,'0')
     	}
     	def stringBirthday = cpc.birthday.split('-');
@@ -235,14 +240,14 @@ class MemberService {
 		
     	
     	
-		
+
 		
 
 		if (cpc.image) {
 		 	def applicationContext = grailsApplication.mainContext
     		
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("/Users/userpc/sativaImages/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
         }
 
@@ -254,9 +259,13 @@ class MemberService {
     
     	partner.save(flush:true)
 
+    	
     	if (addGuess){
     		guestHistoricService.add(partner, cpc.friend)
     	}
+
+    		
+    	
 
 
 		if (cpc.codeCard) {

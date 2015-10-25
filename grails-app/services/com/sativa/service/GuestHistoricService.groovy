@@ -14,21 +14,23 @@ class GuestHistoricService {
 		gh.guest 	= guest
 		gh.entry    = new Date()
 		gh.friend   = friend
-		def ghList = GuestHistoric.createCriteria().list {
-			eq "guest", guest
-			order("id", "asc")
-		}
 		gh.numberEntries = this.numberInvitations(guest)
 		gh.save(flush:true)
+
+
 	}
 
 	@Transactional
 	def historic (Integer offset){
-		offset = offset?:0
+		if (offset || offset==1){
+			offset = 0
+		}
+		
 		def ghList = GuestHistoric.createCriteria().list {
 			order("entry", "desc")
 			maxResults 50
 			firstResult offset
+			cache false
 		}
 		return ghList
 
