@@ -109,6 +109,20 @@
 				 				</g:else>
 				 			</tbody>
 				 		</table>
+				 		<p class="paginationGuest">
+				 			<g:if test="${offset==0}">
+				 				<span class="back disabled">< Atras</span> 
+				 			</g:if>
+				 			<g:else> 
+								<span class="back ">< Atras</span> 
+				 			</g:else>
+				 			<g:if test="${listMembers.size() < 50}">
+				 				<span class="next disabled">Siguiente > </span>	
+				 			</g:if>
+				 			<g:else>
+				 				<span class="next">Siguiente > </span>
+				 			</g:else>
+				 		</p>
 	            	</div>
 	        </div>
 		</div>
@@ -128,6 +142,21 @@
 <script>
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
+   $('.next').click(function(){
+		if (!$(this).hasClass('disabled')){
+			var auxOffset = ${offset};
+			auxOffset = auxOffset + 50;
+			window.location.replace('/buscar-socio?offset='+auxOffset);
+		}
+	});
+	$('.back').click(function(){
+		if (!$(this).hasClass('disabled')){
+			var auxOffset = ${offset};
+			auxOffset = auxOffset - 50;
+			window.location.replace('/buscar-socio?offset='+auxOffset);
+		}
+	});
+
 });
 </script>
 </body>

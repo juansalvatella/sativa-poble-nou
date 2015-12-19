@@ -61,44 +61,44 @@ printHtmlPart(4)
 expressionOut.print(resource(dir: 'css/sativaCss', file: 'custom.css'))
 printHtmlPart(7)
 })
-invokeTag('captureHead','sitemesh',49,[:],1)
+invokeTag('captureHead','sitemesh',48,[:],1)
 printHtmlPart(8)
 createTagBody(1, {->
 printHtmlPart(9)
 expressionOut.print(sec.loggedInUserInfo(field: 'username'))
 printHtmlPart(10)
 })
-invokeTag('ifLoggedIn','sec',62,[:],1)
+invokeTag('ifLoggedIn','sec',61,[:],1)
 printHtmlPart(11)
 createTagBody(1, {->
 printHtmlPart(12)
 createClosureForHtmlPart(13, 2)
-invokeTag('link','g',98,['mapping':("searchMember")],2)
+invokeTag('link','g',97,['mapping':("searchMember")],2)
 printHtmlPart(14)
 createClosureForHtmlPart(15, 2)
-invokeTag('link','g',105,['mapping':("listInvitate")],2)
+invokeTag('link','g',104,['mapping':("listInvitate")],2)
 printHtmlPart(16)
 createTagBody(2, {->
 printHtmlPart(17)
 createClosureForHtmlPart(18, 3)
-invokeTag('link','g',112,['mapping':("managementMembers")],3)
+invokeTag('link','g',111,['mapping':("managementMembers")],3)
 printHtmlPart(19)
 createClosureForHtmlPart(20, 3)
-invokeTag('link','g',120,['mapping':("managementGenetics")],3)
+invokeTag('link','g',119,['mapping':("managementGenetics")],3)
 printHtmlPart(21)
 createClosureForHtmlPart(22, 3)
-invokeTag('link','g',126,['mapping':("stadistics")],3)
+invokeTag('link','g',125,['mapping':("stadistics")],3)
 printHtmlPart(23)
 createClosureForHtmlPart(24, 3)
-invokeTag('link','g',132,['mapping':("searchPartner")],3)
+invokeTag('link','g',131,['mapping':("searchPartner")],3)
 printHtmlPart(16)
 })
-invokeTag('ifAllGranted','sec',134,['roles':("ROLE_ADMIN")],2)
+invokeTag('ifAllGranted','sec',133,['roles':("ROLE_ADMIN")],2)
 printHtmlPart(25)
 expressionOut.print(createLink(uri:'j_spring_security_logout'))
 printHtmlPart(26)
 })
-invokeTag('ifLoggedIn','sec',142,[:],1)
+invokeTag('ifLoggedIn','sec',141,[:],1)
 printHtmlPart(27)
 expressionOut.print(resource(dir:'css/img', file:'logo.png'))
 printHtmlPart(28)
@@ -108,7 +108,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1436041506000L
+public static final long LAST_MODIFIED = 1449249129000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

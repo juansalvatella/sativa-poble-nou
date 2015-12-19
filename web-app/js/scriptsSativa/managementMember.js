@@ -9,6 +9,8 @@ var ManagementMember = function () {
                 $('#deleteMember').modal('show');
                 $('#btnDeleteMember').prop('href', "member/delete?memberId="+id);
             });
+
+		    
         }
     }
 }();

@@ -45,7 +45,6 @@ License: You must have a valid license purchased only from themeforest(the above
 
 
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="http://www.keenthemes.com/preview/conquer/favicon.ico"/>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -143,5 +142,5 @@ License: You must have a valid license purchased only from themeforest(the above
 		</ul>
 		<!-- END SIDEBAR MENU -->
 
-		<a href="/buscar-socio"><img  src="${resource(dir:'css/img', file:'logo.png')}" id="logo" alt="logo"/></a>	
+		<a href="/buscar-socio"><img  src="${resource(dir:'css/img', file:'logo2.png')}" id="logo" alt="logo"/></a>	
 	</div>

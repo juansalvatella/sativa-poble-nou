@@ -22,14 +22,13 @@ class GuestHistoricService {
 
 	@Transactional
 	def historic (Integer offset){
-		if (offset || offset==1){
+		if (!offset || offset==1){
 			offset = 0
 		}
 		
-		def ghList = GuestHistoric.createCriteria().list {
+		println "hito "+offset
+		def ghList = GuestHistoric.createCriteria().list([max:50, offset:offset]) {
 			order("entry", "desc")
-			maxResults 50
-			firstResult offset
 			cache false
 		}
 		return ghList

@@ -38,19 +38,19 @@ class MemberController  {
 
 
 
-	def list () {
-		def listMembers = memberService.list()
-		render(view: "/sativaTemplate/searchMembers", model: [listMembers:listMembers])
+	def list (Integer offset) {
+		offset = offset?:0
+		def listMembers = memberService.list(null, offset)
+		render(view: "/sativaTemplate/searchMembers", model: [offset:offset, listMembers:listMembers])
 	}
 
-	def all (String firstname, String lastname, String identificationNumber, String code) {
-		def listMembers = memberService.all(firstname, lastname, identificationNumber, code)
-		render(view: "/sativaTemplate/managementMembers", model: [listMembers:listMembers])
+	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset) {
+		offset = offset?:0
+		def listMembers = memberService.all(firstname, lastname, identificationNumber, code, offset)
+		render(view: "/sativaTemplate/managementMembers", model: [offset:offset, listMembers:listMembers])
 	}
 
 	def create(DataMemberCommand cpc, Long oldPartner){
-		
-
 		if (!cpc.firstname && !oldPartner){
 			if (!cpc.friend) {
 				redirect(controller: "card", action: "dispatcher",  params:[num_tarjeta:cpc.codeCard, error:"El nombre es un campo necesario"])
@@ -213,7 +213,7 @@ class MemberController  {
 
 
 	def guests(Integer offset) {
-		offset = offset?:1
+		offset = offset?:0
 		def historicGuests = guestHistoricService.historic(offset)
 		def listInvitates = memberService.guests()
 		render(view: "/sativaTemplate/showInvitates", model: [offset:offset, historicGuests:historicGuests, listInvitates:listInvitates])

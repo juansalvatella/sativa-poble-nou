@@ -73,7 +73,8 @@
 			              </g:form>
 			        </div>
 			        <div class="row">
-			        	<h4><b>TOTAL DE USUARIOS: ${listMembers?.size()}</b></h4>
+			        	<h4><b>TOTAL DE USUARIOS: ${listMembers?.totalCount}</b></h4>
+
 				 		<table class="table table-bordered table-condensed">
 				 			<thead>
 				 				<tr>
@@ -127,6 +128,20 @@
 				 				</g:else>
 				 			</tbody>
 				 		</table>
+				 		<p class="paginationGuest">
+				 			<g:if test="${offset==0}">
+				 				<span class="back disabled">< Atras</span> 
+				 			</g:if>
+				 			<g:else> 
+								<span class="back ">< Atras</span> 
+				 			</g:else>
+				 			<g:if test="${listMembers.size() < 50}">
+				 				<span class="next disabled">Siguiente > </span>	
+				 			</g:if>
+				 			<g:else>
+				 				<span class="next">Siguiente > </span>
+				 			</g:else>
+				 		</p>
 	            	</div>
 	        </div>
 		</div>
@@ -147,6 +162,20 @@
 jQuery(document).ready(function() {    
    App.init(); // initlayout and core plugins
    ManagementMember.init();
+	$('.next').click(function(){
+		if (!$(this).hasClass('disabled')){
+			var auxOffset = ${offset};
+			auxOffset = auxOffset+ 50;
+			window.location.replace('/gestionar-usuarios?offset='+auxOffset);
+		}
+	});
+	$('.back').click(function(){
+		if (!$(this).hasClass('disabled')){
+			var auxOffset = ${offset};
+			auxOffset = auxOffset- 50;
+			window.location.replace('/gestionar-usuarios?offset='+auxOffset);
+		}
+	});
 
 });
 </script>

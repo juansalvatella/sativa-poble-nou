@@ -31,7 +31,7 @@ loop:{
 int i = 0
 for( mem in (historicGuests) ) {
 printHtmlPart(8)
-expressionOut.print(i+1+((offset-1)*50))
+expressionOut.print((i+1)+offset)
 printHtmlPart(9)
 expressionOut.print(mem.guest.code)
 printHtmlPart(10)
@@ -89,7 +89,7 @@ else {
 printHtmlPart(23)
 }
 printHtmlPart(24)
-if(true && (offset==1)) {
+if(true && (offset==0)) {
 printHtmlPart(25)
 }
 else {
@@ -115,7 +115,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1444491602000L
+public static final long LAST_MODIFIED = 1448906937000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

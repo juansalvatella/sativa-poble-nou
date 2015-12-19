@@ -347,6 +347,7 @@ Header and header elements.
 
 #logo {
   margin-top:20%;
+  width:200px;
 }
 
 /* quick search */
@@ -3458,6 +3459,7 @@ Responsive Flip Scroll Tables
   float: right;
 }
 
+.next,
 .nextGuest {
   cursor: pointer;
   color:#5CB85C;
@@ -3465,6 +3467,7 @@ Responsive Flip Scroll Tables
   font-size: 20px;
 }
 
+.back,
 .backGuest {
   cursor: pointer;
   color:#5CB85C;
@@ -3472,11 +3475,26 @@ Responsive Flip Scroll Tables
   font-size: 20px;
 }
 
+.next.disabled,
 .nextGuest.disabled{
   color:grey;
   cursor: default;
 }
+
+.back.disabled,
 .backGuest.disabled{
   color:grey;
   cursor: default;
 }
+ul.page-sidebar-menu > li > a {
+  color:black !important;
+}
+
+ul.page-sidebar-menu > li > a:hover{
+  color:white !important;
+}
+
+ul.page-sidebar-menu > li.active > a {
+  color:white !important;
+}
+

@@ -66,7 +66,7 @@
 				 				<g:if test="${historicGuests}">
 				 						<g:each in="${historicGuests}" var="mem" status="i">
 				 							<tr > 
-				 								<td class="valignInvitate">${i+1+((offset-1)*50)} ${mem.guest.code}</td>
+				 								<td class="valignInvitate">${(i+1)+offset} ${mem.guest.code}</td>
 				 								<td style="text-align:center">
 				 									<g:if test="${mem.guest.image}">
 										 				<%
@@ -105,7 +105,7 @@
 				 			</tbody>
 				 		</table>
 				 		<p class="paginationGuest">
-				 			<g:if test="${offset==1}">
+				 			<g:if test="${offset==0}">
 				 				<span class="backGuest disabled">< Atras</span> 
 				 			</g:if>
 				 			<g:else> 
@@ -149,14 +149,14 @@ jQuery(document).ready(function() {
    $('.nextGuest').click(function(){
    		if (!$(this).hasClass('disabled')){
    			var auxOffset = ${offset};
-   			auxOffset++;
+   			auxOffset = auxOffset + 50;
    			window.location.replace('/invitados?offset='+auxOffset);
    		}
    });
     $('.backGuest').click(function(){
    		if (!$(this).hasClass('disabled')){
-   			var auxOffset = ${offset};
-   			auxOffset--;
+   			var auxOffset = ${offset}
+   			auxOffset = auxOffset - 50;
    			window.location.replace('/invitados?offset='+auxOffset);
    		}
    });

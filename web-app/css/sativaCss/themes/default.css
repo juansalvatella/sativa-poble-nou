@@ -6,7 +6,8 @@ Reset and overrides
 ***/
 body {
   color: #222222;
-  background-color: #35363a !important;
+  /*background-color: #35363a !important;*/
+  background-color: #efefef !important;
 }
 /***
 Page header
@@ -14,7 +15,8 @@ Page header
 .header {
   filter: none;
   background-image: none;
-  background-color: #242527;
+  /*background-color: #242527;*/
+  background-color: #efefef;
 }
 .header .navbar-nav .dropdown-toggle:hover,
 .header .navbar-nav .dropdown.open .dropdown-toggle {
@@ -27,7 +29,12 @@ Page header
   border-left: 1px solid #484a4f !important;
 }
 .header .navbar-nav > li.dropdown.user .dropdown-toggle .username {
-  color: #cecfd3;
+  /*color: #cecfd3;*/
+  color:black;
+}
+
+.username:hover {
+  background-color: inherit !important;
 }
 .header .search-form .form-control,
 .page-sidebar-menu .search-form .form-control {
@@ -64,7 +71,7 @@ Page header
 Page sidebar
 ***/
 .page-sidebar {
-  background: #35363a;
+  background: #efefef;
 }
 ul.page-sidebar-menu > li {
   border-bottom: 1px solid #414247;

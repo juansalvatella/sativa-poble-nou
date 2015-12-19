@@ -101,7 +101,18 @@ class MemberService {
 
 
 	@Transactional(readOnly = true)
-	def list (String orderParam) {
+	def list (String orderParam, Integer offset = null) {
+			if (offset){
+				return Partner.createCriteria().list ([max:50, offset:offset]){
+					or {
+						eq "status", PARTNER_STATUS__ACTIVED
+						eq "status", PARTNER_STATUS__UNKNOWN
+						//eq "status", PARTNER_STATUS__DETOXIFIED
+					}
+					if (orderParam) order (orderParam, "asc")
+					else order("id", "asc")
+				}	
+			}
 			return Partner.createCriteria().list {
 				or {
 					eq "status", PARTNER_STATUS__ACTIVED
@@ -145,9 +156,9 @@ class MemberService {
 
 
 	@Transactional(readOnly = true)
-	def all (String firstname, String lastname, String identificationNumber, String code) {
-			return Partner.createCriteria().list {
-				order("id", "desc")
+	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset) {
+			return Partner.createCriteria().list ([max:50, offset:offset]){
+				
 				if (firstname){
 					ilike 'firstname', "%${firstname}%"
 				}
@@ -162,7 +173,8 @@ class MemberService {
 				}
 				ne "status", PARTNER_STATUS__INVITE
 				ne "status", PARTNER_STATUS__REMOVED
-
+				order("id", "desc")
+				cache false
 			}
 	}
 
