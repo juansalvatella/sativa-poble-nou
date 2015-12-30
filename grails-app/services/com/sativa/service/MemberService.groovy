@@ -276,8 +276,6 @@ class MemberService {
     		guestHistoricService.add(partner, cpc.friend)
     	}
 
-    		
-    	
 
 
 		if (cpc.codeCard) {

@@ -13,7 +13,7 @@ class PartnerDisabledJob {
 	
     static triggers = {
 		// Execucio cada hora al minuto 1 segundo 10
-		cron name:'partnerDisabledJob', cronExpression: '10 1 0/10 * * ?' 
+		//cron name:'partnerDisabledJob', cronExpression: '10 1 0/10 * * ?' 
 		
     }
 	
