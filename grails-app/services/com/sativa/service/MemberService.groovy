@@ -16,6 +16,10 @@ import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__DISABLED
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__NEW_CARD
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__NEW_USER
 import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__RENOVATE
+import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__AMONISHED
+import  static com.sativa.enums.EventTypeEnum.EVENT_TYPE__AMONISHED_FORGIVE
+
+
 
 
 
@@ -29,6 +33,9 @@ import com.sativa.domain.Role
 import com.sativa.domain.Card
 import com.sativa.enums.PartnerStatusEnum
 import com.sativa.command.DataMemberCommand
+import com.sativa.enums.TypeConsumEnum
+
+
 
 
 import com.sativa.utils.ImageUtils
@@ -36,6 +43,8 @@ import com.sativa.utils.ImageUtils
 import org.apache.commons.io.FileUtils;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+
+
 
 
 class MemberService {
@@ -156,7 +165,9 @@ class MemberService {
 
 
 	@Transactional(readOnly = true)
-	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset) {
+	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset, List statusArray = null) {
+			println "aaaa --> "+statusArray
+
 			return Partner.createCriteria().list ([max:50, offset:offset]){
 				
 				if (firstname){
@@ -173,6 +184,9 @@ class MemberService {
 				}
 				ne "status", PARTNER_STATUS__INVITE
 				ne "status", PARTNER_STATUS__REMOVED
+				if (statusArray){
+					'in' "status", statusArray.collect{PartnerStatusEnum.valueOf(it)}
+				}
 				order("id", "desc")
 				cache false
 			}
@@ -195,6 +209,9 @@ class MemberService {
 		String monthString = now.getAt(Calendar.MONTH)+1
 		String yearString  = now.getAt(Calendar.YEAR)
 		yearString 		   = yearString.substring(2)
+		dayString   	   = dayString.padLeft(2, '0')
+		monthString 	   = monthString.padLeft(2, '0')
+
 
 		def start = Calendar.instance
 		start.set(year:now.getAt(Calendar.YEAR), month: now.getAt(Calendar.MONTH), date: now.getAt(Calendar.DATE), hourOfDay:0, minute:0, second:0)
@@ -243,6 +260,7 @@ class MemberService {
 		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 12, 0)
 		dateBirthday.set(year:stringBirthday[0] as Integer)
 
+		partner.consum				 = TypeConsumEnum."${cpc.consum}"
     	partner.birthday			 = dateBirthday
 		partner.phone 				 = cpc.phone
 		partner.firstname			 = cpc.firstname
@@ -259,7 +277,7 @@ class MemberService {
 		 	def applicationContext = grailsApplication.mainContext
     		
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("/opt/sativaImages/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
         }
 
@@ -290,7 +308,7 @@ class MemberService {
 		partner.firstname			 = cpc.firstname
 		partner.lastname 			 = cpc.lastname
 		partner.address 			 = cpc.address
-
+		partner.consum				 = TypeConsumEnum."${cpc.consum}"
 
 		if (cpc.birthday){
 			def stringBirthday = cpc.birthday.split('-');
@@ -304,7 +322,7 @@ class MemberService {
 		if (cpc.image) {
 		 	def applicationContext = grailsApplication.mainContext
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("/opt/sativaImages/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
     	}
 
@@ -325,7 +343,7 @@ class MemberService {
 	def remove(Partner member, String observation) {
 		member.status = PARTNER_STATUS__BANNED
 		member.save()
-		String textObservation = "El usuarios ha sido desactivado. "+observation
+		String textObservation = "El socio ha sido desactivado. "+observation
 		eventService.create(textObservation, member, EVENT_TYPE__DISABLED)
 	}
 
@@ -334,9 +352,22 @@ class MemberService {
 	def delete(Partner member, String observation) {
 		member.status = PARTNER_STATUS__REMOVED
 		member.save()
-		String textObservation = "El usuarios ha sido eliminado. "+observation
+		String textObservation = "El socios ha sido eliminado. "+observation
 		eventService.create(textObservation, member, EVENT_TYPE__DISABLED)
 	}
+
+	@Transactional
+	def amonished(Partner member) {
+		String textObservation = "El socio ha sido amonestado"
+		eventService.create(textObservation, member, EVENT_TYPE__AMONISHED)
+	}
+
+	@Transactional
+	def forgiveAmonished(Partner member) {
+		String textObservation = "El socio ha sido perdonado de la amonestacion"
+		eventService.create(textObservation, member, EVENT_TYPE__AMONISHED_FORGIVE)
+	}
+
 
 
 	@Transactional
@@ -357,11 +388,12 @@ class MemberService {
 		eventService.create(observation, member, EVENT_TYPE__RENOVATE)
 	}
 
+	
 	@Transactional
 	def photo(Partner member, String image) {
 		def applicationContext = grailsApplication.mainContext
 		BufferedImage newImg = ImageUtils.decodeToImage(image);
-        ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+member.code+".png"))
+        ImageIO.write(newImg, "png", new File("/opt/sativaImages/partners/"+member.code+".png"))
         member.image = member.code+".png"
         if (member.status == PARTNER_STATUS__UNKNOWN && member.firstname && member.image && member.lastname && member.address && member.identificationNumber && member.phone) {
     		member.status = PARTNER_STATUS__ACTIVED

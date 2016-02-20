@@ -3486,6 +3486,49 @@ Responsive Flip Scroll Tables
   color:grey;
   cursor: default;
 }
+
+
+.ludicDiv {
+    background-color: grey;
+    width:10px;
+    height: 10px;
+}
+
+.therapeuticDiv{
+    background-color: blue;
+    width:10px;
+    height: 10px;
+}
+
+.btnYellow{
+  background-color: yellow;
+  border:1px solid black;
+}
+
+.showCards{
+  margin-top:10px;
+  display: inline-block;
+}
+
+.showCards > div {
+  display: inline-block;
+}
+
+.showCards > div > img{
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.removeCardBtn {
+    color: red;
+    font-weight: bold;
+    position: relative;
+    top: -30px;
+    left: -15px;
+    cursor: pointer;
+}
+
+/* verison white
 ul.page-sidebar-menu > li > a {
   color:black !important;
 }
@@ -3496,5 +3539,5 @@ ul.page-sidebar-menu > li > a:hover{
 
 ul.page-sidebar-menu > li.active > a {
   color:white !important;
-}
+}*/
 

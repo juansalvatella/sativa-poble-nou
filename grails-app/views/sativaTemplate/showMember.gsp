@@ -35,6 +35,16 @@
 				 			 		<a href="#disabledMember" class="btn btn-block  btn-success" data-toggle="modal" class="config">Activar socio</a>
 				 			 	</sec:ifAllGranted>
 				 			</g:if>
+
+				 			<div class="showCards">
+					 			<g:each in="${1..yellowCard}">
+					 				<div>
+						 				<g:img dir="css/img" file="yellowCard.jpg" width="50"/>
+						 				<a class="removeCardBtn" href="${createLink(controller:'member', action:'forgiveAmonished', params:[page:"show", memberId:member.id])}">
+						 				X</a>
+					 				</div>
+					 			</g:each>
+				 			</div>
 				 			 
 				 			
 				 		</div>
@@ -49,6 +59,7 @@
 				 			<p><b>Fecha de inscripción:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateCreated}"/> </p>
 				 			<p><b>Última cuota:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
 				 			<p><b>Tarjeta:</b>  ${card?.code}</p>
+				 			<p><b>Consumo:</b>  ${member.consum.getHumanName()}</p>
 			 				<g:if test="${member.status.name() == 'PARTNER_STATUS__INVITE'}">
 								<p><b>Invitado por:</b><br />${member.lastFriend().firstname} ${member.lastFriend().lastname}</p>
 							</g:if>
@@ -348,6 +359,8 @@ jQuery(document).ready(function() {
 		$("#scrennEncima").removeClass('hide');
 		$('#saveSignature').removeClass('hide');
 	});
+
+
 
 	$("#generarFirma").click(function() { 
         $("#scrennEncima").addClass('hide');

@@ -1,6 +1,9 @@
 package com.sativa.service
 import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__CUSTOM
 import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__REMOVED
+import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__AMONISHED
+import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__AMONISHED_FORGIVE
+
 
 
 import grails.transaction.Transactional
@@ -31,6 +34,23 @@ class EventService {
 			order("dateCreated", "desc")
 			ne "type", EVENT_TYPE__REMOVED
 		}
+	}
+
+
+	@Transactional
+	def amonished (Partner partner) {
+		def countAmonished = Event.createCriteria().count {
+					eq "member", partner
+					eq "type", EVENT_TYPE__AMONISHED
+			}
+		def countForgiveAmonished = Event.createCriteria().count {
+					eq "member", partner
+					eq "type", EVENT_TYPE__AMONISHED_FORGIVE
+			}
+
+		
+
+		return countAmonished-countForgiveAmonished
 	}
 
 

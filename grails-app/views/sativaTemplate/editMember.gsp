@@ -7,7 +7,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1>ELIMINAR USUARIO</h1>
+					<h1>ELIMINAR SOCIO</h1>
 				</div>
 				<div class="modal-body">
 						<p>¿Estas seguro que quieres eliminar al usuario?</p>
@@ -15,6 +15,26 @@
 				<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 						<a id="btnDeleteMember" href="${createLink(controller:'member', action:'delete', params:[memberId:member.id])}" class="btn btn-danger" >Eliminar</a>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+
+	<div class="modal fade" id="admonished" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1>AMONESTAR SOCIO</h1>
+				</div>
+				<div class="modal-body">
+						<p>¿Estas seguro que quieres amonestar a este socio?</p>
+				</div>
+				<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<a id="btnAmonished" href="${createLink(controller:'member', action:'amonished', params:[memberId:member.id])}" class="btn btn-danger" >Amonestar</a>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -46,6 +66,7 @@
 				 			<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">
 				 			 	<a href="#disabledMember" class="btn center btn-success" data-toggle="modal" class="config">Activar socio</a>
 				 			</g:elseif>
+				 			 	<a href="#admonished" class="btn center btnYellow " data-toggle="modal"  class="config">Amonestar socio</a>
 				 			 	<a href="#deleteMember" class="btn center btn-danger" data-toggle="modal"  class="config">Eliminar socio</a>
 				 			<p></p>
 			 				<div class="form-group">
@@ -65,6 +86,17 @@
 									<p><b>Invitado por:</b><br />${member.lastFriend().firstname} ${member.lastFriend().lastname}</p>
 								</div>
 							</g:if>
+							<div class="showCards">
+								<g:if test="${yellowCard > 0}">
+						 			<g:each in="${1..yellowCard}">
+						 				<div>
+							 				<g:img dir="css/img" file="yellowCard.jpg" width="50"/>
+							 				<a class="removeCardBtn" href="${createLink(controller:'member', action:'forgiveAmonished', params:[memberId:member.id])}">
+							 				X</a>
+						 				</div>
+						 			</g:each>
+					 			</g:if>
+				 			</div>
 
 				 		</div>
 				 		<div class="col-lg-5">
@@ -101,12 +133,34 @@
       									<input type="text" class="form-control" value="${member.phone}" name="phone" >
     								</div>
     							</div>
+    							<div id="selectConsum" class="form-group groupGuest">
+                                    <label  class="col-sm-2 control-label">Tipo consumo:</label>
+                                     <div class="col-sm-10">
+                                        <select name="consum" class="form-control">
+                                            <g:if test="${member.consum.name() == 'CONSUM_LUDIC'}">
+                                            	<option value="CONSUM_LUDIC">Lúdico</option>
+                                            </g:if>
+                                             <g:else>
+                                            	<option value="CONSUM_LUDIC">Lúdico</option>
+                                            </g:else>
+                                            <g:if test="${member.consum.name() == 'CONSUM_THERAPEUTIC'}">
+                                            	<option selected value="CONSUM_THERAPEUTIC">Terapéutico</option>
+                                            </g:if>
+                                            <g:else>
+                                            	<option value="CONSUM_THERAPEUTIC">Terapéutico</option>
+                                            </g:else>
+
+                                            
+                                        </select>
+                                    </div>
+                                </div>
     							<div class="form-group">
     								<label  class="col-sm-2 control-label">Fecha nacimiento:</label>
     								 <div class="col-sm-10">
       									<div class="col-sm-10">
 
-                                          <input name="birthday" type="date" id="calendar1"  class="form-control">
+
+                                          <input name="birthday" type="date" id="calendarBirth"  class="form-control">
                                         </div>
     								</div>
     							</div>
@@ -259,7 +313,9 @@ jQuery(document).ready(function() {
  	var month = ("0" + showBirthday[1]).slice(-2); 
  	var day    =("0" + showBirthday[0]).slice(-2); 
 
-    $('#calendar1').val(showBirthday[2]+'-'+month+'-'+day);
+ 	var stringShowDate = showBirthday[2]+'-'+month+'-'+day;
+
+ 	 $('#calendarBirth').val(stringShowDate);
    
 
     // Put event listeners into place

@@ -1,6 +1,10 @@
 package com.sativa.domain
 
+import static com.sativa.enums.TypeConsumEnum.CONSUM_LUDIC
+
 import com.sativa.enums.PartnerStatusEnum
+import com.sativa.enums.TypeConsumEnum
+
 
 class Partner {
 	def guestHistoricService
@@ -26,6 +30,7 @@ class Partner {
 	PartnerStatusEnum   status 
 	Partner             friend 
 	Date  				birthday
+	TypeConsumEnum		consum = CONSUM_LUDIC
 	Long 				numInvitations = 0
 
 
@@ -49,7 +54,7 @@ class Partner {
 
 	static hasMany = [
 		cards  : Card,
-		events : Event
+		events 	: Event
 	]
 
 	Set<Role> getAuthorities() {

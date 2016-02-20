@@ -48,7 +48,7 @@
 	                            
 			              </g:form>
 			        </div>
-			       <h4><b>TOTAL DE USUARIOS INVITADOS, SIN DERECHO A CONSUMIR: ${listInvitates?.size()}</b></h4>
+			       <h4><b>TOTAL DE SOCIOS INVITADOS, SIN DERECHO A CONSUMIR: ${listInvitates?.size()}</b></h4>
 			        <div class="row">
 				 		<table id="tableGuests" class="table table-bordered table-condensed" >
 				 			<thead>
@@ -66,13 +66,17 @@
 				 				<g:if test="${historicGuests}">
 				 						<g:each in="${historicGuests}" var="mem" status="i">
 				 							<tr > 
-				 								<td class="valignInvitate">${(i+1)+offset} ${mem.guest.code}</td>
+				 								<td class="valignInvitate">
+				 									<g:if test="${offset}">
+				 										${(i+1)+offset} ${mem.guest.code}
+				 									</g:if>
+				 								</td>
 				 								<td style="text-align:center">
 				 									<g:if test="${mem.guest.image}">
 										 				<%
 					 										def guestImage
 					 										try {
-																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+mem.guest.image));
+																def imageAux		  = ImageIO.read(new File("/opt/sativaImages/partners/"+mem.guest.image));
 																ByteArrayOutputStream bos = new ByteArrayOutputStream();
 															 	ImageIO.write(imageAux, "png", bos);
 																byte[] imageBytes	  = bos.toByteArray();

@@ -6,8 +6,8 @@ Reset and overrides
 ***/
 body {
   color: #222222;
-  /*background-color: #35363a !important;*/
-  background-color: #efefef !important;
+  background-color: #35363a !important; black version*/
+  /*background-color: #efefef !important; /*white version*/
 }
 /***
 Page header
@@ -15,8 +15,8 @@ Page header
 .header {
   filter: none;
   background-image: none;
-  /*background-color: #242527;*/
-  background-color: #efefef;
+  background-color: #242527; /*black version*/
+  /*background-color: #efefef /*white version*/;
 }
 .header .navbar-nav .dropdown-toggle:hover,
 .header .navbar-nav .dropdown.open .dropdown-toggle {
@@ -29,8 +29,9 @@ Page header
   border-left: 1px solid #484a4f !important;
 }
 .header .navbar-nav > li.dropdown.user .dropdown-toggle .username {
-  /*color: #cecfd3;*/
-  color:black;
+  color: #cecfd3; /*black version */
+  /*color:black; /*white version*/
+
 }
 
 .username:hover {
@@ -71,7 +72,11 @@ Page header
 Page sidebar
 ***/
 .page-sidebar {
-  background: #efefef;
+  /*background: #efefef;  /*white admin */ 
+
+  background: #35363a; /*black admin*/
+
+
 }
 ul.page-sidebar-menu > li {
   border-bottom: 1px solid #414247;

@@ -69,11 +69,75 @@
 		                             </div>
 		                            
 	                            </div>
+	                            <div class="row">
+	                            <g:set var="isGreen" value="false"/>
+	                            <g:set var="isYellow" value="false"/>
+	                            <g:set var="isOrange" value="false"/>
+	                            <g:set var="isRed" value="false"/>
+
+	                            
+	                            <g:each in="${statusMembers}">
+	                            	<g:if test="${it == "PARTNER_STATUS__ACTIVED"}">
+	                            		<g:set var="isGreen" value="true"/>
+	                            	</g:if>
+	                            	<g:if test="${it == "PARTNER_STATUS__UNKNOWN"}">
+	                            		<g:set var="isYellow" value="true"/>
+	                            	</g:if>
+	                            	<g:if test="${it == "PARTNER_STATUS__DETOXIFIED"}">
+	                            		<g:set var="isOrange" value="true"/>
+	                            	</g:if>
+	                            	<g:if test="${it == "PARTNER_STATUS__BANNED"}">
+	                            		<g:set var="isRed" value="true"/>
+	                            	</g:if>
+	                            </g:each>
+
+
+	                            	<div class="col-lg-2">
+	                            		<g:img dir="css/img" file="semaforoVerde.jpg"/>
+	                            		<g:if test="${isGreen == 'true'}">
+	                            			<input type="checkbox" class="statusChecks" checked name="greenStatus"  />
+	                            		</g:if>
+	                            		<g:else>
+	                            			<input type="checkbox" class="statusChecks" name="greenStatus"  />
+	                            		</g:else>
+	                            	</div>
+	                            	<div class="col-lg-2">
+	                            		<g:img dir="css/img" file="semaforoAmarillo.jpg"/>
+	                            		<g:if test="${isYellow == 'true'}">
+	                            			<input type="checkbox" class="statusChecks" checked name="yellowStatus"  />
+	                            		</g:if>
+	                            		<g:else>
+	                            			<input type="checkbox" class="statusChecks" name="yellowStatus"  />
+	                            		</g:else>
+	                            	</div>
+	                            	<div class="col-lg-2">
+	                            		<g:img dir="css/img" file="semaforoNaranja.jpg"/>
+	                            		<g:if test="${isOrange == 'true'}">
+	                            			<input type="checkbox" class="statusChecks" checked name="orangeStatus"  />
+	                            		</g:if>
+	                            		<g:else>
+	                            			<input type="checkbox" class="statusChecks" name="orangeStatus"  />
+	                            		</g:else>
+	                            	</div>
+									<div class="col-lg-2">
+	                            		<g:img dir="css/img" file="semaforoRojo.jpg"/>
+	                            		<g:if test="${isRed == 'true'}">
+	                            			<input type="checkbox" class="statusChecks" checked name="redStatus"  />
+	                            		</g:if>
+	                            		<g:else>
+	                            			<input type="checkbox" class="statusChecks" name="redStatus"  />
+	                            		</g:else>
+	                            	</div>
+
+	                            	
+
+	                            </div>
+
 	                            
 			              </g:form>
 			        </div>
 			        <div class="row">
-			        	<h4><b>TOTAL DE USUARIOS: ${listMembers?.totalCount}</b></h4>
+			        	<h4><b>TOTAL DE SOCIOS: ${listMembers?.totalCount}</b></h4>
 
 				 		<table class="table table-bordered table-condensed">
 				 			<thead>
@@ -83,6 +147,7 @@
 					 				<th>DNI</th>
 					 				<th>Estado</th>
 					 				<th>Acciones</th>
+					 				<th></th>
 				 				</tr>
 				 			</thead>
 				 			<tbody>
@@ -119,6 +184,16 @@
 				 									<a class="btn btn-danger deleteMember" id="${it.id}" >
 				 										Eliminar
 				 									</a>
+				 								</td>
+
+				 								<td>
+				 									<g:if test="${it.consum.name() == 'CONSUM_THERAPEUTIC'}">
+				 										<div class="therapeuticDiv"></div>
+				 									</g:if>
+				 									<g:else>
+				 										<div class="ludicDiv"></div>
+				 									</g:else>
+
 				 								</td>
 				 							</tr>
 				 						</g:each>
@@ -175,6 +250,10 @@ jQuery(document).ready(function() {
 			auxOffset = auxOffset- 50;
 			window.location.replace('/gestionar-usuarios?offset='+auxOffset);
 		}
+	});
+
+	$('.statusChecks').change(function() {
+		$('#myForm').submit();
 	});
 
 });

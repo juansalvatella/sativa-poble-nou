@@ -1,12 +1,20 @@
 package com.sativa.controller
 
 
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__BANNED
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__ACTIVED
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DETOXIFIED
+import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__UNKNOWN
+
+
+
 import grails.plugin.springsecurity.annotation.Secured
 
 import com.sativa.utils.ImageUtils
 
 import com.sativa.domain.Partner
 import com.sativa.command.DataMemberCommand
+import com.sativa.enums.PartnerStatusEnum
 
 
 import com.sativa.exception.NotFoundException
@@ -46,8 +54,27 @@ class MemberController  {
 
 	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset) {
 		offset = offset?:0
-		def listMembers = memberService.all(firstname, lastname, identificationNumber, code, offset)
-		render(view: "/sativaTemplate/managementMembers", model: [offset:offset, listMembers:listMembers])
+
+
+		List<PartnerStatusEnum> statusMembers = [];
+		if (params.greenStatus) {
+			statusMembers.push("PARTNER_STATUS__ACTIVED")
+		}
+		if (params.yellowStatus){
+			statusMembers.push("PARTNER_STATUS__UNKNOWN")	
+		}
+		if (params.orangeStatus){
+			statusMembers.push("PARTNER_STATUS__DETOXIFIED")	
+		}
+		if (params.redStatus){
+			statusMembers.push("PARTNER_STATUS__BANNED")	
+		}
+
+		println "aa "+statusMembers
+		
+
+		def listMembers = memberService.all(firstname, lastname, identificationNumber, code, offset, statusMembers)
+		render(view: "/sativaTemplate/managementMembers", model: [offset:offset, listMembers:listMembers, statusMembers:statusMembers])
 	}
 
 	def create(DataMemberCommand cpc, Long oldPartner){
@@ -121,16 +148,18 @@ class MemberController  {
 		def notification	  = eventService.notification(member)
 		def card  		 	  = cardService.cardActive(member)
 		def grams			  = geneticOrdersService.grams(member)
+		def yellowCards 	  = eventService.amonished(member)
+
 		def pedro
 		try {
-			def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+member.code+".png"));
+			def imageAux		  = ImageIO.read(new File("/opt/sativaImages/partners/"+member.code+".png"));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		 	ImageIO.write(imageAux, "png", bos);
 			byte[] imageBytes	  = bos.toByteArray();
 			BASE64Encoder encoder = new BASE64Encoder();
         	pedro = encoder.encode(imageBytes);
         }catch(all){}
-		render(view: "/sativaTemplate/showMember", model: [error:error, imagePerson:pedro, grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents])
+		render(view: "/sativaTemplate/showMember", model: [error:error, yellowCard:yellowCards, imagePerson:pedro, grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents])
 	}
 
 
@@ -146,16 +175,17 @@ class MemberController  {
 		def card  		 	  = cardService.cardActive(member)
 		def numberInvitations = guestHistoricService.numberInvitations(member)
 		def grams			  = geneticOrdersService.grams(member)
+		def yellowCards 	  = eventService.amonished(member)
 		def pedro
 		try {
-			def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+member.code+".png"));
+			def imageAux		  = ImageIO.read(new File("/opt/sativaImages/partners/"+member.code+".png"));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		 	ImageIO.write(imageAux, "png", bos);
 			byte[] imageBytes	  = bos.toByteArray();
 			BASE64Encoder encoder = new BASE64Encoder();
         	pedro = encoder.encode(imageBytes);
         }catch(all){}
-		render(view: "/sativaTemplate/editMember", model: [card:card,imagePerson:pedro, grams:grams,  numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents, error:error])
+		render(view: "/sativaTemplate/editMember", model: [card:card,yellowCard:yellowCards, imagePerson:pedro, grams:grams,  numberInvitations: numberInvitations, notification:notification, member:member,  listEvents:listEvents, error:error])
 
 	}
 
@@ -189,6 +219,19 @@ class MemberController  {
 		memberService.delete(member, observation)
 		def listMembers = memberService.all(null, null, null, null)
 		render(view: "/sativaTemplate/managementMembers", model: [listMembers:listMembers])
+	}
+
+	def amonished (Long memberId) {
+		Partner member = Partner.get(memberId)
+		memberService.amonished(member)
+		redirect(controller: "member", action: "showEdit",  params:[memberId:memberId])
+	}
+
+	def forgiveAmonished (Long memberId, String page) {
+		Partner member = Partner.get(memberId)
+		memberService.forgiveAmonished(member)
+		if (page == "show") redirect(controller: "member", action: "show",  params:[memberId:memberId])
+		else redirect(controller: "member", action: "showEdit",  params:[memberId:memberId])
 	}
 
 	def activate(Long memberId, String page) {

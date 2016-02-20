@@ -67,6 +67,16 @@
                                           <input name="birthday" type="date" id="calendar1" class="form-control">
                                         </div>
                                 </div>
+                                <div id="selectConsum" class="form-group groupGuest">
+                                    <label  class="col-sm-2 control-label">Tipo consumo:</label>
+                                     <div class="col-sm-10">
+                                        <select name="consum" class="form-control">
+                                            <option value="CONSUM_LUDIC">Lúdico</option>
+                                            <option value="CONSUM_THERAPEUTIC">Terapéutico</option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
                                 <div id="selectMember" class="form-group groupGuest">
                                     <label  class="col-sm-2 control-label">Seleccionar miembro:</label>
                                      <div class="col-sm-10">

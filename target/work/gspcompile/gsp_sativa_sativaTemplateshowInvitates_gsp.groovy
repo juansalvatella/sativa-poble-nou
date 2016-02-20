@@ -31,16 +31,20 @@ loop:{
 int i = 0
 for( mem in (historicGuests) ) {
 printHtmlPart(8)
-expressionOut.print((i+1)+offset)
+if(true && (offset)) {
 printHtmlPart(9)
-expressionOut.print(mem.guest.code)
+expressionOut.print((i+1)+offset)
 printHtmlPart(10)
-if(true && (mem.guest.image)) {
+expressionOut.print(mem.guest.code)
 printHtmlPart(11)
+}
+printHtmlPart(12)
+if(true && (mem.guest.image)) {
+printHtmlPart(13)
 
 def guestImage
 					 										try {
-																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+mem.guest.image));
+																def imageAux		  = ImageIO.read(new File("/opt/sativaImages/partners/"+mem.guest.image));
 																ByteArrayOutputStream bos = new ByteArrayOutputStream();
 															 	ImageIO.write(imageAux, "png", bos);
 																byte[] imageBytes	  = bos.toByteArray();
@@ -48,36 +52,36 @@ def guestImage
 													        	guestImage = encoder.encode(imageBytes);
 													        }catch(all){}
 
-printHtmlPart(12)
-expressionOut.print(guestImage)
-printHtmlPart(13)
-expressionOut.print(mem.guest.image)
 printHtmlPart(14)
-}
-else {
+expressionOut.print(guestImage)
 printHtmlPart(15)
-invokeTag('img','g',87,['dir':("css/img"),'id':("avatar.png"),'class':("seeImage"),'file':("avatar.png"),'width':("200")],-1)
+expressionOut.print(mem.guest.image)
 printHtmlPart(16)
 }
+else {
 printHtmlPart(17)
+invokeTag('img','g',91,['dir':("css/img"),'id':("avatar.png"),'class':("seeImage"),'file':("avatar.png"),'width':("200")],-1)
+printHtmlPart(18)
+}
+printHtmlPart(19)
 expressionOut.print(mem.guest.firstname)
-printHtmlPart(9)
+printHtmlPart(10)
 expressionOut.print(mem.guest.lastname)
-printHtmlPart(18)
-expressionOut.print(mem.guest.identificationNumber)
-printHtmlPart(18)
-expressionOut.print(mem.entry)
-printHtmlPart(18)
-expressionOut.print(mem.friend.firstname)
-printHtmlPart(9)
-expressionOut.print(mem.friend.lastname)
-printHtmlPart(18)
-expressionOut.print(mem.numberEntries)
-printHtmlPart(19)
-if(true && (mem.numberEntries >= 5)) {
 printHtmlPart(20)
-invokeTag('img','g',96,['dir':("images/imageSativa"),'file':("warning.png"),'width':("20"),'height':("20")],-1)
-printHtmlPart(19)
+expressionOut.print(mem.guest.identificationNumber)
+printHtmlPart(20)
+expressionOut.print(mem.entry)
+printHtmlPart(20)
+expressionOut.print(mem.friend.firstname)
+printHtmlPart(10)
+expressionOut.print(mem.friend.lastname)
+printHtmlPart(20)
+expressionOut.print(mem.numberEntries)
+printHtmlPart(11)
+if(true && (mem.numberEntries >= 5)) {
+printHtmlPart(9)
+invokeTag('img','g',100,['dir':("images/imageSativa"),'file':("warning.png"),'width':("20"),'height':("20")],-1)
+printHtmlPart(11)
 }
 printHtmlPart(21)
 i++
@@ -103,7 +107,7 @@ else {
 printHtmlPart(29)
 }
 printHtmlPart(30)
-invokeTag('render','g',136,['template':("/sativaTemplate/scriptsTemplate")],-1)
+invokeTag('render','g',140,['template':("/sativaTemplate/scriptsTemplate")],-1)
 printHtmlPart(31)
 expressionOut.print(offset)
 printHtmlPart(32)
@@ -115,7 +119,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1448906937000L
+public static final long LAST_MODIFIED = 1455968079000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

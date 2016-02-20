@@ -41,7 +41,7 @@ class GeneticOrdersService {
 
 	
     	BufferedImage newImg = ImageUtils.decodeToImage(signature)
-        ImageIO.write(newImg, "jpg", new File("/usr/sativaImages/firmas/"+go.id+".png"))		
+        ImageIO.write(newImg, "jpg", new File("/opt/sativaImages/firmas/"+go.id+".png"))		
 	
 	}
 

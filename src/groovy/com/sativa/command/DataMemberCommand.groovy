@@ -23,6 +23,7 @@ class DataMemberCommand {
 	String 				image 
 	String  			identificationNumber
 	String 				codeCard
+	String 				consum
 	Partner				friend
 
 	static constraints = {
