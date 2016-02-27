@@ -15,6 +15,8 @@ import com.sativa.utils.ImageUtils
 import com.sativa.domain.Partner
 import com.sativa.command.DataMemberCommand
 import com.sativa.enums.PartnerStatusEnum
+import com.sativa.enums.TypeConsumEnum
+
 
 
 import com.sativa.exception.NotFoundException
@@ -48,6 +50,7 @@ class MemberController  {
 
 	def list (Integer offset) {
 		offset = offset?:0
+		
 		def listMembers = memberService.list(null, offset)
 		render(view: "/sativaTemplate/searchMembers", model: [offset:offset, listMembers:listMembers])
 	}
@@ -57,6 +60,8 @@ class MemberController  {
 
 
 		List<PartnerStatusEnum> statusMembers = [];
+
+		List<TypeConsumEnum> typeMembers = [];
 		if (params.greenStatus) {
 			statusMembers.push("PARTNER_STATUS__ACTIVED")
 		}
@@ -70,11 +75,17 @@ class MemberController  {
 			statusMembers.push("PARTNER_STATUS__BANNED")	
 		}
 
-		println "aa "+statusMembers
-		
+		if (params.ludicStatus){
+			typeMembers.push("CONSUM_LUDIC")
+		}
 
-		def listMembers = memberService.all(firstname, lastname, identificationNumber, code, offset, statusMembers)
-		render(view: "/sativaTemplate/managementMembers", model: [offset:offset, listMembers:listMembers, statusMembers:statusMembers])
+		if (params.thrapeuticStatus){
+			typeMembers.push("CONSUM_THERAPEUTIC")
+		}
+
+		
+		def listMembers = memberService.all(firstname, lastname, identificationNumber, code, offset, statusMembers, typeMembers)
+		render(view: "/sativaTemplate/managementMembers", model: [offset:offset, listMembers:listMembers, statusMembers:statusMembers, typeMemebers:typeMembers])
 	}
 
 	def create(DataMemberCommand cpc, Long oldPartner){
@@ -152,7 +163,7 @@ class MemberController  {
 
 		def pedro
 		try {
-			def imageAux		  = ImageIO.read(new File("/opt/sativaImages/partners/"+member.code+".png"));
+			def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+member.code+".png"));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		 	ImageIO.write(imageAux, "png", bos);
 			byte[] imageBytes	  = bos.toByteArray();
@@ -178,7 +189,7 @@ class MemberController  {
 		def yellowCards 	  = eventService.amonished(member)
 		def pedro
 		try {
-			def imageAux		  = ImageIO.read(new File("/opt/sativaImages/partners/"+member.code+".png"));
+			def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+member.code+".png"));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		 	ImageIO.write(imageAux, "png", bos);
 			byte[] imageBytes	  = bos.toByteArray();

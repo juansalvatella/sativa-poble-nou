@@ -8,6 +8,9 @@ import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__INVITE
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__DETOXIFIED
 import static com.sativa.enums.PartnerStatusEnum.PARTNER_STATUS__REMOVED
 
+import static com.sativa.enums.TypeConsumEnum.CONSUM_THERAPEUTIC
+import static com.sativa.enums.TypeConsumEnum.CONSUM_LUDIC
+
 
 
 
@@ -30,6 +33,7 @@ import grails.transaction.Transactional
 import com.sativa.domain.Partner
 import com.sativa.domain.PartnerRole
 import com.sativa.domain.Role
+import com.sativa.domain.Event
 import com.sativa.domain.Card
 import com.sativa.enums.PartnerStatusEnum
 import com.sativa.command.DataMemberCommand
@@ -111,7 +115,7 @@ class MemberService {
 
 	@Transactional(readOnly = true)
 	def list (String orderParam, Integer offset = null) {
-			if (offset){
+			if (offset != null){
 				return Partner.createCriteria().list ([max:50, offset:offset]){
 					or {
 						eq "status", PARTNER_STATUS__ACTIVED
@@ -165,7 +169,7 @@ class MemberService {
 
 
 	@Transactional(readOnly = true)
-	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset, List statusArray = null) {
+	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset, List statusArray = null, List typeMembersArray = null) {
 			println "aaaa --> "+statusArray
 
 			return Partner.createCriteria().list ([max:50, offset:offset]){
@@ -186,6 +190,9 @@ class MemberService {
 				ne "status", PARTNER_STATUS__REMOVED
 				if (statusArray){
 					'in' "status", statusArray.collect{PartnerStatusEnum.valueOf(it)}
+				}
+				if (typeMembersArray){
+					'in' "consum", typeMembersArray.collect{TypeConsumEnum.valueOf(it)}
 				}
 				order("id", "desc")
 				cache false
@@ -277,7 +284,7 @@ class MemberService {
 		 	def applicationContext = grailsApplication.mainContext
     		
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("/opt/sativaImages/partners/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
         }
 
@@ -322,7 +329,7 @@ class MemberService {
 		if (cpc.image) {
 		 	def applicationContext = grailsApplication.mainContext
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("/opt/sativaImages/partners/"+partner.code+".png"))
+        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
         	partner.image = partner.code+".png"
     	}
 
@@ -359,13 +366,24 @@ class MemberService {
 	@Transactional
 	def amonished(Partner member) {
 		String textObservation = "El socio ha sido amonestado"
+
 		eventService.create(textObservation, member, EVENT_TYPE__AMONISHED)
 	}
 
 	@Transactional
 	def forgiveAmonished(Partner member) {
 		String textObservation = "El socio ha sido perdonado de la amonestacion"
-		eventService.create(textObservation, member, EVENT_TYPE__AMONISHED_FORGIVE)
+		def countAmonished = Event.createCriteria().count {
+					eq "member", member
+					eq "type", EVENT_TYPE__AMONISHED
+			}
+		def countForgiveAmonished = Event.createCriteria().count {
+					eq "member", member
+					eq "type", EVENT_TYPE__AMONISHED_FORGIVE
+	    }
+	    if (countAmonished > countForgiveAmonished){
+			eventService.create(textObservation, member, EVENT_TYPE__AMONISHED_FORGIVE)
+		}
 	}
 
 
@@ -393,7 +411,7 @@ class MemberService {
 	def photo(Partner member, String image) {
 		def applicationContext = grailsApplication.mainContext
 		BufferedImage newImg = ImageUtils.decodeToImage(image);
-        ImageIO.write(newImg, "png", new File("/opt/sativaImages/partners/"+member.code+".png"))
+        ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+member.code+".png"))
         member.image = member.code+".png"
         if (member.status == PARTNER_STATUS__UNKNOWN && member.firstname && member.image && member.lastname && member.address && member.identificationNumber && member.phone) {
     		member.status = PARTNER_STATUS__ACTIVED

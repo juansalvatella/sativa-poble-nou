@@ -37,14 +37,15 @@
 				 			</g:if>
 
 				 			<div class="showCards">
+				 			<g:if test="${yellowCard > 0}">
 					 			<g:each in="${1..yellowCard}">
 					 				<div>
 						 				<g:img dir="css/img" file="yellowCard.jpg" width="50"/>
-						 				<a class="removeCardBtn" href="${createLink(controller:'member', action:'forgiveAmonished', params:[page:"show", memberId:member.id])}">
-						 				X</a>
 					 				</div>
 					 			</g:each>
+							</g:if>
 				 			</div>
+
 				 			 
 				 			
 				 		</div>

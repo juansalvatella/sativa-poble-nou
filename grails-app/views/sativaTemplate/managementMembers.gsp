@@ -74,6 +74,8 @@
 	                            <g:set var="isYellow" value="false"/>
 	                            <g:set var="isOrange" value="false"/>
 	                            <g:set var="isRed" value="false"/>
+	                            <g:set var="isGrey" value="false"/>
+	                            <g:set var="isBlue" value="false"/>
 
 	                            
 	                            <g:each in="${statusMembers}">
@@ -90,6 +92,17 @@
 	                            		<g:set var="isRed" value="true"/>
 	                            	</g:if>
 	                            </g:each>
+	                            <g:each in="${typeMemebers}">
+	                            <g:if test="${it == "CONSUM_LUDIC"}">
+	                            		<g:set var="isGrey" value="true"/>
+	                            	</g:if>
+	                            	<g:if test="${it == "CONSUM_THERAPEUTIC"}">
+	                            		<g:set var="isBlue" value="true"/>
+	                            	</g:if>
+
+	                            </g:each>
+
+	                            
 
 
 	                            	<div class="col-lg-2">
@@ -128,6 +141,24 @@
 	                            			<input type="checkbox" class="statusChecks" name="redStatus"  />
 	                            		</g:else>
 	                            	</div>
+	                            	<div class="col-lg-2">
+	                            		<div class="therapeuticDiv"></div>
+	                            		<g:if test="${isBlue == 'true'}">
+	                            			<input type="checkbox" class="statusChecks" checked name="thrapeuticStatus"  />
+	                            		</g:if>
+	                            		<g:else>
+	                            			<input type="checkbox" class="statusChecks" name="thrapeuticStatus"  />
+	                            		</g:else>
+	                            	</div>
+	                            		<div class="col-lg-2">
+	                            		<div class="ludicDiv"></div>
+	                            		<g:if test="${isGrey == 'true'}">
+	                            			<input type="checkbox" class="statusChecks" checked name="ludicStatus"  />
+	                            		</g:if>
+	                            		<g:else>
+	                            			<input type="checkbox" class="statusChecks" name="ludicStatus"  />
+	                            		</g:else>
+	                            	</div>
 
 	                            	
 
@@ -137,7 +168,7 @@
 			              </g:form>
 			        </div>
 			        <div class="row">
-			        	<h4><b>TOTAL DE SOCIOS: ${listMembers?.totalCount}</b></h4>
+			        	<h4><b>TOTAL DE USUARIOS: ${listMembers?.totalCount}</b></h4>
 
 				 		<table class="table table-bordered table-condensed">
 				 			<thead>

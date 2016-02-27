@@ -25,8 +25,8 @@ invokeTag('form','g',32,['name':("myForm"),'role':("form"),'class':("form-horizo
 printHtmlPart(5)
 if(true && (stadisticsPerDay)) {
 printHtmlPart(6)
-for( _it2053372354 in (stadisticsPerDay) ) {
-changeItVariable(_it2053372354)
+for( _it1120730385 in (stadisticsPerDay) ) {
+changeItVariable(_it1120730385)
 printHtmlPart(7)
 expressionOut.print(it.partner?.code)
 printHtmlPart(8)
@@ -39,7 +39,7 @@ printHtmlPart(10)
 
 def signatureImage
 					 										try {
-																def imageAux		  = ImageIO.read(new File("/opt/sativaImages/firmas/"+it.id+".png"));
+																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/firmas/"+it.id+".png"));
 																ByteArrayOutputStream bos = new ByteArrayOutputStream();
 															 	ImageIO.write(imageAux, "png", bos);
 																byte[] imageBytes	  = bos.toByteArray();
@@ -72,8 +72,8 @@ expressionOut.print(totalPerPeriod)
 printHtmlPart(21)
 if(true && (stadisticsPerPeriod)) {
 printHtmlPart(22)
-for( _it966946388 in (stadisticsPerPeriod) ) {
-changeItVariable(_it966946388)
+for( _it536512858 in (stadisticsPerPeriod) ) {
+changeItVariable(_it536512858)
 printHtmlPart(23)
 expressionOut.print(it.partner?.code)
 printHtmlPart(24)
@@ -105,8 +105,8 @@ expressionOut.print(totalBuys)
 printHtmlPart(34)
 expressionOut.print(totalGrams)
 printHtmlPart(35)
-for( _it1459186267 in (listGenetics) ) {
-changeItVariable(_it1459186267)
+for( _it2035254300 in (listGenetics) ) {
+changeItVariable(_it2035254300)
 printHtmlPart(36)
 expressionOut.print(it.name.name)
 printHtmlPart(37)
@@ -158,7 +158,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1455968079000L
+public static final long LAST_MODIFIED = 1456566809000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

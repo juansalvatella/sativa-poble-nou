@@ -1,4 +1,4 @@
-
+  
 import com.sativa.domain.*
   
   
@@ -6,7 +6,7 @@ import com.sativa.domain.*
 
   
 
-
+def cont = 0;
 
 listPartners.each {Partner p -> 
   
@@ -19,8 +19,11 @@ listPartners.each {Partner p ->
   monthString 	   = monthString.padLeft(2, '0')
   
   String countString = p.code.substring(p.code.size()-3)
+ def newcode =dayString+monthString+yearString+countString.padLeft(3,'0')
+
+ new File("/usr/sativaImages/partners/"+p.code+".png").renameTo(new File("/usr/sativaImages/partners/"+newcode+".png"))
   
- 	 
-  p.code = dayString+monthString+yearString+countString.padLeft(3,'0')
+ 	p.code = newcode
+  p.save(flush:true)
   
 }

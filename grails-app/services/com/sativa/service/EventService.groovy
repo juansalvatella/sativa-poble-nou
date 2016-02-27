@@ -48,9 +48,10 @@ class EventService {
 					eq "type", EVENT_TYPE__AMONISHED_FORGIVE
 			}
 
-		
+		def countTotal = countAmonished-countForgiveAmonished
+		countTotal = countTotal<0?0:countTotal
 
-		return countAmonished-countForgiveAmonished
+		return countTotal
 	}
 
 

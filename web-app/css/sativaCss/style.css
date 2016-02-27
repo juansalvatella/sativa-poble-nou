@@ -3492,12 +3492,16 @@ Responsive Flip Scroll Tables
     background-color: grey;
     width:10px;
     height: 10px;
+    float: left;
+    margin-top: 5px;
 }
 
 .therapeuticDiv{
     background-color: blue;
     width:10px;
     height: 10px;
+   float: left;
+    margin-top: 5px;
 }
 
 .btnYellow{

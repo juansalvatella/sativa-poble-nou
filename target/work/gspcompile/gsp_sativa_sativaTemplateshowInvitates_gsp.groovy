@@ -44,7 +44,7 @@ printHtmlPart(13)
 
 def guestImage
 					 										try {
-																def imageAux		  = ImageIO.read(new File("/opt/sativaImages/partners/"+mem.guest.image));
+																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+mem.guest.image));
 																ByteArrayOutputStream bos = new ByteArrayOutputStream();
 															 	ImageIO.write(imageAux, "png", bos);
 																byte[] imageBytes	  = bos.toByteArray();
@@ -119,7 +119,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1455968079000L
+public static final long LAST_MODIFIED = 1456566809000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

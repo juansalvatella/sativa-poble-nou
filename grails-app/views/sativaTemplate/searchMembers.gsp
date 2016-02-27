@@ -55,7 +55,7 @@
 	                            
 			              </g:form>
 			        </div>
-			        <h4><b>TOTAL DE SOCIOS: ${listMembers?.size()}</b></h4>
+			        <h4><b>TOTAL DE SOCIOS: ${listMembers?.totalCount}</b></h4>
 			        <div class="row">
 				 		<table class="table table-bordered table-condensed">
 				 			<thead>
@@ -72,7 +72,7 @@
 				 				<g:if test="${listMembers}">
 				 						<g:each in="${listMembers}" var="mem" status="i">
 				 							<tr >
-				 								<td style="vertical-align:middle">${i+1}</td>
+				 								<td style="vertical-align:middle">${i+1+offset}</td>
 				 								<td style="vertical-align:middle">${mem.code}</td>
 				 								<td style="vertical-align:middle">${mem.firstname} ${mem.lastname}</td>
 				 								<td style="vertical-align:middle">${mem.identificationNumber}</td>
