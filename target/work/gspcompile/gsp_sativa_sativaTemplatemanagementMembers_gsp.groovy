@@ -23,166 +23,201 @@ printHtmlPart(3)
 invokeTag('set','g',75,['var':("isOrange"),'value':("false")],-1)
 printHtmlPart(3)
 invokeTag('set','g',76,['var':("isRed"),'value':("false")],-1)
+printHtmlPart(3)
+invokeTag('set','g',77,['var':("isGrey"),'value':("false")],-1)
+printHtmlPart(3)
+invokeTag('set','g',78,['var':("isBlue"),'value':("false")],-1)
 printHtmlPart(4)
-for( _it341167646 in (statusMembers) ) {
-changeItVariable(_it341167646)
+for( _it1732381424 in (statusMembers) ) {
+changeItVariable(_it1732381424)
 printHtmlPart(5)
 if(true && (it == "PARTNER_STATUS__ACTIVED")) {
 printHtmlPart(6)
-invokeTag('set','g',81,['var':("isGreen"),'value':("true")],-1)
+invokeTag('set','g',83,['var':("isGreen"),'value':("true")],-1)
 printHtmlPart(5)
 }
 printHtmlPart(5)
 if(true && (it == "PARTNER_STATUS__UNKNOWN")) {
 printHtmlPart(6)
-invokeTag('set','g',84,['var':("isYellow"),'value':("true")],-1)
+invokeTag('set','g',86,['var':("isYellow"),'value':("true")],-1)
 printHtmlPart(5)
 }
 printHtmlPart(5)
 if(true && (it == "PARTNER_STATUS__DETOXIFIED")) {
 printHtmlPart(6)
-invokeTag('set','g',87,['var':("isOrange"),'value':("true")],-1)
+invokeTag('set','g',89,['var':("isOrange"),'value':("true")],-1)
 printHtmlPart(5)
 }
 printHtmlPart(5)
 if(true && (it == "PARTNER_STATUS__BANNED")) {
 printHtmlPart(6)
-invokeTag('set','g',90,['var':("isRed"),'value':("true")],-1)
+invokeTag('set','g',92,['var':("isRed"),'value':("true")],-1)
 printHtmlPart(5)
 }
 printHtmlPart(3)
 }
+printHtmlPart(3)
+for( _it551307142 in (typeMemebers) ) {
+changeItVariable(_it551307142)
+printHtmlPart(3)
+if(true && (it == "CONSUM_LUDIC")) {
+printHtmlPart(6)
+invokeTag('set','g',97,['var':("isGrey"),'value':("true")],-1)
+printHtmlPart(5)
+}
+printHtmlPart(5)
+if(true && (it == "CONSUM_THERAPEUTIC")) {
+printHtmlPart(6)
+invokeTag('set','g',100,['var':("isBlue"),'value':("true")],-1)
+printHtmlPart(5)
+}
 printHtmlPart(7)
-invokeTag('img','g',96,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
+}
+printHtmlPart(8)
+invokeTag('img','g',109,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
 printHtmlPart(6)
 if(true && (isGreen == 'true')) {
-printHtmlPart(8)
-}
-else {
 printHtmlPart(9)
 }
+else {
 printHtmlPart(10)
-invokeTag('img','g',105,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
+}
+printHtmlPart(11)
+invokeTag('img','g',118,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
 printHtmlPart(6)
 if(true && (isYellow == 'true')) {
-printHtmlPart(11)
-}
-else {
 printHtmlPart(12)
 }
-printHtmlPart(10)
-invokeTag('img','g',114,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
-printHtmlPart(6)
-if(true && (isOrange == 'true')) {
+else {
 printHtmlPart(13)
 }
-else {
+printHtmlPart(11)
+invokeTag('img','g',127,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
+printHtmlPart(6)
+if(true && (isOrange == 'true')) {
 printHtmlPart(14)
 }
+else {
 printHtmlPart(15)
-invokeTag('img','g',123,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
+}
+printHtmlPart(16)
+invokeTag('img','g',136,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
 printHtmlPart(6)
 if(true && (isRed == 'true')) {
-printHtmlPart(16)
-}
-else {
 printHtmlPart(17)
 }
+else {
 printHtmlPart(18)
-})
-invokeTag('form','g',137,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'all',controller:'member'])],1)
+}
 printHtmlPart(19)
-expressionOut.print(listMembers?.totalCount)
+if(true && (isBlue == 'true')) {
 printHtmlPart(20)
-if(true && (listMembers)) {
-printHtmlPart(21)
-for( _it223288832 in (listMembers) ) {
-changeItVariable(_it223288832)
-printHtmlPart(22)
-expressionOut.print(it.code)
-printHtmlPart(23)
-expressionOut.print(it.firstname)
-printHtmlPart(24)
-expressionOut.print(it.lastname)
-printHtmlPart(23)
-expressionOut.print(it.identificationNumber)
-printHtmlPart(25)
-if(true && (it.status.name() == 'PARTNER_STATUS__ACTIVED')) {
-printHtmlPart(26)
-invokeTag('img','g',162,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
-printHtmlPart(27)
-}
-else if(true && (it.status.name() == 'PARTNER_STATUS__DISABLED')) {
-printHtmlPart(26)
-invokeTag('img','g',165,['dir':("css/img"),'file':("semaforoAzul.jpg ")],-1)
-printHtmlPart(27)
-}
-else if(true && (it.status.name() == 'PARTNER_STATUS__BANNED')) {
-printHtmlPart(26)
-invokeTag('img','g',168,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
-printHtmlPart(27)
-}
-else if(true && (it.status.name() == 'PARTNER_STATUS__DETOXIFIED')) {
-printHtmlPart(26)
-invokeTag('img','g',171,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
-printHtmlPart(27)
-}
-else if(true && (it.status.name() == 'PARTNER_STATUS__UNKNOWN')) {
-printHtmlPart(26)
-invokeTag('img','g',174,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
-printHtmlPart(27)
-}
-else if(true && (it.status.name() == 'PARTNER_STATUS__INVITE')) {
-printHtmlPart(26)
-invokeTag('img','g',177,['dir':("css/img"),'file':("semaforoLila.jpg")],-1)
-printHtmlPart(27)
-}
-printHtmlPart(28)
-expressionOut.print(createLink(controller:'member', action:'showEdit', params:[memberId:it.id]))
-printHtmlPart(29)
-expressionOut.print(it.id)
-printHtmlPart(30)
-if(true && (it.consum.name() == 'CONSUM_THERAPEUTIC')) {
-printHtmlPart(31)
 }
 else {
+printHtmlPart(21)
+}
+printHtmlPart(22)
+if(true && (isGrey == 'true')) {
+printHtmlPart(23)
+}
+else {
+printHtmlPart(24)
+}
+printHtmlPart(25)
+})
+invokeTag('form','g',168,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'all',controller:'member'])],1)
+printHtmlPart(26)
+expressionOut.print(listMembers?.totalCount)
+printHtmlPart(27)
+if(true && (listMembers)) {
+printHtmlPart(28)
+for( _it1574682436 in (listMembers) ) {
+changeItVariable(_it1574682436)
+printHtmlPart(29)
+expressionOut.print(it.code)
+printHtmlPart(30)
+expressionOut.print(it.firstname)
+printHtmlPart(31)
+expressionOut.print(it.lastname)
+printHtmlPart(30)
+expressionOut.print(it.identificationNumber)
 printHtmlPart(32)
-}
+if(true && (it.status?.name() == 'PARTNER_STATUS__ACTIVED')) {
 printHtmlPart(33)
-}
+invokeTag('img','g',193,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
 printHtmlPart(34)
 }
-else {
+else if(true && (it.status?.name() == 'PARTNER_STATUS__DISABLED')) {
+printHtmlPart(33)
+invokeTag('img','g',196,['dir':("css/img"),'file':("semaforoAzul.jpg ")],-1)
+printHtmlPart(34)
+}
+else if(true && (it.status?.name() == 'PARTNER_STATUS__BANNED')) {
+printHtmlPart(33)
+invokeTag('img','g',199,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
+printHtmlPart(34)
+}
+else if(true && (it.status?.name() == 'PARTNER_STATUS__DETOXIFIED')) {
+printHtmlPart(33)
+invokeTag('img','g',202,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
+printHtmlPart(34)
+}
+else if(true && (it.status?.name() == 'PARTNER_STATUS__UNKNOWN')) {
+printHtmlPart(33)
+invokeTag('img','g',205,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
+printHtmlPart(34)
+}
+else if(true && (it.status?.name() == 'PARTNER_STATUS__INVITE')) {
+printHtmlPart(33)
+invokeTag('img','g',208,['dir':("css/img"),'file':("semaforoLila.jpg")],-1)
+printHtmlPart(34)
+}
 printHtmlPart(35)
-}
+expressionOut.print(createLink(controller:'member', action:'showEdit', params:[memberId:it.id]))
 printHtmlPart(36)
-if(true && (offset==0)) {
+expressionOut.print(it.id)
 printHtmlPart(37)
-}
-else {
+if(true && (it.consum?.name() == 'CONSUM_THERAPEUTIC')) {
 printHtmlPart(38)
 }
+else {
 printHtmlPart(39)
-if(true && (listMembers.size() < 50)) {
+}
 printHtmlPart(40)
 }
-else {
 printHtmlPart(41)
 }
+else {
 printHtmlPart(42)
-invokeTag('render','g',235,['template':("/sativaTemplate/scriptsTemplate")],-1)
+}
 printHtmlPart(43)
-expressionOut.print(offset)
+if(true && (offset==0)) {
 printHtmlPart(44)
-expressionOut.print(offset)
+}
+else {
 printHtmlPart(45)
+}
+printHtmlPart(46)
+if(true && (listMembers.size() < 50)) {
+printHtmlPart(47)
+}
+else {
+printHtmlPart(48)
+}
+printHtmlPart(49)
+invokeTag('render','g',266,['template':("/sativaTemplate/scriptsTemplate")],-1)
+printHtmlPart(50)
+expressionOut.print(offset)
+printHtmlPart(51)
+expressionOut.print(offset)
+printHtmlPart(52)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1455967220000L
+public static final long LAST_MODIFIED = 1458841351000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

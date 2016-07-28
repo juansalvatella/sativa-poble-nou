@@ -17,7 +17,7 @@ printHtmlPart(1)
 createClosureForHtmlPart(2, 1)
 invokeTag('form','g',56,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'search',controller:'member'])],1)
 printHtmlPart(3)
-expressionOut.print(listMembers?.size())
+expressionOut.print(total)
 printHtmlPart(4)
 if(true && (listMembers)) {
 printHtmlPart(5)
@@ -25,7 +25,7 @@ loop:{
 int i = 0
 for( mem in (listMembers) ) {
 printHtmlPart(6)
-expressionOut.print(i+1)
+expressionOut.print(i+1+offset)
 printHtmlPart(7)
 expressionOut.print(mem.code)
 printHtmlPart(7)
@@ -103,7 +103,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1455964367000L
+public static final long LAST_MODIFIED = 1458842019000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

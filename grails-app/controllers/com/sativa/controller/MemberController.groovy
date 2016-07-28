@@ -36,9 +36,10 @@ class MemberController  {
 	def geneticOrdersService
 	def guestHistoricService
 
-	def search(String firstname, String lastname, String identificationNumber, String code) {
+	def search(String firstname, String lastname, String identificationNumber, String code, Integer offset) {
 		def listMembers = memberService.search(firstname, lastname, identificationNumber, code)
-		render(view: "/sativaTemplate/searchMembers", model: [listMembers:listMembers])
+		def total = listMembers.size();
+		render(view: "/sativaTemplate/searchMembers", model: [listMembers:listMembers, total:total, offset:0])
 	}
 
 	def searchInvitate(String firstname, String lastname, String identificationNumber) {
@@ -52,7 +53,8 @@ class MemberController  {
 		offset = offset?:0
 		
 		def listMembers = memberService.list(null, offset)
-		render(view: "/sativaTemplate/searchMembers", model: [offset:offset, listMembers:listMembers])
+		def total = listMembers.totalCount
+		render(view: "/sativaTemplate/searchMembers", model: [offset:offset, listMembers:listMembers, total:total])
 	}
 
 	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset) {
@@ -83,8 +85,11 @@ class MemberController  {
 			typeMembers.push("CONSUM_THERAPEUTIC")
 		}
 
+		println "all okkkk";
 		
 		def listMembers = memberService.all(firstname, lastname, identificationNumber, code, offset, statusMembers, typeMembers)
+
+		println "all okkkk2 ";
 		render(view: "/sativaTemplate/managementMembers", model: [offset:offset, listMembers:listMembers, statusMembers:statusMembers, typeMemebers:typeMembers])
 	}
 

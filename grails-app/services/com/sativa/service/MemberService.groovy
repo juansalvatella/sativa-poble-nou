@@ -60,7 +60,7 @@ class MemberService {
 
 	@Transactional(readOnly = true)
 	def search (String firstname, String lastname, String identificationNumber, String code) {
-		return Partner.createCriteria().list {
+		return Partner.createCriteria().list{
 			order("code", "asc")
 			and {
 				or {

@@ -6,8 +6,8 @@ Reset and overrides
 ***/
 body {
   color: #222222;
-  background-color: #35363a !important; black version*/
-  /*background-color: #efefef !important; /*white version*/
+  /*background-color: #35363a !important; black version*/
+  background-color: #efefef !important; /*white version*/
 }
 /***
 Page header
@@ -15,8 +15,8 @@ Page header
 .header {
   filter: none;
   background-image: none;
-  background-color: #242527; /*black version*/
-  /*background-color: #efefef /*white version*/;
+  /*background-color: #242527; *//*black version*/
+  background-color: #efefef; /*white version*/
 }
 .header .navbar-nav .dropdown-toggle:hover,
 .header .navbar-nav .dropdown.open .dropdown-toggle {
@@ -29,8 +29,8 @@ Page header
   border-left: 1px solid #484a4f !important;
 }
 .header .navbar-nav > li.dropdown.user .dropdown-toggle .username {
-  color: #cecfd3; /*black version */
-  /*color:black; /*white version*/
+  /*color: #cecfd3; /*black version */
+  color:black; /*white version*/
 
 }
 
@@ -72,9 +72,9 @@ Page header
 Page sidebar
 ***/
 .page-sidebar {
-  /*background: #efefef;  /*white admin */ 
+  background: #efefef;  /*white version */ 
 
-  background: #35363a; /*black admin*/
+  /*background: #35363a; /*black version*/
 
 
 }
@@ -256,4 +256,17 @@ Landscape phone to portrait tablet
   .header .navbar-nav > li.devider {
     border-left: 1px solid #414247 !important;
   }
+}
+
+/* verison white*/
+ul.page-sidebar-menu > li > a {
+  color:black !important;
+}
+
+ul.page-sidebar-menu > li > a:hover{
+  color:white !important;
+}
+
+ul.page-sidebar-menu > li.active > a {
+  color:white !important;
 }

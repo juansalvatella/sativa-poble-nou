@@ -189,22 +189,22 @@
 				 								<td style="vertical-align:middle">${it.firstname} ${it.lastname}</td>
 				 								<td style="vertical-align:middle">${it.identificationNumber}</td>
 				 								<td style="vertical-align:middle">
-				 									<g:if test="${it.status.name() == 'PARTNER_STATUS__ACTIVED'}">
+				 									<g:if test="${it.status?.name() == 'PARTNER_STATUS__ACTIVED'}">
 				 										<g:img dir="css/img" file="semaforoVerde.jpg"/>
 				 									</g:if>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__DISABLED'}">
+				 									<g:elseif test="${it.status?.name() == 'PARTNER_STATUS__DISABLED'}">
 				 										<g:img dir="css/img" file="semaforoAzul.jpg "/>
 				 									</g:elseif>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__BANNED'}">
+				 									<g:elseif test="${it.status?.name() == 'PARTNER_STATUS__BANNED'}">
 				 										<g:img dir="css/img" file="semaforoRojo.jpg"/>
 				 									</g:elseif>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__DETOXIFIED'}">
+				 									<g:elseif test="${it.status?.name() == 'PARTNER_STATUS__DETOXIFIED'}">
 				 										<g:img dir="css/img" file="semaforoNaranja.jpg"/>
 				 									</g:elseif>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__UNKNOWN'}">
+				 									<g:elseif test="${it.status?.name() == 'PARTNER_STATUS__UNKNOWN'}">
 				 										<g:img dir="css/img" file="semaforoAmarillo.jpg"/>
 				 									</g:elseif>
-				 									<g:elseif test="${it.status.name() == 'PARTNER_STATUS__INVITE'}">
+				 									<g:elseif test="${it.status?.name() == 'PARTNER_STATUS__INVITE'}">
 				 										<g:img dir="css/img" file="semaforoLila.jpg"/>
 				 									</g:elseif>
 				 								</td>
@@ -218,7 +218,7 @@
 				 								</td>
 
 				 								<td>
-				 									<g:if test="${it.consum.name() == 'CONSUM_THERAPEUTIC'}">
+				 									<g:if test="${it.consum?.name() == 'CONSUM_THERAPEUTIC'}">
 				 										<div class="therapeuticDiv"></div>
 				 									</g:if>
 				 									<g:else>

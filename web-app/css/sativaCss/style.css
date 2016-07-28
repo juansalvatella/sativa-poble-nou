@@ -3532,16 +3532,5 @@ Responsive Flip Scroll Tables
     cursor: pointer;
 }
 
-/* verison white
-ul.page-sidebar-menu > li > a {
-  color:black !important;
-}
 
-ul.page-sidebar-menu > li > a:hover{
-  color:white !important;
-}
-
-ul.page-sidebar-menu > li.active > a {
-  color:white !important;
-}*/
 

@@ -55,7 +55,7 @@
 	                            
 			              </g:form>
 			        </div>
-			        <h4><b>TOTAL DE SOCIOS: ${listMembers?.totalCount}</b></h4>
+			        <h4><b>TOTAL DE SOCIOS: ${total}</b></h4>
 			        <div class="row">
 				 		<table class="table table-bordered table-condensed">
 				 			<thead>
