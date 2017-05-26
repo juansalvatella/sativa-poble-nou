@@ -102,7 +102,7 @@
 
 <div class="footer">
 	<div class="footer-inner">
-		 2014 &copy; Sativa
+		 2017 &copy; Sativa
 	</div>
 </div>
 

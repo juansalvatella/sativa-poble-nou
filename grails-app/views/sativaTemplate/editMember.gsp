@@ -162,31 +162,42 @@
                                         </div>
     								</div>
     							</div>
-    							<input type="hidden" name="image" id="foto_canvas" value="">
 					 			<input class="btn center pull-right btn-success" type="submit" id="updatePartner" value="Actualizar socio" />
-					 			
 				 			</g:form>
 							<g:if test="${numInvitations >= 5}">
 					 			<div class="row alert alert-warning showAlarmGuest">
-					 				
 										<h2>Este usuario ha sido invitado mas de 5 veces</h2>
 										<g:img  id="imageAlertGuest" dir="images/imageSativa"  file="warning.png" width="80" height="80"/>
-									
 					 			</div>
 				 			</g:if>
 				 		</div>
 				 		<div class="col-lg-4">
-				 			<video id="video" width="200" height="150" class="gapPhoto videoWebcam" autoplay></video>
+				 			<video id="video" width="300" height="225" class="gapPhoto videoWebcam" autoplay></video>
 				 			<a id="snap" class="btn btn-block btn-warning">
 				 				<i class="icon-camera"></i>
 				 				 HACER FOTO
 				 			</a>
-				            <div id="divCanvas" class="hide">  
+				            <div id="divCanvas" class="hide">
 				                <p><b>Imagen:</b></p>
-				               <canvas name="canvas" id="canvas"  width="300" height="200"></canvas>
+				               <canvas name="snapshot" id="snapshot" width="300" height="225"></canvas>
+				               <g:form name="myForm" id="formPhoto" role="form"  class="form-horizontal" url="[action:'photo',controller:'member']" >
+				               		<input type="hidden" name="image" id="foto_canvas" value="">
+				               		<input type="hidden" name="memberId" value="${member.id}" />
+				               		<a id="savePhoto" class="btn btn-block btn-primary" >Guardar foto</a>
+				           		</g:form>
 				            </div>
 				            <h2>Consumo</h2>
 				            <p><b>Total mensual:</b> ${grams.monthly}g</p>
+				            <p><strong>Estado actual:</strong>
+				            	<g:if test="${member.status.name() == 'PARTNER_STATUS__ACTIVED'}">Activo</g:if>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">Deshabilitado</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">Expulsado</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DETOXIFIED'}">No habitual</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__UNKNOWN'}">Desconocido</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__INVITE'}">Invitado</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__REMOVED'}">Eliminado</g:elseif>
+				            	<g:else>N/A</g:else>
+				            </p>
 				 		</div>
 				 	</div>
 				 	<div class="row" id="listActiveGenetics">
@@ -288,7 +299,14 @@
 
 <g:render template="/sativaTemplate/scriptsTemplate"  />
 <script>
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
+
+   $('#savePhoto').click(function() {
+   		$('#formPhoto').submit();
+   		$('#divCanvas').addClass('hide');
+
+   });
+
    App.init(); // initlayout and core plugins
    ManagementMember.init();
 
@@ -304,54 +322,36 @@ jQuery(document).ready(function() {
 
 
     var showBirthday =  birthday.toLocaleDateString().split('/');
-
-
- 	showBirthday[2]+'-'+showBirthday[1]+'-'+showBirthday[0]
- 	var month = ("0" + showBirthday[1]).slice(-2); 
- 	var day    =("0" + showBirthday[0]).slice(-2); 
+ 	var month = ("0" + showBirthday[1]).slice(-2);
+ 	var day    =("0" + showBirthday[0]).slice(-2);
 
  	var stringShowDate = showBirthday[2]+'-'+month+'-'+day;
 
  	 $('#calendarBirth').val(stringShowDate);
-   
 
-    // Put event listeners into place
-    window.addEventListener("DOMContentLoaded", function() {
-        // Grab elements, create settings, etc.
-        var canvas = document.getElementById("canvas"),
-            context = canvas.getContext("2d"),
-            video = document.getElementById("video"),
-            videoObj = { "video": true },
-            errBack = function(error) {
-                console.log("Video capture error: ", error.code); 
-            };
-    
-        // Put video listeners into place
-        if(navigator.getUserMedia) { // Standard
-            navigator.getUserMedia(videoObj, function(stream) {
-                video.src = stream;
-                video.play();
-            }, errBack);
-        } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-            navigator.webkitGetUserMedia(videoObj, function(stream){
-                video.src = window.webkitURL.createObjectURL(stream);
-                video.play();
-            }, errBack);
-        } else if(navigator.mozGetUserMedia) { // WebKit-prefixed
-            navigator.mozGetUserMedia(videoObj, function(stream){
-                video.src = window.URL.createObjectURL(stream);
-                video.play();
-            }, errBack);
-        }
-    
-        document.getElementById("snap").addEventListener("click", function(e) {
-        	$('#divCanvas').removeClass('hide');
-            context.drawImage(video, 0, 0, 310, 200);
-            var jpegUrl = canvas.toDataURL("image/jpeg");
-            document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
-            e.preventDefault(); 
-        });
-    }, false);
+
+var player = document.getElementById('video');
+var snapshotCanvas = document.getElementById('snapshot');
+var captureButton = document.getElementById('snap');
+
+var handleSuccess = function(stream) {
+// Attach the video stream to the video element and autoplay.
+player.srcObject = stream;
+};
+
+captureButton.addEventListener('click', function(e) {
+var context = snapshot.getContext('2d');
+// Draw the video frame to the canvas.
+context.drawImage(player, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
+$('#divCanvas').removeClass('hide');
+var jpegUrl = snapshot.toDataURL("image/jpeg");
+document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
+e.preventDefault();
+
+});
+
+navigator.mediaDevices.getUserMedia({video: true}).then(handleSuccess);
+
 });
 </script>
 </body>

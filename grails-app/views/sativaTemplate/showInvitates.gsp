@@ -18,7 +18,6 @@
 	                              			<div class="col-lg-9">
 	                               	 			<input type="text" class="form-control" name="firstname" />
 	                              			 </div>
-	                               			
 	                            		</div>
 	                            	</div>
 	                            	<div class="col-lg-3">
@@ -76,7 +75,7 @@
 										 				<%
 					 										def guestImage
 					 										try {
-																def imageAux = ImageIO.read(new File(grailsApplication.config.memberImgPath + mem.guest.image);
+																def imageAux = ImageIO.read(new File(grailsApplication.config.memberImgPath + mem.guest.image));
 																ByteArrayOutputStream bos = new ByteArrayOutputStream();
 															 	ImageIO.write(imageAux, "png", bos);
 																byte[] imageBytes	  = bos.toByteArray();
@@ -133,7 +132,7 @@
 
 <div class="footer">
 	<div class="footer-inner">
-		 2014 &copy; Sativa
+		 2017 &copy; Sativa
 	</div>
 </div>
 

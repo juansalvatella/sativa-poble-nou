@@ -39,10 +39,8 @@ class GeneticOrdersService {
 	    	partner.save(flush:true)
 		}
 
-	
     	BufferedImage newImg = ImageUtils.decodeToImage(signature)
-        ImageIO.write(newImg, "jpg", new File("/usr/sativaImages/firmas/"+go.id+".png"))		
-	
+        ImageIO.write(newImg, "jpg", new File(grailsApplication.config.signImgPath + go.id + ".png"))
 	}
 
 

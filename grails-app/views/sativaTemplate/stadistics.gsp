@@ -57,7 +57,7 @@
 					 									<%
 					 										def signatureImage
 					 										try {
-																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/firmas/"+it.id+".png"));
+																def imageAux		  = ImageIO.read(new File(grailsApplication.config.signImgPath + it.id + ".png"));
 																ByteArrayOutputStream bos = new ByteArrayOutputStream();
 															 	ImageIO.write(imageAux, "png", bos);
 																byte[] imageBytes	  = bos.toByteArray();
@@ -204,7 +204,7 @@
 
 <div class="footer">
 	<div class="footer-inner">
-		 2014 &copy; Sativa
+		 2017 &copy; Sativa
 	</div>
 </div>
 

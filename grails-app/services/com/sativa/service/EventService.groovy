@@ -29,20 +29,22 @@ class EventService {
 	def listCustom (Partner partner) {
 		return Event.createCriteria().list {
 			eq "member", partner
-			eq "type", EVENT_TYPE__CUSTOM
-			 maxResults(4)
+			and {
+				ne "type", EVENT_TYPE__BUY
+				ne "type", EVENT_TYPE__REMOVED
+			}
 			order("dateCreated", "desc")
-			ne "type", EVENT_TYPE__REMOVED
 		}
 	}
 
 	@Transactional(readOnly = true)
 	def listWithdrawals (Partner partner) {
-		return Event.createCriteria().list {
+		def withds = Event.createCriteria().list {
 			eq "member", partner
 			eq "type", EVENT_TYPE__BUY
 			order("dateCreated", "desc")
 		}
+		return withds
 	}
 
 

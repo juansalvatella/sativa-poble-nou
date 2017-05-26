@@ -51,7 +51,7 @@ class MemberController  {
 
 	def list (Integer offset) {
 		offset = offset?:0
-		
+
 		def listMembers = memberService.list(null, offset)
 		def total = listMembers.totalCount
 		render(view: "/sativaTemplate/searchMembers", model: [offset:offset, listMembers:listMembers, total:total])
@@ -68,13 +68,13 @@ class MemberController  {
 			statusMembers.push("PARTNER_STATUS__ACTIVED")
 		}
 		if (params.yellowStatus){
-			statusMembers.push("PARTNER_STATUS__UNKNOWN")	
+			statusMembers.push("PARTNER_STATUS__UNKNOWN")
 		}
 		if (params.orangeStatus){
-			statusMembers.push("PARTNER_STATUS__DETOXIFIED")	
+			statusMembers.push("PARTNER_STATUS__DETOXIFIED")
 		}
 		if (params.redStatus){
-			statusMembers.push("PARTNER_STATUS__BANNED")	
+			statusMembers.push("PARTNER_STATUS__BANNED")
 		}
 
 		if (params.ludicStatus){
@@ -115,13 +115,13 @@ class MemberController  {
 		def stringBirthday = cpc.birthday.split('-');
 		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
 		dateBirthday.set(year:stringBirthday[0] as Integer)
-		
+
 		def now = new Date() - 18*365
 
 		if (now < dateBirthday) {
 			if (!cpc.friend) {
 				redirect(controller: "card", action: "dispatcher",  params:[num_tarjeta:cpc.codeCard, error:"¡¡Es menor de edad!!"])
-				return	
+				return
 			}
 			else {
 				redirect(controller: "member", action: "invite",  params:[memberId:cpc.friend.id, error:"¡¡Es menor de edad!!"])
@@ -130,7 +130,7 @@ class MemberController  {
 		}
 
 		def member
-		def error 
+		def error
 		if (oldPartner){
 			member = Partner.get(oldPartner)
 			cardService.add(member, cpc.codeCard)
@@ -173,7 +173,7 @@ class MemberController  {
 			BASE64Encoder encoder = new BASE64Encoder();
         	pedro = encoder.encode(imageBytes);
         }catch(all){}
-		render(view: "/sativaTemplate/showMember", model: [error:error, yellowCard:yellowCards, imagePerson:pedro, grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents])
+		render(view: "/sativaTemplate/showMember", model: [error:error, yellowCard:yellowCards, imagePerson:pedro, grams:grams, member:member, notification:notification, card:card, listGenetics:listGenetics, listEvents:listEvents, listCustomEvents:listCustomEvents, listWithdrawals:listWithdrawals])
 	}
 
 
@@ -211,11 +211,10 @@ class MemberController  {
 		def stringBirthday = cpc.birthday.split('-');
 		def dateBirthday = new Date(stringBirthday[0] as Integer, (stringBirthday[1] as Integer) - 1, stringBirthday[2] as Integer, 0, 0)
 		dateBirthday.set(year:stringBirthday[0] as Integer)
-		
 		def now = new Date() - 18*365
 
 		if (now < dateBirthday) {
-			redirect(controller: "member", action: "showEdit",  params:[memberId:memberId, error:"¡¡Es menor de edad!!"])	
+			redirect(controller: "member", action: "showEdit",  params:[memberId:memberId, error:"¡¡Es menor de edad!!"])
 			return
 		}
 		memberService.edit(member, cpc)
@@ -263,10 +262,18 @@ class MemberController  {
 		else redirect(controller: "member", action: "show", params:[memberId:memberId])
 	}
 
+	def notpayed(Long memberId, String page) {
+		Partner member = Partner.get(memberId)
+		memberService.notpayed(member)
+		if (page == "edit") redirect(controller: "member", action: "showEdit", params:[memberId:memberId])
+		else redirect(controller: "member", action: "show", params:[memberId:memberId])
+	}
+
 	def photo (Long memberId, String image){
 		Partner member = Partner.get(memberId)
 		memberService.photo(member, image)
-		redirect(controller: "member", action: "show", params:[memberId:memberId])
+		if (page == "edit") redirect(controller: "member", action: "showEdit", params:[memberId:memberId])
+		else redirect(controller: "member", action: "show", params:[memberId:memberId])
 	}
 
 

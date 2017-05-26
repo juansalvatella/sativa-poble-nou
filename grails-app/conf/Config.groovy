@@ -101,10 +101,12 @@ environments {
     development {
         grails.logging.jul.usebridge = true
         memberImgPath = "C:/Users/j.salvatella.ibanez/repos/sativa-poble-nou/temp/profile-pics/"
+        signImgPath = "C:/Users/j.salvatella.ibanez/repos/sativa-poble-nou/temp/signatures/"
     }
     production {
         grails.logging.jul.usebridge = true
         memberImgPath = "/usr/sativaImages/partners/"
+        signImgPath = "/usr/sativaImages/firmas/"
     }
 }
 

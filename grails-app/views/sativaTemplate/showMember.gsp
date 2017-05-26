@@ -20,8 +20,9 @@
 				 			 	<a href="#disabledMember" class="btn btn-block btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
 				 			
 				 				<g:if test="${member.status.name() != 'PARTNER_STATUS__INVITE'}">
-				 			 		<a href="#renovationMember" id="renovationMemberBtn" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Pagar cuota</a>
+				 			 		<a href="#renovationMember" id="renovationMemberBtn" class="btn  btn-block btn-primary" data-toggle="modal" class="config">Cuota no pagada</a>
 				 			 	</g:if>
+
 				 			 	<g:form name="myForm" id="formFriend" role="form"  class="form-horizontal" url="[action:'invite',controller:'member']" >
 				 			 		<input type="hidden" name="memberId" value="${member.id}" />
 				 			 		<g:if test="${member.status.name() != 'PARTNER_STATUS__INVITE'}">
@@ -78,7 +79,17 @@
 				           		</g:form>
 				            </div>
 				            <h2>Consumo</h2>
-				            <p><b>Total mensual:</b> ${grams.monthly}g</p>
+				            <p><strong>Total mensual:</strong> ${grams.monthly}g</p>
+				            <p><strong>Estado actual:</strong>
+				            	<g:if test="${member.status.name() == 'PARTNER_STATUS__ACTIVED'}">Activo</g:if>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DISABLED'}">Deshabilitado</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__BANNED'}">Expulsado</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__DETOXIFIED'}">No habitual</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__UNKNOWN'}">Desconocido</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__INVITE'}">Invitado</g:elseif>
+				            	<g:elseif test="${member.status.name() == 'PARTNER_STATUS__REMOVED'}">Eliminado</g:elseif>
+				            	<g:else>N/A</g:else>
+				            </p>
 				 		</div>
 				 	</div>
 				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams.monthly > 90.00 }">
@@ -108,18 +119,8 @@
 						 		<h3>Historial de Retiradas</h3>
 						 		<g:if  test="${listWithdrawals != null && listWithdrawals.size() == 0}">
 							 		<div style="margin-bottom: 15px;">No hay retiradas</div>
-							 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
-							 		<textarea  name="observation" class="textareaHistoric"></textarea>
-							 		<input type="hidden" name="partnerId" value="${member.id}" />
-							 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
-						 		</g:form>
 							 	</g:if>
 							 	<g:else>
-							 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
-								 		<textarea  name="observation" class="textareaHistoric"></textarea>
-								 		<input type="hidden" name="partnerId" value="${member.id}" />
-								 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
-							 		</g:form>
 							 		<table id="tableHistoric" class="table table-bordered table-condensed">
 							 			<g:each in="${listWithdrawals}">
 							 				<tr>
@@ -134,13 +135,31 @@
 						 		<h3>Historial de Comentarios</h3>
 						 		<g:if  test="${listCustomEvents != null && listCustomEvents.size() == 0}">
 							 		<div style="margin-bottom: 15px;">No hay comentarios</div>
+							 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
+								 		<textarea  name="observation" class="textareaHistoric"></textarea>
+								 		<input type="hidden" name="partnerId" value="${member.id}" />
+								 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
+							 		</g:form>
 							 	</g:if>
 							 	<g:else>
+							 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
+								 		<textarea  name="observation" class="textareaHistoric"></textarea>
+								 		<input type="hidden" name="partnerId" value="${member.id}" />
+								 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
+							 		</g:form>
 							 		<table id="tableHistoric" class="table table-bordered table-condensed">
 								 		<g:each in="${listCustomEvents}">
 							 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
-							 				<td class="alignTd" >${it.observation}</td>	
-							 				<td class="alignTd"><a href="${createLink(controller:'event', action:'removed', params:[eventId:it.id, partnerId:member.id])}"><img width="20" src="/css/img/delete-genetic.png"></a></td>
+				 					<g:if test="${it.type.name() == 'EVENT_TYPE__ACTIVATE'}"><td class="textGreen"></g:if>
+				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:elseif>
+				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__RENOVATE'}"><td class="textBlue"></g:elseif>
+				 					<g:else><td></g:else>${it.observation}</td>
+
+
+							 				<td class="alignTd">
+												<g:if test="${it.type.name() == 'EVENT_TYPE__CUSTOM'}">
+							 						<a href="${createLink(controller:'event', action:'removed', params:[eventId:it.id, partnerId:member.id])}"><img width="20" src="/css/img/delete-genetic.png"></a></td>
+							 					</g:if>
 							 				</tr>
 							 			</g:each>
 							 		</table>
@@ -211,7 +230,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				 <h4 class="modal-title">RENOVAR SOCIO</h4>
+				 <h4 class="modal-title">Confirmación de socio sin pagar cuota</h4>
 			</div>
 			
 			<g:set var="controllerBtn" value="" />
@@ -220,11 +239,11 @@
 			<g:form name="myForm" role="form"  class="form-horizontal" url="[controller:'member', action:'renovation']" >
 				<div class="modal-body">
 					<input type="hidden" name="memberId" value="${member.id}" />
-					<p>¿Estas seguro que quieres renovarlo?.</p>
+					<p>¿Estas seguro que quieres indicar que este socio NO ha pagado la cuota?</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-					<input type="submit" class="btn btn-primary" value="Renovar" />
+					<input type="submit" class="btn btn-primary" value="Confirmar" />
 				</div>
 			</g:form>
 		</div>
@@ -323,7 +342,7 @@ jQuery(document).ready(function() {
 		}
 		else {
 			carroGenetics.push(auxId)
-			carroObject.push({geneticId:auxId, amount:1, price:priceUnit});				
+			carroObject.push({geneticId:auxId, amount:1, price:priceUnit});
 		}
 
 		$.each(carroObject, function(key, value) {
@@ -415,49 +434,6 @@ jQuery(document).ready(function() {
     	if( (document.getElementById("image-saved-semaphore").value == "false") && ($('#signElectric').attr('disabled') === undefined) )
     		{ return "El socio todavía no ha firmado. ¿Estás seguro?"; }
     }
-
-/*
-    // Put event listeners into place
-    window.addEventListener("DOMContentLoaded", function() {
-        // Grab elements, create settings, etc.
-        var canvas = document.getElementById("canvas"),
-            context = canvas.getContext("2d"),
-            video = document.getElementById("video"),
-            videoObj = { "video": true },
-            errBack = function(error) {
-                console.log("Video capture error: ", error.code); 
-            };
-
-        // Put video listeners into place
-        if(navigator.getUserMedia) { // Standard
-            navigator.getUserMedia(videoObj, function(stream) {
-                video.src = stream;
-                video.play();
-            }, errBack);
-        } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-            navigator.webkitGetUserMedia(videoObj, function(stream){
-                video.src = window.webkitURL.createObjectURL(stream);
-                video.play();
-            }, errBack);
-        } else if(navigator.mozGetUserMedia) { // WebKit-prefixed
-            navigator.mozGetUserMedia(videoObj, function(stream){
-                video.src = window.URL.createObjectURL(stream);
-                video.play();
-            }, errBack);
-        }
-
-  navigator.mediaDevices.getUserMedia({video: true})
-      .then(handleSuccess);
-
-        document.getElementById("snap").addEventListener("click", function(e) {
-        	$('#divCanvas').removeClass('hide');
-            context.drawImage(video, 0, 0, 310, 200);
-            var jpegUrl = canvas.toDataURL("image/jpeg");
-            document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
-            e.preventDefault(); 
-        });
-    }, false);
-*/
 
   var player = document.getElementById('video');
   var snapshotCanvas = document.getElementById('snapshot');

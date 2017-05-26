@@ -406,6 +406,14 @@ class MemberService {
 	}
 
 	@Transactional
+	def notpayed(Partner member) {
+		member.status = PARTNER_STATUS__DETOXIFIED
+		member.save()
+		String observation = "El socio no ha pagado la cuota"
+		eventService.create(observation, member, EVENT_TYPE__NEW_USER)
+	}
+
+	@Transactional
 	def photo(Partner member, String image) {
 		def applicationContext = grailsApplication.mainContext
 		BufferedImage newImg = ImageUtils.decodeToImage(image);
