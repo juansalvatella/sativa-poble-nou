@@ -25,8 +25,7 @@ class GuestHistoricService {
 		if (!offset || offset==1){
 			offset = 0
 		}
-		
-		println "hito "+offset
+
 		def ghList = GuestHistoric.createCriteria().list([max:50, offset:offset]) {
 			order("entry", "desc")
 			cache false
@@ -55,7 +54,6 @@ class GuestHistoricService {
 					eq "status", PARTNER_STATUS__INVITE
 				}
 			}
-			
 		}
 	}
 
@@ -76,6 +74,10 @@ class GuestHistoricService {
 		def ghList = GuestHistoric.createCriteria().list {
 			eq "guest", guest
 			order("id", "asc")
-		}?.last().friend
+		}
+		if (ghList && !ghList.isEmpty()){
+			return ghList.last().friend
+		}
+		else return null;
 	}
 }

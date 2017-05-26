@@ -20,15 +20,15 @@ class Partner {
 	Date    			dateCreated
 	Date                dateRenovation = new Date()
 	String 				code
-	String 				phone 
+	String 				phone
 	String  			firstname
 	String 	    	    lastname
 	String  			address
-	String 				image 
+	String 				image
 	String				signature
 	String  			identificationNumber
-	PartnerStatusEnum   status 
-	Partner             friend 
+	PartnerStatusEnum   status
+	Partner             friend
 	Date  				birthday
 	TypeConsumEnum		consum = CONSUM_LUDIC
 	Long 				numInvitations = 0
@@ -60,21 +60,13 @@ class Partner {
 	Set<Role> getAuthorities() {
 		PartnerRole.findAllByPartner(this).collect { it.role }
 	}
-
-
-
 	def guestHistoricService() {
 		return guestHistoricService.numberInvitations(this)
 	}
-		
 	def lastFriend() {
-		return guestHistoricService.lastFriend(this)
+			return guestHistoricService.lastFriend(this);
 	}
-
-
 	protected void encodePassword() {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
 	}
-
-	
 }

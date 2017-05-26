@@ -149,8 +149,6 @@
                                             <g:else>
                                             	<option value="CONSUM_THERAPEUTIC">Terapéutico</option>
                                             </g:else>
-
-                                            
                                         </select>
                                     </div>
                                 </div>
@@ -189,7 +187,6 @@
 				            </div>
 				            <h2>Consumo</h2>
 				            <p><b>Total mensual:</b> ${grams.monthly}g</p>
-				            <p><b>Total anual:</b> ${grams.anualy}g</p>
 				 		</div>
 				 	</div>
 				 	<div class="row" id="listActiveGenetics">
@@ -285,7 +282,7 @@
 
 <div class="footer">
 	<div class="footer-inner">
-		 2014 &copy; Sativa
+		 2017 &copy; Sativa
 	</div>
 </div>
 

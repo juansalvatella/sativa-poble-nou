@@ -3,6 +3,7 @@ import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__CUSTOM
 import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__REMOVED
 import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__AMONISHED
 import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__AMONISHED_FORGIVE
+import static com.sativa.enums.EventTypeEnum.EVENT_TYPE__BUY
 
 
 
@@ -15,7 +16,6 @@ import com.sativa.enums.EventTypeEnum
 class EventService {
 
 	def springSecurityService
-	
 	@Transactional(readOnly = true)
 	def list (Partner partner) {
 		return Event.createCriteria().list {
@@ -33,6 +33,15 @@ class EventService {
 			 maxResults(4)
 			order("dateCreated", "desc")
 			ne "type", EVENT_TYPE__REMOVED
+		}
+	}
+
+	@Transactional(readOnly = true)
+	def listWithdrawals (Partner partner) {
+		return Event.createCriteria().list {
+			eq "member", partner
+			eq "type", EVENT_TYPE__BUY
+			order("dateCreated", "desc")
 		}
 	}
 

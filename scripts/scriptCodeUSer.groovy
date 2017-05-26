@@ -21,7 +21,7 @@ listPartners.each {Partner p ->
   String countString = p.code.substring(p.code.size()-3)
  def newcode =dayString+monthString+yearString+countString.padLeft(3,'0')
 
- new File("/usr/sativaImages/partners/"+p.code+".png").renameTo(new File("/usr/sativaImages/partners/"+newcode+".png"))
+ new File("/usr/sativaImages/partners/"+p.code+".png").renameTo(new File(grailsApplication.config.memberImgPath +newcode+".png"))
   
  	p.code = newcode
   p.save(flush:true)

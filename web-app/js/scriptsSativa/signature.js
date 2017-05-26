@@ -118,6 +118,7 @@ function signatureSave() {
 	//poner la imagen en la pantalla
 	var dataURL = canvas.toDataURL("image/jpeg");
 	document.getElementById("saveSignature").src = dataURL;
+	document.getElementById("image-saved-semaphore").value = true;
 
 };
 

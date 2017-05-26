@@ -100,9 +100,11 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        memberImgPath = "C:/Users/j.salvatella.ibanez/repos/sativa-poble-nou/temp/profile-pics/"
     }
     production {
-        grails.logging.jul.usebridge = false
+        grails.logging.jul.usebridge = true
+        memberImgPath = "/usr/sativaImages/partners/"
     }
 }
 

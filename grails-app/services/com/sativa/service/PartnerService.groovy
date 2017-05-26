@@ -18,9 +18,7 @@ class PartnerService {
 				distinct "partner.id"
 			}
 		}
-		return Partner.createCriteria().list{
-			'in' 'id', users
-		}
+		return Partner.createCriteria().list{'in'('id', users)}
 	}
 
 	@Transactional

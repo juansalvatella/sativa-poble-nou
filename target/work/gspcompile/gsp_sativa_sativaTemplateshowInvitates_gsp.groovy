@@ -43,14 +43,14 @@ if(true && (mem.guest.image)) {
 printHtmlPart(13)
 
 def guestImage
-					 										try {
-																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+mem.guest.image));
-																ByteArrayOutputStream bos = new ByteArrayOutputStream();
-															 	ImageIO.write(imageAux, "png", bos);
-																byte[] imageBytes	  = bos.toByteArray();
-																BASE64Encoder encoder = new BASE64Encoder();
-													        	guestImage = encoder.encode(imageBytes);
-													        }catch(all){}
+	try {
+	def imageAux		  = ImageIO.read(grailsApplication.config.memberImgPath +mem.guest.image));
+	ByteArrayOutputStream bos = new ByteArrayOutputStream();
+ 	ImageIO.write(imageAux, "png", bos);
+	byte[] imageBytes	  = bos.toByteArray();
+	BASE64Encoder encoder = new BASE64Encoder();
+	guestImage = encoder.encode(imageBytes);
+}catch(all){}
 
 printHtmlPart(14)
 expressionOut.print(guestImage)

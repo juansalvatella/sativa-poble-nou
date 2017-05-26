@@ -85,11 +85,8 @@ class MemberController  {
 			typeMembers.push("CONSUM_THERAPEUTIC")
 		}
 
-		println "all okkkk";
-		
 		def listMembers = memberService.all(firstname, lastname, identificationNumber, code, offset, statusMembers, typeMembers)
 
-		println "all okkkk2 ";
 		render(view: "/sativaTemplate/managementMembers", model: [offset:offset, listMembers:listMembers, statusMembers:statusMembers, typeMemebers:typeMembers])
 	}
 
@@ -161,6 +158,7 @@ class MemberController  {
 		def listGenetics 	  = geneticService.active()
 		def listEvents   	  = eventService.list(member)
 		def listCustomEvents  = eventService.listCustom(member)
+		def listWithdrawals   = eventService.listWithdrawals(member)
 		def notification	  = eventService.notification(member)
 		def card  		 	  = cardService.cardActive(member)
 		def grams			  = geneticOrdersService.grams(member)
@@ -168,7 +166,7 @@ class MemberController  {
 
 		def pedro
 		try {
-			def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+member.code+".png"));
+			def imageAux		  = ImageIO.read(new File(grailsApplication.config.memberImgPath + member.code + ".png"));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		 	ImageIO.write(imageAux, "png", bos);
 			byte[] imageBytes	  = bos.toByteArray();
@@ -194,7 +192,7 @@ class MemberController  {
 		def yellowCards 	  = eventService.amonished(member)
 		def pedro
 		try {
-			def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+member.code+".png"));
+			def imageAux		  = ImageIO.read(new File(grailsApplication.config.memberImgPath + member.code + ".png"));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		 	ImageIO.write(imageAux, "png", bos);
 			byte[] imageBytes	  = bos.toByteArray();
@@ -207,6 +205,7 @@ class MemberController  {
 
 
 	def edit (Long memberId, DataMemberCommand cpc){
+		println "TEST"
 		Partner member = Partner.get(memberId)
 
 		def stringBirthday = cpc.birthday.split('-');

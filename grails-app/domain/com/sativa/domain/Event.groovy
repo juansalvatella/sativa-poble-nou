@@ -13,11 +13,7 @@ class Event {
 
 	static belongsTo 	= [member	: Partner]
 
-
 	static constraints = {
 		observation (maxSize:1000)
 	}
-		
-	
-	
 }

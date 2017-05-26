@@ -45,9 +45,6 @@
 					 			</g:each>
 							</g:if>
 				 			</div>
-
-				 			 
-				 			
 				 		</div>
 				 		<div class="col-lg-5">
 							<p><b>Numero de socio:</b> ${member.code}</p>
@@ -61,7 +58,7 @@
 				 			<p><b>Última cuota:</b> <g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${member.dateRenovation}"/> </p>
 				 			<p><b>Tarjeta:</b>  ${card?.code}</p>
 				 			<p><b>Consumo:</b>  ${member.consum.getHumanName()}</p>
-			 				<g:if test="${member.status.name() == 'PARTNER_STATUS__INVITE'}">
+			 				<g:if test="${member.lastFriend() != null}">
 								<p><b>Invitado por:</b><br />${member.lastFriend().firstname} ${member.lastFriend().lastname}</p>
 							</g:if>
 				 		</div>
@@ -71,9 +68,9 @@
 				 				<i class="icon-camera"></i>
 				 				 HACER FOTO
 				 			</a>
-				            <div id="divCanvas"  class="hide" >  
+				            <div id="divCanvas"  class="hide" >
 				                <p><b>Imagen:</b></p>
-				               <canvas name="canvas" id="canvas" width="310" height="200"></canvas>
+				               <canvas name="snapshot" id="snapshot" width="300" height="225"></canvas>
 				               <g:form name="myForm" id="formPhoto" role="form"  class="form-horizontal" url="[action:'photo',controller:'member']" >
 				               		<input type="hidden" name="image" id="foto_canvas" value="">
 				               		<input type="hidden" name="memberId" value="${member.id}" />
@@ -82,35 +79,15 @@
 				            </div>
 				            <h2>Consumo</h2>
 				            <p><b>Total mensual:</b> ${grams.monthly}g</p>
-				            <p><b>Total anual:</b> ${grams.anualy}g</p>
-				            <h2>Histórico</h2>
-				            <g:if  test="${listCustomEvents.size() == 0}">
-					 			No hay comentarios
-					 		</g:if>
-					 		<g:else>
-					            <table id="tableHistoricCustom" class="table table-bordered table-condensed">
-
-						 			<g:each in="${listCustomEvents}">
-						 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
-						 				<td class="alignTd" >${it.observation}</td>	
-						 				<td class="alignTd"><a href="${createLink(controller:'event', action:'removed', params:[eventId:it.id, partnerId:member.id])}"><img width="20" src="/css/img/delete-genetic.png"></a></td>
-						 				</tr>
-						 			</g:each>
-					 			</table>
-				 			</g:else>	
 				 		</div>
 				 	</div>
 				 	<g:if test="${(member.status.name() != 'PARTNER_STATUS__INVITE' && member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED') || grams.monthly > 90.00 }">
-				 
-					 
 				 	<div class="row" id="listActiveGenetics">
 				 			<g:each in="${listGenetics}">
 					 			<a  style="background-color:${it.type.color};border-color:${it.type.color};"  id="genetic_${it.id}" price="${it.type.price}" class="geneticAdd btn btn-success btn-lg"> ${it.name}</a>
 					 		</g:each>
-				 		
 				 	</div>
 				 	<hr />
-				 	
 				 	<div class="row">
 				 		<div class="col-lg-11">
 						 	<div class="row" id="divBill">
@@ -119,32 +96,57 @@
 						 			<img id="saveSignature" src="" class="hide imagenGenerada">
 						 			<input type="hidden" name="memberId" value="${member.id}" />
 						 			<input type="hidden" name="signature" id="firma_canvas" value="">
-						 			<a id="signElectric" class="btn btn-primary" disabled>Firma elctrónica</a>
+						 			<a id="signElectric" class="btn btn-primary" disabled>Firma electrónica</a>
 						 	</div>
 					 	</div>
 				 	</div>
 				 	</g:if>
 				 	<div class="row">
 				 		<g:cookie name="myCookie" />
-				 		<h3>Historial del usuario</h3>
-				 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
-					 		<textarea  name="observation" class="textareaHistoric"></textarea>
-					 		<input type="hidden" name="partnerId" value="${member.id}" />
-					 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
-				 		</g:form>
-				 		<table id="tableHistoric" class="table table-bordered table-condensed">
-				 			<g:each in="${listEvents}">
-				 				
-				 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
-				 					<g:if test="${it.type.name() == 'EVENT_TYPE__ACTIVATE'}"><td class="textGreen"></g:if>
-				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__DISABLED'}"><td class="textRed"></g:elseif>
-				 					<g:elseif test="${it.type.name() == 'EVENT_TYPE__RENOVATE'}"><td class="textBlue"></g:elseif>
-				 					<g:else><td ></g:else>
-				 					${it.observation}</td>
-				 					
-				 				</tr>
-				 			</g:each>
-				 		</table>
+				 		<div class="col-md-12">
+				 			<div class="col-md-6">
+						 		<h3>Historial de Retiradas</h3>
+						 		<g:if  test="${listWithdrawals != null && listWithdrawals.size() == 0}">
+							 		<div style="margin-bottom: 15px;">No hay retiradas</div>
+							 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
+							 		<textarea  name="observation" class="textareaHistoric"></textarea>
+							 		<input type="hidden" name="partnerId" value="${member.id}" />
+							 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
+						 		</g:form>
+							 	</g:if>
+							 	<g:else>
+							 		<g:form name="myForm" role="form"  class="form-horizontal" url="[action:'create',controller:'event']" >
+								 		<textarea  name="observation" class="textareaHistoric"></textarea>
+								 		<input type="hidden" name="partnerId" value="${member.id}" />
+								 		<input type="submit" class="btn btn-success" value="Publicar comentario" />
+							 		</g:form>
+							 		<table id="tableHistoric" class="table table-bordered table-condensed">
+							 			<g:each in="${listWithdrawals}">
+							 				<tr>
+							 					<td class="center"><b>${it.writer}</b><br /><small><g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}" /></small></td>
+							 					<td >${it.observation}</td>
+							 				</tr>
+							 			</g:each>
+							 		</table>
+						 		</g:else>
+						 	</div>
+						 	<div class="col-md-6">
+						 		<h3>Historial de Comentarios</h3>
+						 		<g:if  test="${listCustomEvents != null && listCustomEvents.size() == 0}">
+							 		<div style="margin-bottom: 15px;">No hay comentarios</div>
+							 	</g:if>
+							 	<g:else>
+							 		<table id="tableHistoric" class="table table-bordered table-condensed">
+								 		<g:each in="${listCustomEvents}">
+							 				<tr><td class="center"><b>${it.writer}</b><br /><small><g:formatDate timeZone="${TimeZone.getTimeZone('Europe/Madrid')}" format="dd-MM-yyyy HH:mm" date="${it.dateCreated}"/></small></td>
+							 				<td class="alignTd" >${it.observation}</td>	
+							 				<td class="alignTd"><a href="${createLink(controller:'event', action:'removed', params:[eventId:it.id, partnerId:member.id])}"><img width="20" src="/css/img/delete-genetic.png"></a></td>
+							 				</tr>
+							 			</g:each>
+							 		</table>
+						 		</g:else>
+						 	</div>
+					 	</div>
 				 	</div>
 				 </div>
 		</div>
@@ -203,6 +205,7 @@
 	<!-- /.modal-dialog -->
 </div>
 
+<input id="image-saved-semaphore" type="hidden" value=false />
 
 <div class="modal fade" id="renovationMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -270,7 +273,7 @@
 
 <div class="footer">
 	<div class="footer-inner">
-		 2014 &copy; Sativa
+		 2017 &copy; Sativa
 	</div>
 </div>
 
@@ -405,14 +408,15 @@ jQuery(document).ready(function() {
 				withCredentials: true
 			}
 		});
-    });   
+    });
 
-	
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+    	if( (document.getElementById("image-saved-semaphore").value == "false") && ($('#signElectric').attr('disabled') === undefined) )
+    		{ return "El socio todavía no ha firmado. ¿Estás seguro?"; }
+    }
 
-
-
-
-
+/*
     // Put event listeners into place
     window.addEventListener("DOMContentLoaded", function() {
         // Grab elements, create settings, etc.
@@ -423,7 +427,7 @@ jQuery(document).ready(function() {
             errBack = function(error) {
                 console.log("Video capture error: ", error.code); 
             };
-    
+
         // Put video listeners into place
         if(navigator.getUserMedia) { // Standard
             navigator.getUserMedia(videoObj, function(stream) {
@@ -441,7 +445,10 @@ jQuery(document).ready(function() {
                 video.play();
             }, errBack);
         }
-    
+
+  navigator.mediaDevices.getUserMedia({video: true})
+      .then(handleSuccess);
+
         document.getElementById("snap").addEventListener("click", function(e) {
         	$('#divCanvas').removeClass('hide');
             context.drawImage(video, 0, 0, 310, 200);
@@ -450,7 +457,28 @@ jQuery(document).ready(function() {
             e.preventDefault(); 
         });
     }, false);
+*/
 
+  var player = document.getElementById('video');
+  var snapshotCanvas = document.getElementById('snapshot');
+  var captureButton = document.getElementById('snap');
+
+  var handleSuccess = function(stream) {
+    // Attach the video stream to the video element and autoplay.
+    player.srcObject = stream;
+  };
+
+  captureButton.addEventListener('click', function() {
+    var context = snapshot.getContext('2d');
+    // Draw the video frame to the canvas.
+    context.drawImage(player, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
+    $('#divCanvas').removeClass('hide');
+    var jpegUrl = snapshot.toDataURL("image/jpeg");
+    document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
+    e.preventDefault();
+  });
+
+  navigator.mediaDevices.getUserMedia({video: true}).then(handleSuccess);
 });
 </script>
 </body>

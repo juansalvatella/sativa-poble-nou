@@ -170,10 +170,7 @@ class MemberService {
 
 	@Transactional(readOnly = true)
 	def all (String firstname, String lastname, String identificationNumber, String code, Integer offset, List statusArray = null, List typeMembersArray = null) {
-			println "aaaa --> "+statusArray
-
 			return Partner.createCriteria().list ([max:50, offset:offset]){
-				
 				if (firstname){
 					ilike 'firstname', "%${firstname}%"
 				}
@@ -284,7 +281,8 @@ class MemberService {
 		 	def applicationContext = grailsApplication.mainContext
     		
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
+        	File out = new File(grailsApplication.config.memberImgPath + member.code + ".png")
+        	ImageIO.write(newImg, "png", out)
         	partner.image = partner.code+".png"
         }
 
@@ -329,7 +327,8 @@ class MemberService {
 		if (cpc.image) {
 		 	def applicationContext = grailsApplication.mainContext
 			BufferedImage newImg = ImageUtils.decodeToImage(cpc.image);
-        	ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+partner.code+".png"))
+        	File out = new File(grailsApplication.config.memberImgPath + member.code + ".png")
+        	ImageIO.write(newImg, "png", out)
         	partner.image = partner.code+".png"
     	}
 
@@ -406,13 +405,13 @@ class MemberService {
 		eventService.create(observation, member, EVENT_TYPE__RENOVATE)
 	}
 
-	
 	@Transactional
 	def photo(Partner member, String image) {
 		def applicationContext = grailsApplication.mainContext
 		BufferedImage newImg = ImageUtils.decodeToImage(image);
-        ImageIO.write(newImg, "png", new File("/usr/sativaImages/partners/"+member.code+".png"))
-        member.image = member.code+".png"
+		File out = new File(grailsApplication.config.memberImgPath + member.code + ".png")
+        ImageIO.write(newImg, "png", out)
+        member.image = member.code + ".png"
         if (member.status == PARTNER_STATUS__UNKNOWN && member.firstname && member.image && member.lastname && member.address && member.identificationNumber && member.phone) {
     		member.status = PARTNER_STATUS__ACTIVED
     	}

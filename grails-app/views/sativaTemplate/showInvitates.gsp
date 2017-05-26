@@ -76,7 +76,7 @@
 										 				<%
 					 										def guestImage
 					 										try {
-																def imageAux		  = ImageIO.read(new File("/usr/sativaImages/partners/"+mem.guest.image));
+																def imageAux = ImageIO.read(new File(grailsApplication.config.memberImgPath + mem.guest.image);
 																ByteArrayOutputStream bos = new ByteArrayOutputStream();
 															 	ImageIO.write(imageAux, "png", bos);
 																byte[] imageBytes	  = bos.toByteArray();
