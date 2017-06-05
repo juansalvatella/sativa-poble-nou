@@ -66,8 +66,8 @@ printHtmlPart(24)
 printHtmlPart(25)
 if(true && (yellowCard > 0)) {
 printHtmlPart(26)
-for( _it486224381 in (1..yellowCard) ) {
-changeItVariable(_it486224381)
+for( _it432112010 in (1..yellowCard) ) {
+changeItVariable(_it432112010)
 printHtmlPart(27)
 invokeTag('img','g',93,['dir':("css/img"),'file':("yellowCard.jpg"),'width':("50")],-1)
 printHtmlPart(28)
@@ -106,93 +106,85 @@ printHtmlPart(42)
 }
 printHtmlPart(43)
 })
-invokeTag('form','g',170,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'edit',controller:'member'])],1)
+invokeTag('form','g',166,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'edit',controller:'member'])],1)
 printHtmlPart(44)
 if(true && (numInvitations >= 5)) {
 printHtmlPart(45)
-invokeTag('img','g',175,['id':("imageAlertGuest"),'dir':("images/imageSativa"),'file':("warning.png"),'width':("80"),'height':("80")],-1)
+invokeTag('img','g',170,['id':("imageAlertGuest"),'dir':("images/imageSativa"),'file':("warning.png"),'width':("80"),'height':("80")],-1)
 printHtmlPart(46)
 }
 printHtmlPart(47)
-expressionOut.print(grams.monthly)
-printHtmlPart(48)
-expressionOut.print(grams.anualy)
-printHtmlPart(49)
-for( _it797894632 in (listGenetics) ) {
-changeItVariable(_it797894632)
-printHtmlPart(50)
-expressionOut.print(it.name)
-printHtmlPart(51)
-}
-printHtmlPart(52)
-invokeTag('cookie','g',202,['name':("myCookie")],-1)
-printHtmlPart(53)
 createTagBody(1, {->
-printHtmlPart(54)
+printHtmlPart(48)
 expressionOut.print(member.id)
-printHtmlPart(55)
+printHtmlPart(49)
 })
-invokeTag('form','g',209,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'create',controller:'event'])],1)
-printHtmlPart(56)
-for( _it1327188156 in (listEvents) ) {
-changeItVariable(_it1327188156)
-printHtmlPart(57)
-expressionOut.print(it.writer)
-printHtmlPart(58)
-invokeTag('formatDate','g',212,['timeZone':(TimeZone.getTimeZone('Europe/Madrid')),'format':("dd-MM-yyyy HH:mm"),'date':(it.dateCreated)],-1)
-printHtmlPart(59)
-if(true && (it.type.name() == 'EVENT_TYPE__ACTIVATE')) {
-printHtmlPart(60)
-}
-else if(true && (it.type.name() == 'EVENT_TYPE__DISABLED')) {
-printHtmlPart(61)
-}
-else if(true && (it.type.name() == 'EVENT_TYPE__RENOVATE')) {
-printHtmlPart(62)
-}
-else {
-printHtmlPart(63)
-}
-printHtmlPart(64)
-expressionOut.print(it.observation)
-printHtmlPart(65)
-}
-printHtmlPart(66)
-if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
-printHtmlPart(67)
-}
-else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
-printHtmlPart(68)
-}
-printHtmlPart(69)
-invokeTag('set','g',243,['var':("controllerBtn"),'value':("")],-1)
-printHtmlPart(70)
-invokeTag('set','g',244,['var':("actionBtn"),'value':("")],-1)
-printHtmlPart(70)
-if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
-printHtmlPart(71)
-invokeTag('set','g',246,['var':("actionBtn"),'value':("remove")],-1)
-printHtmlPart(70)
-}
-else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
-printHtmlPart(71)
-invokeTag('set','g',249,['var':("actionBtn"),'value':("activate")],-1)
-printHtmlPart(70)
+invokeTag('form','g',187,['name':("myForm"),'id':("formPhoto"),'role':("form"),'class':("form-horizontal"),'url':([action:'photo',controller:'member'])],1)
+printHtmlPart(50)
+expressionOut.print(grams.monthly)
+printHtmlPart(51)
+if(true && (member.status.name() == 'PARTNER_STATUS__ACTIVED')) {
+printHtmlPart(52)
 }
 else if(true && (member.status.name() == 'PARTNER_STATUS__DISABLED')) {
-printHtmlPart(71)
-invokeTag('set','g',252,['var':("actionBtn"),'value':("renovation")],-1)
-printHtmlPart(70)
-}
-printHtmlPart(72)
-createTagBody(1, {->
-printHtmlPart(73)
-expressionOut.print(member.id)
-printHtmlPart(74)
-if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
-printHtmlPart(75)
+printHtmlPart(53)
 }
 else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
+printHtmlPart(54)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__DETOXIFIED')) {
+printHtmlPart(55)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__UNKNOWN')) {
+printHtmlPart(56)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__INVITE')) {
+printHtmlPart(57)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__REMOVED')) {
+printHtmlPart(58)
+}
+else {
+printHtmlPart(59)
+}
+printHtmlPart(60)
+for( _it1864341563 in (listGenetics) ) {
+changeItVariable(_it1864341563)
+printHtmlPart(61)
+expressionOut.print(it.name)
+printHtmlPart(62)
+}
+printHtmlPart(63)
+invokeTag('cookie','g',210,['name':("myCookie")],-1)
+printHtmlPart(64)
+createTagBody(1, {->
+printHtmlPart(65)
+expressionOut.print(member.id)
+printHtmlPart(66)
+})
+invokeTag('form','g',217,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'create',controller:'event'])],1)
+printHtmlPart(67)
+for( _it54755964 in (listEvents) ) {
+changeItVariable(_it54755964)
+printHtmlPart(68)
+expressionOut.print(it.writer)
+printHtmlPart(69)
+invokeTag('formatDate','g',220,['timeZone':(TimeZone.getTimeZone('Europe/Madrid')),'format':("dd-MM-yyyy HH:mm"),'date':(it.dateCreated)],-1)
+printHtmlPart(70)
+if(true && (it.type.name() == 'EVENT_TYPE__ACTIVATE')) {
+printHtmlPart(71)
+}
+else if(true && (it.type.name() == 'EVENT_TYPE__DISABLED')) {
+printHtmlPart(72)
+}
+else if(true && (it.type.name() == 'EVENT_TYPE__RENOVATE')) {
+printHtmlPart(73)
+}
+else {
+printHtmlPart(74)
+}
+printHtmlPart(75)
+expressionOut.print(it.observation)
 printHtmlPart(76)
 }
 printHtmlPart(77)
@@ -203,24 +195,62 @@ else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
 printHtmlPart(79)
 }
 printHtmlPart(80)
-})
-invokeTag('form','g',277,['name':("myForm"),'role':("form"),'id':("formMemberEdit"),'class':("form-horizontal"),'url':([controller:'member', action:actionBtn ])],1)
+invokeTag('set','g',251,['var':("controllerBtn"),'value':("")],-1)
 printHtmlPart(81)
-invokeTag('render','g',292,['template':("/sativaTemplate/scriptsTemplate")],-1)
+invokeTag('set','g',252,['var':("actionBtn"),'value':("")],-1)
+printHtmlPart(81)
+if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
 printHtmlPart(82)
-expressionOut.print(member.status.name())
+invokeTag('set','g',254,['var':("actionBtn"),'value':("remove")],-1)
+printHtmlPart(81)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
+printHtmlPart(82)
+invokeTag('set','g',257,['var':("actionBtn"),'value':("activate")],-1)
+printHtmlPart(81)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__DISABLED')) {
+printHtmlPart(82)
+invokeTag('set','g',260,['var':("actionBtn"),'value':("renovation")],-1)
+printHtmlPart(81)
+}
 printHtmlPart(83)
-expressionOut.print(member.status.name())
+createTagBody(1, {->
 printHtmlPart(84)
-expressionOut.print(member.birthday)
+expressionOut.print(member.id)
 printHtmlPart(85)
+if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
+printHtmlPart(86)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
+printHtmlPart(87)
+}
+printHtmlPart(88)
+if(true && (member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED')) {
+printHtmlPart(89)
+}
+else if(true && (member.status.name() == 'PARTNER_STATUS__BANNED')) {
+printHtmlPart(90)
+}
+printHtmlPart(91)
+})
+invokeTag('form','g',285,['name':("myForm"),'role':("form"),'id':("formMemberEdit"),'class':("form-horizontal"),'url':([controller:'member', action:actionBtn ])],1)
+printHtmlPart(92)
+invokeTag('render','g',300,['template':("/sativaTemplate/scriptsTemplate")],-1)
+printHtmlPart(93)
+expressionOut.print(member.status.name())
+printHtmlPart(94)
+expressionOut.print(member.status.name())
+printHtmlPart(95)
+expressionOut.print(member.birthday)
+printHtmlPart(96)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1491500025717L
+public static final long LAST_MODIFIED = 1495836084046L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

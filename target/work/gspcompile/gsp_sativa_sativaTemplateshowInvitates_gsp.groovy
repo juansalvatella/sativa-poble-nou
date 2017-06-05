@@ -21,7 +21,7 @@ printHtmlPart(2)
 invokeTag('render','g',5,['template':("/sativaTemplate/menuTemplate"),'model':(username)],-1)
 printHtmlPart(3)
 createClosureForHtmlPart(4, 1)
-invokeTag('form','g',49,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'searchInvitate',controller:'member'])],1)
+invokeTag('form','g',48,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'searchInvitate',controller:'member'])],1)
 printHtmlPart(5)
 expressionOut.print(listInvitates?.size())
 printHtmlPart(6)
@@ -43,14 +43,14 @@ if(true && (mem.guest.image)) {
 printHtmlPart(13)
 
 def guestImage
-	try {
-	def imageAux		  = ImageIO.read(grailsApplication.config.memberImgPath +mem.guest.image));
-	ByteArrayOutputStream bos = new ByteArrayOutputStream();
- 	ImageIO.write(imageAux, "png", bos);
-	byte[] imageBytes	  = bos.toByteArray();
-	BASE64Encoder encoder = new BASE64Encoder();
-	guestImage = encoder.encode(imageBytes);
-}catch(all){}
+					 										try {
+																def imageAux = ImageIO.read(new File(grailsApplication.config.memberImgPath + mem.guest.image));
+																ByteArrayOutputStream bos = new ByteArrayOutputStream();
+															 	ImageIO.write(imageAux, "png", bos);
+																byte[] imageBytes	  = bos.toByteArray();
+																BASE64Encoder encoder = new BASE64Encoder();
+													        	guestImage = encoder.encode(imageBytes);
+													        }catch(all){}
 
 printHtmlPart(14)
 expressionOut.print(guestImage)
@@ -60,7 +60,7 @@ printHtmlPart(16)
 }
 else {
 printHtmlPart(17)
-invokeTag('img','g',91,['dir':("css/img"),'id':("avatar.png"),'class':("seeImage"),'file':("avatar.png"),'width':("200")],-1)
+invokeTag('img','g',90,['dir':("css/img"),'id':("avatar.png"),'class':("seeImage"),'file':("avatar.png"),'width':("200")],-1)
 printHtmlPart(18)
 }
 printHtmlPart(19)
@@ -80,7 +80,7 @@ expressionOut.print(mem.numberEntries)
 printHtmlPart(11)
 if(true && (mem.numberEntries >= 5)) {
 printHtmlPart(9)
-invokeTag('img','g',100,['dir':("images/imageSativa"),'file':("warning.png"),'width':("20"),'height':("20")],-1)
+invokeTag('img','g',99,['dir':("images/imageSativa"),'file':("warning.png"),'width':("20"),'height':("20")],-1)
 printHtmlPart(11)
 }
 printHtmlPart(21)
@@ -107,7 +107,7 @@ else {
 printHtmlPart(29)
 }
 printHtmlPart(30)
-invokeTag('render','g',140,['template':("/sativaTemplate/scriptsTemplate")],-1)
+invokeTag('render','g',139,['template':("/sativaTemplate/scriptsTemplate")],-1)
 printHtmlPart(31)
 expressionOut.print(offset)
 printHtmlPart(32)
@@ -119,7 +119,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1491500026059L
+public static final long LAST_MODIFIED = 1495836012608L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

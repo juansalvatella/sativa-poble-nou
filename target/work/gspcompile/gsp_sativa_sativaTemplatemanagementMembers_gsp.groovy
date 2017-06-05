@@ -28,8 +28,8 @@ invokeTag('set','g',77,['var':("isGrey"),'value':("false")],-1)
 printHtmlPart(3)
 invokeTag('set','g',78,['var':("isBlue"),'value':("false")],-1)
 printHtmlPart(4)
-for( _it253310401 in (statusMembers) ) {
-changeItVariable(_it253310401)
+for( _it1466340547 in (statusMembers) ) {
+changeItVariable(_it1466340547)
 printHtmlPart(5)
 if(true && (it == "PARTNER_STATUS__ACTIVED")) {
 printHtmlPart(6)
@@ -54,27 +54,33 @@ printHtmlPart(6)
 invokeTag('set','g',92,['var':("isRed"),'value':("true")],-1)
 printHtmlPart(5)
 }
-printHtmlPart(3)
+printHtmlPart(5)
+if(true && (it == "PARTNER_STATUS__BANNED")) {
+printHtmlPart(6)
+invokeTag('set','g',95,['var':("isRed"),'value':("true")],-1)
+printHtmlPart(5)
 }
 printHtmlPart(3)
-for( _it1075321253 in (typeMemebers) ) {
-changeItVariable(_it1075321253)
+}
+printHtmlPart(7)
+for( _it263240457 in (typeMemebers) ) {
+changeItVariable(_it263240457)
 printHtmlPart(3)
 if(true && (it == "CONSUM_LUDIC")) {
 printHtmlPart(6)
-invokeTag('set','g',97,['var':("isGrey"),'value':("true")],-1)
+invokeTag('set','g',101,['var':("isGrey"),'value':("true")],-1)
 printHtmlPart(5)
 }
 printHtmlPart(5)
 if(true && (it == "CONSUM_THERAPEUTIC")) {
 printHtmlPart(6)
-invokeTag('set','g',100,['var':("isBlue"),'value':("true")],-1)
+invokeTag('set','g',104,['var':("isBlue"),'value':("true")],-1)
 printHtmlPart(5)
 }
-printHtmlPart(7)
+printHtmlPart(3)
 }
 printHtmlPart(8)
-invokeTag('img','g',109,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
+invokeTag('img','g',112,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
 printHtmlPart(6)
 if(true && (isGreen == 'true')) {
 printHtmlPart(9)
@@ -83,7 +89,7 @@ else {
 printHtmlPart(10)
 }
 printHtmlPart(11)
-invokeTag('img','g',118,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
+invokeTag('img','g',121,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
 printHtmlPart(6)
 if(true && (isYellow == 'true')) {
 printHtmlPart(12)
@@ -92,7 +98,7 @@ else {
 printHtmlPart(13)
 }
 printHtmlPart(11)
-invokeTag('img','g',127,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
+invokeTag('img','g',130,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
 printHtmlPart(6)
 if(true && (isOrange == 'true')) {
 printHtmlPart(14)
@@ -101,7 +107,7 @@ else {
 printHtmlPart(15)
 }
 printHtmlPart(16)
-invokeTag('img','g',136,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
+invokeTag('img','g',139,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
 printHtmlPart(6)
 if(true && (isRed == 'true')) {
 printHtmlPart(17)
@@ -125,14 +131,14 @@ printHtmlPart(24)
 }
 printHtmlPart(25)
 })
-invokeTag('form','g',168,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'all',controller:'member'])],1)
+invokeTag('form','g',171,['name':("myForm"),'role':("form"),'class':("form-horizontal"),'url':([action:'all',controller:'member'])],1)
 printHtmlPart(26)
 expressionOut.print(listMembers?.totalCount)
 printHtmlPart(27)
 if(true && (listMembers)) {
 printHtmlPart(28)
-for( _it1849409666 in (listMembers) ) {
-changeItVariable(_it1849409666)
+for( _it700622531 in (listMembers) ) {
+changeItVariable(_it700622531)
 printHtmlPart(29)
 expressionOut.print(it.code)
 printHtmlPart(30)
@@ -144,32 +150,32 @@ expressionOut.print(it.identificationNumber)
 printHtmlPart(32)
 if(true && (it.status?.name() == 'PARTNER_STATUS__ACTIVED')) {
 printHtmlPart(33)
-invokeTag('img','g',193,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
+invokeTag('img','g',196,['dir':("css/img"),'file':("semaforoVerde.jpg")],-1)
 printHtmlPart(34)
 }
 else if(true && (it.status?.name() == 'PARTNER_STATUS__DISABLED')) {
 printHtmlPart(33)
-invokeTag('img','g',196,['dir':("css/img"),'file':("semaforoAzul.jpg ")],-1)
+invokeTag('img','g',199,['dir':("css/img"),'file':("semaforoAzul.jpg ")],-1)
 printHtmlPart(34)
 }
 else if(true && (it.status?.name() == 'PARTNER_STATUS__BANNED')) {
 printHtmlPart(33)
-invokeTag('img','g',199,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
+invokeTag('img','g',202,['dir':("css/img"),'file':("semaforoRojo.jpg")],-1)
 printHtmlPart(34)
 }
 else if(true && (it.status?.name() == 'PARTNER_STATUS__DETOXIFIED')) {
 printHtmlPart(33)
-invokeTag('img','g',202,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
+invokeTag('img','g',205,['dir':("css/img"),'file':("semaforoNaranja.jpg")],-1)
 printHtmlPart(34)
 }
 else if(true && (it.status?.name() == 'PARTNER_STATUS__UNKNOWN')) {
 printHtmlPart(33)
-invokeTag('img','g',205,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
+invokeTag('img','g',208,['dir':("css/img"),'file':("semaforoAmarillo.jpg")],-1)
 printHtmlPart(34)
 }
 else if(true && (it.status?.name() == 'PARTNER_STATUS__INVITE')) {
 printHtmlPart(33)
-invokeTag('img','g',208,['dir':("css/img"),'file':("semaforoLila.jpg")],-1)
+invokeTag('img','g',211,['dir':("css/img"),'file':("semaforoLila.jpg")],-1)
 printHtmlPart(34)
 }
 printHtmlPart(35)
@@ -205,7 +211,7 @@ else {
 printHtmlPart(48)
 }
 printHtmlPart(49)
-invokeTag('render','g',266,['template':("/sativaTemplate/scriptsTemplate")],-1)
+invokeTag('render','g',269,['template':("/sativaTemplate/scriptsTemplate")],-1)
 printHtmlPart(50)
 expressionOut.print(offset)
 printHtmlPart(51)
@@ -217,7 +223,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1491500025892L
+public static final long LAST_MODIFIED = 1496174168360L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'
