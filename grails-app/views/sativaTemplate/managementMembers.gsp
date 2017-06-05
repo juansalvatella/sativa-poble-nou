@@ -91,7 +91,11 @@
 	                            	<g:if test="${it == "PARTNER_STATUS__BANNED"}">
 	                            		<g:set var="isRed" value="true"/>
 	                            	</g:if>
+	                            	<g:if test="${it == "PARTNER_STATUS__BANNED"}">
+	                            		<g:set var="isRed" value="true"/>
+	                            	</g:if>
 	                            </g:each>
+	                            
 	                            <g:each in="${typeMemebers}">
 	                            <g:if test="${it == "CONSUM_LUDIC"}">
 	                            		<g:set var="isGrey" value="true"/>
@@ -99,7 +103,6 @@
 	                            	<g:if test="${it == "CONSUM_THERAPEUTIC"}">
 	                            		<g:set var="isBlue" value="true"/>
 	                            	</g:if>
-
 	                            </g:each>
 
 	                            

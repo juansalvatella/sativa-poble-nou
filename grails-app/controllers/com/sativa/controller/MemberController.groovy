@@ -269,11 +269,10 @@ class MemberController  {
 		else redirect(controller: "member", action: "show", params:[memberId:memberId])
 	}
 
-	def photo (Long memberId, String image){
+	def photo (Long memberId, String image, String page){
 		Partner member = Partner.get(memberId)
 		memberService.photo(member, image)
-		if (page == "edit") redirect(controller: "member", action: "showEdit", params:[memberId:memberId])
-		else redirect(controller: "member", action: "show", params:[memberId:memberId])
+		redirect(controller: "member", action: "show", params:[memberId:memberId])
 	}
 
 

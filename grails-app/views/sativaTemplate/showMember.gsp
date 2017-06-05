@@ -11,10 +11,10 @@
 				 	<div class="row" id="divShowMember">
 				 		<div class="col-lg-3">
 				 			<g:if test="${member.image}">
-				 			<img src="data:image/png;base64,${imagePerson}" width="225" height="180"/>
+				 			<img src="data:image/png;base64,${imagePerson}" width="302" height="220"/>
 					 		</g:if>
 					 		<g:else>
-								<g:img dir="css/img" file="avatar.png" width="200"/>
+								<g:img dir="css/img" file="avatar.png" width="302" height="220"/>
 					 		</g:else>
 					 		<g:if test="${member.status.name() != 'PARTNER_STATUS__BANNED' && member.status.name() != 'PARTNER_STATUS__DISABLED' }">
 				 			 	<a href="#disabledMember" class="btn btn-block btn-danger" data-toggle="modal" class="config">Desactivar socio</a>
@@ -60,7 +60,7 @@
 				 			<p><b>Tarjeta:</b>  ${card?.code}</p>
 				 			<p><b>Consumo:</b>  ${member.consum.getHumanName()}</p>
 			 				<g:if test="${member.lastFriend() != null}">
-								<p><b>Invitado por:</b><br />${member.lastFriend().firstname} ${member.lastFriend().lastname}</p>
+								<p><b>Invitado por:</b><br />${member.lastFriend().code}</p>
 							</g:if>
 				 		</div>
 				 		<div class="col-lg-4">
@@ -236,7 +236,7 @@
 			<g:set var="controllerBtn" value="" />
 			<g:set var="actionBtn" value="" />
 			
-			<g:form name="myForm" role="form"  class="form-horizontal" url="[controller:'member', action:'renovation']" >
+			<g:form name="myForm" role="form"  class="form-horizontal" url="[controller:'member', action:'notpayed']" >
 				<div class="modal-body">
 					<input type="hidden" name="memberId" value="${member.id}" />
 					<p>¿Estas seguro que quieres indicar que este socio NO ha pagado la cuota?</p>

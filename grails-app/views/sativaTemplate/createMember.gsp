@@ -23,7 +23,7 @@
 				 			</a>
               <div id="divCanvas">  
                   <p><b>Imagen:</b></p>
-                 <canvas name="canvas" id="canvas" width="300"    height="200"></canvas>
+                 <canvas name="canvas" id="snapshot" width="300"    height="200"></canvas>
               </div>
 				 		</div>
 				 		<div class="col-lg-8">
@@ -135,44 +135,29 @@ jQuery(document).ready(function() {
    }
 
 
-    $('#calendar1').val("")
-    // Put event listeners into place
-    window.addEventListener("DOMContentLoaded", function() {
-        // Grab elements, create settings, etc.
-        var canvas = document.getElementById("canvas"),
-            context = canvas.getContext("2d"),
-            video = document.getElementById("video"),
-            videoObj = { "video": true },
-            errBack = function(error) {
-                console.log("Video capture error: ", error.code); 
-            };
-    
-        // Put video listeners into place
-        if(navigator.getUserMedia) { // Standard
-            navigator.getUserMedia(videoObj, function(stream) {
-                video.src = stream;
-                video.play();
-            }, errBack);
-        } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-            navigator.webkitGetUserMedia(videoObj, function(stream){
-                video.src = window.webkitURL.createObjectURL(stream);
-                video.play();
-            }, errBack);
-        } else if(navigator.mozGetUserMedia) { // WebKit-prefixed
-            navigator.mozGetUserMedia(videoObj, function(stream){
-                video.src = window.URL.createObjectURL(stream);
-                video.play();
-            }, errBack);
-        }
-    
-        document.getElementById("snap").addEventListener("click", function(e) {
-            $('#canvas').removeClass('hide');
-            context.drawImage(video, 0, 0, 310, 200);
-            var jpegUrl = canvas.toDataURL("image/jpeg");
-            document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
-            e.preventDefault(); 
-        });
-    }, false);
+    $('#calendar1').val("");
+
+    var player = document.getElementById('video');
+    var snapshotCanvas = document.getElementById('snapshot');
+    var captureButton = document.getElementById('snap');
+
+    var handleSuccess = function(stream) {
+        // Attach the video stream to the video element and autoplay.
+        player.srcObject = stream;
+    };
+
+    captureButton.addEventListener('click', function(e) {
+        var context = snapshot.getContext('2d');
+        // Draw the video frame to the canvas.
+        context.drawImage(player, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
+        $('#divCanvas').removeClass('hide');
+        var jpegUrl = snapshot.toDataURL("image/jpeg");
+        document.getElementById('foto_canvas').value = jpegUrl.split(',')[1];
+        e.preventDefault();
+    });
+
+    navigator.mediaDevices.getUserMedia({video: true}).then(handleSuccess);
+
 });
 </script>
 </body>
